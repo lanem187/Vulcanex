@@ -1,0 +1,2271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#000000">
+<link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiVlVMQ0FORVgiLCJzaG9ydF9uYW1lIjoiVlVMQ0FORVgiLCJzdGFydF91cmwiOiIuIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiIzA1MDUwNyIsInRoZW1lX2NvbG9yIjoiI2ZmNDUwMCJ9">
+<title>VULCANEX — Fil-Trek Production Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#000000;--s1:#0a0a0f;--s2:#101018;--s3:#16161f;--br:#1e1e2e;--br2:#2a2a3d;--fire:#ff4500;--fire2:#ff6a00;--fire3:#ff8533;--green:#00e5a0;--yellow:#ffc400;--red:#ff3355;--blue:#00aaff;--tx:#f0f0f5;--tx2:#7a7a96;--tx3:#3d3d55;--vc:#ff4500;--bc:#00aaff;--ec:#00e5a0;--fd:'Bebas Neue',Impact,'Arial Narrow',sans-serif;--fm:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace;--fb:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--r:8px;--r2:12px;--ease:cubic-bezier(.4,0,.2,1);--ease-out:cubic-bezier(.34,1.56,.64,1)}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;touch-action:manipulation}
+body{background:var(--bg);color:var(--tx);font-family:var(--fb);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.02) 2px,rgba(0,0,0,.02) 4px);pointer-events:none;z-index:9999}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 20% 0%,rgba(255,69,0,.035),transparent 50%),radial-gradient(ellipse 60% 40% at 80% 100%,rgba(0,170,255,.025),transparent 50%);pointer-events:none;z-index:0}
+::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--br2);border-radius:3px}::selection{background:rgba(255,69,0,.25);color:#fff}
+#hdr{display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:62px;background:linear-gradient(180deg,var(--s1),rgba(10,10,15,.96));border-bottom:1px solid var(--br);position:sticky;top:0;z-index:200;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.logo-name{font-family:var(--fd);font-size:34px;letter-spacing:8px;color:var(--fire);line-height:1;text-shadow:0 0 30px rgba(255,69,0,.5),0 0 60px rgba(255,69,0,.15);position:relative}
+.logo-name::after{content:'';position:absolute;bottom:-3px;left:0;width:100%;height:2px;background:linear-gradient(90deg,var(--fire),var(--fire2),transparent);border-radius:1px}
+.logo-tag{font-family:var(--fm);font-size:9px;letter-spacing:3px;color:var(--tx3);text-transform:uppercase;margin-left:14px;display:none;opacity:.6}
+@media(min-width:600px){.logo-tag{display:inline}}
+.hdr-r{display:flex;align-items:center;gap:14px}
+.spill{font-family:var(--fm);font-size:10px;color:var(--green);background:rgba(0,229,160,.08);border:1px solid rgba(0,229,160,.18);padding:5px 12px;border-radius:20px;display:flex;align-items:center;gap:7px;box-shadow:0 0 16px rgba(0,229,160,.06);font-weight:600}
+.pdot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pd 2s ease-in-out infinite;box-shadow:0 0 8px var(--green)}
+@keyframes pd{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.2;transform:scale(.7)}}
+.clk{font-family:var(--fm);font-size:12px;color:var(--tx2);min-width:65px;text-align:right;font-weight:600;letter-spacing:1px}
+#nav{display:flex;background:var(--s1);border-bottom:1px solid var(--br);padding:0 8px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;position:relative}
+#nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--br2),transparent)}
+#nav::-webkit-scrollbar{display:none}
+.tab{font-family:var(--fm);font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--tx3);padding:14px 16px;cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;transition:color .2s var(--ease),border-color .2s var(--ease),text-shadow .2s;-webkit-appearance:none;font-weight:600;min-height:44px}
+.tab:hover{color:var(--tx2)}
+.tab.on{color:var(--fire);border-bottom-color:var(--fire);text-shadow:0 0 16px rgba(255,69,0,.35)}
+.pg{display:none;padding:24px;max-width:1340px;margin:0 auto;animation:pgIn .3s var(--ease)}
+.pg.on{display:block}
+@keyframes pgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.card{background:linear-gradient(145deg,var(--s1),var(--s2));border:1px solid var(--br);border-radius:var(--r2);padding:20px;position:relative;overflow:hidden;transition:border-color .25s var(--ease),box-shadow .25s}
+.card:hover{border-color:var(--br2)}
+.cg::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--fire),var(--fire2),transparent 70%)}
+.cg::after{content:'';position:absolute;top:0;left:0;right:0;height:40px;background:linear-gradient(180deg,rgba(255,69,0,.03),transparent);pointer-events:none}
+.lbl{font-family:var(--fm);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--tx2);margin-bottom:8px;font-weight:600}
+.bnum{font-family:var(--fd);font-size:56px;line-height:1;letter-spacing:3px}
+.unit{font-family:var(--fm);font-size:9px;color:var(--tx3);margin-top:6px;letter-spacing:2px;text-transform:uppercase;font-weight:600}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.g5{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.gap{margin-bottom:24px}
+@media(max-width:900px){.g4,.g5{grid-template-columns:1fr 1fr}.g3{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.g4,.g5,.g3{grid-template-columns:1fr 1fr}.g2{grid-template-columns:1fr}}
+.sh{font-family:var(--fd);font-size:18px;letter-spacing:5px;color:var(--tx2);text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:14px}
+.sh::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--br2),transparent)}
+.btn{font-family:var(--fm);font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:11px 18px;border-radius:var(--r);border:1px solid;cursor:pointer;transition:all .2s var(--ease);-webkit-appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:600;position:relative;overflow:hidden;min-height:44px;min-width:44px}
+.btn::after{content:'';position:absolute;inset:0;opacity:0;background:radial-gradient(circle at center,rgba(255,255,255,.12),transparent 70%);transition:opacity .2s}
+.btn:active::after{opacity:1}
+.btn:disabled{opacity:.2;cursor:not-allowed;filter:saturate(0)}.btn:disabled::after{display:none}
+.bf{background:var(--fire);border-color:var(--fire);color:#fff;box-shadow:0 0 20px rgba(255,69,0,.18)}
+.bf:not(:disabled):hover{background:var(--fire2);box-shadow:0 0 32px rgba(255,69,0,.3);transform:translateY(-1px)}
+.bf:not(:disabled):active{transform:translateY(0)}
+.bg{background:transparent;border-color:var(--br2);color:var(--tx2)}
+.bg:not(:disabled):hover{border-color:var(--tx3);color:var(--tx);background:rgba(255,255,255,.02)}
+.bgr{background:transparent;border-color:var(--green);color:var(--green)}
+.bgr:not(:disabled):hover{box-shadow:0 0 20px rgba(0,229,160,.1);background:rgba(0,229,160,.05)}
+.brd{background:transparent;border-color:var(--red);color:var(--red)}
+.brd:not(:disabled):hover{box-shadow:0 0 20px rgba(255,51,85,.08);background:rgba(255,51,85,.05)}
+.byel{background:transparent;border-color:var(--yellow);color:var(--yellow)}
+.byel:not(:disabled):hover{box-shadow:0 0 20px rgba(255,196,0,.08);background:rgba(255,196,0,.05)}
+.bbl{background:transparent;border-color:var(--blue);color:var(--blue)}
+.bfull{width:100%;margin-top:12px}
+.inp,.sel,.ta{background:var(--s2);border:1px solid var(--br);color:var(--tx);font-family:var(--fm);font-size:12px;padding:11px 14px;border-radius:var(--r);outline:none;width:100%;transition:border-color .2s var(--ease),box-shadow .2s;-webkit-appearance:none;min-height:44px}
+.inp:focus,.sel:focus,.ta:focus{border-color:var(--fire);box-shadow:0 0 0 3px rgba(255,69,0,.08)}
+.inp::placeholder{color:var(--tx3)}
+.ta{resize:vertical;min-height:80px;line-height:1.7}
+.sel{cursor:pointer}
+.fg{display:flex;flex-direction:column;gap:6px}
+.fl{font-family:var(--fm);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--tx2);font-weight:600}
+.fr2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.ff{margin-bottom:12px}
+.badge{display:inline-block;font-family:var(--fm);font-size:8px;letter-spacing:1.5px;text-transform:uppercase;padding:3px 8px;border-radius:4px;border:1px solid;font-weight:700}
+.bv{color:var(--vc);border-color:rgba(255,69,0,.25);background:rgba(255,69,0,.08)}
+.bb{color:var(--bc);border-color:rgba(0,170,255,.25);background:rgba(0,170,255,.08)}
+.be{color:var(--ec);border-color:rgba(0,229,160,.25);background:rgba(0,229,160,.08)}
+.bp{color:var(--green);border-color:rgba(0,229,160,.25);background:rgba(0,229,160,.08)}
+.bf2{color:var(--red);border-color:rgba(255,51,85,.25);background:rgba(255,51,85,.08)}
+.bdelay{color:var(--yellow);border-color:rgba(255,196,0,.25);background:rgba(255,196,0,.08)}
+.binp{color:var(--fire);border-color:rgba(255,69,0,.25);background:rgba(255,69,0,.08)}
+.brsh{color:var(--red);border-color:rgba(255,51,85,.25);background:rgba(255,51,85,.08)}
+.bug{color:var(--yellow);border-color:rgba(255,196,0,.25);background:rgba(255,196,0,.08)}
+.bnm,.bnor{color:var(--tx2);border-color:var(--br);background:transparent}
+.buru,.brug{color:var(--yellow);border-color:rgba(255,196,0,.25);background:rgba(255,196,0,.08)}
+.brus{color:var(--red);border-color:rgba(255,51,85,.25);background:rgba(255,51,85,.08)}
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{font-family:var(--fm);font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--tx3);padding:12px 16px;text-align:left;border-bottom:1px solid var(--br);background:var(--s2);font-weight:700}
+.tbl td{font-family:var(--fm);font-size:11px;color:var(--tx);padding:12px 16px;border-bottom:1px solid rgba(30,30,46,.5);transition:background .15s}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:rgba(255,255,255,.012)}
+.tbl-e{text-align:center;color:var(--tx3);padding:36px !important;font-style:italic}
+.pw{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:24px}
+@media(max-width:700px){.pw{grid-template-columns:1fr}}
+.pc{background:linear-gradient(160deg,var(--s1),var(--s2));border:1px solid var(--br);border-radius:var(--r2);overflow:hidden;transition:border-color .3s var(--ease),box-shadow .3s var(--ease),transform .3s var(--ease)}
+.pc.sr{border-color:var(--fire);box-shadow:0 0 40px rgba(255,69,0,.15),0 0 80px rgba(255,69,0,.06);transform:scale(1.003)}
+.pc.sd{border-color:var(--green);box-shadow:0 0 40px rgba(0,229,160,.12),0 0 80px rgba(0,229,160,.05)}
+.pc.sdly{border-color:var(--yellow);box-shadow:0 0 30px rgba(255,196,0,.1)}
+.pc.serr{border-color:var(--red);box-shadow:0 0 30px rgba(255,51,85,.12)}
+.pc-top{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;background:var(--s2);border-bottom:1px solid var(--br);position:relative}
+.pc-top::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--br2),transparent)}
+.pn{font-family:var(--fd);font-size:24px;letter-spacing:6px;color:var(--tx2)}
+.sb{font-family:var(--fm);font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border-radius:4px;font-weight:700}
+.si{color:var(--tx3);border:1px solid var(--tx3);background:transparent}
+.srun{color:var(--fire);border:1px solid var(--fire);background:rgba(255,69,0,.1);animation:sblink 1.2s ease-in-out infinite;box-shadow:0 0 12px rgba(255,69,0,.12)}
+.sdone{color:var(--green);border:1px solid var(--green);background:rgba(0,229,160,.1);box-shadow:0 0 12px rgba(0,229,160,.1)}
+.sdly2{color:var(--yellow);border:1px solid var(--yellow);background:rgba(255,196,0,.1)}
+.serr2{color:var(--red);border:1px solid var(--red);background:rgba(255,51,85,.1)}
+.spau{color:var(--blue);border:1px solid var(--blue);background:rgba(0,170,255,.1)}
+@keyframes sblink{0%,100%{opacity:1}50%{opacity:.3}}
+.pc-job-zone{padding:16px 20px;border-bottom:1px solid var(--br);min-height:95px}
+.pc-no-job{font-family:var(--fm);font-size:10px;color:var(--tx3);letter-spacing:1px;padding:8px 0}
+.pc-active-job{background:rgba(255,69,0,.04);border:1px solid rgba(255,69,0,.15);border-radius:var(--r);padding:14px;animation:jobPop .3s var(--ease-out)}
+@keyframes jobPop{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
+.paj-ref{font-family:var(--fd);font-size:24px;letter-spacing:3px;color:var(--tx);margin-bottom:6px}
+.paj-info{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:6px}
+.paj-cut{font-family:var(--fm);font-size:11px;color:var(--fire);letter-spacing:1px;font-weight:600}
+.pc-timer{padding:4px 20px 12px}
+.tf{font-family:var(--fd);font-size:80px;line-height:1;text-align:center;padding:14px 0 8px;letter-spacing:6px;color:var(--tx);transition:color .3s var(--ease),text-shadow .3s}
+.tf.frun{color:var(--fire);text-shadow:0 0 40px rgba(255,69,0,.3)}
+.tf.fdone{color:var(--green);text-shadow:0 0 40px rgba(0,229,160,.25)}
+.tf.fwarn{color:var(--yellow);animation:tw .4s ease-in-out infinite;text-shadow:0 0 30px rgba(255,196,0,.35)}
+.tf.fpau{color:var(--blue);text-shadow:0 0 20px rgba(0,170,255,.2)}
+.tf.ferr{color:var(--red);text-shadow:0 0 30px rgba(255,51,85,.25)}
+@keyframes tw{0%,100%{opacity:1}50%{opacity:.1}}
+@media(max-width:400px){.tf{font-size:60px;letter-spacing:3px}}
+.ptrk{width:100%;height:6px;background:var(--br);border-radius:3px;margin:0 0 16px;overflow:hidden}
+.pfill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--fire),var(--fire2));transition:width 1s linear,background .3s}
+.pfill.dn{background:linear-gradient(90deg,var(--green),#00c895)}
+.pc-btns{padding:0 20px 20px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.pc-result-btns{padding:0 20px 20px;display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:10px}
+@media(max-width:600px){.pc-result-btns{grid-template-columns:1fr 1fr 1fr}}
+.cycle-progress{margin-top:12px}
+.cp-bar-wrap{width:100%;height:6px;background:var(--br);border-radius:3px;overflow:hidden;margin-bottom:6px}
+.cp-bar{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--green),#00c895);transition:width .4s var(--ease)}
+.cp-label{font-family:var(--fm);font-size:10px;color:var(--green);letter-spacing:1px;text-align:right;font-weight:600}
+.dpm{background:var(--s2);border:1px solid var(--br);border-radius:var(--r2);padding:16px;margin-bottom:12px;transition:border-color .2s}
+.dpm:hover{border-color:var(--br2)}
+.dpmt{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.dpmn{font-family:var(--fm);font-size:10px;letter-spacing:3px;color:var(--tx2);text-transform:uppercase;font-weight:700}
+.dptm{font-family:var(--fd);font-size:34px;color:var(--tx);letter-spacing:2px}
+.dpsb{font-family:var(--fm);font-size:10px;color:var(--tx3)}
+.barr{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.barl{font-family:var(--fm);font-size:10px;width:70px;flex-shrink:0;font-weight:700;letter-spacing:1px}
+.bart{flex:1;height:6px;background:var(--br);border-radius:3px;overflow:hidden}
+.barf{height:100%;border-radius:3px;transition:width .8s var(--ease)}
+.barv{font-family:var(--fm);font-size:10px;width:30px;text-align:right;color:var(--tx2);font-weight:600}
+.cr{display:grid;grid-template-columns:1fr 1fr 1fr 1.5fr;gap:14px;align-items:end}
+@media(max-width:700px){.cr{grid-template-columns:1fr 1fr}}
+@media(max-width:400px){.cr{grid-template-columns:1fr}}
+.crb{background:var(--s2);border:1px solid var(--fire);border-radius:var(--r);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 0 20px rgba(255,69,0,.06)}
+.crv{font-family:var(--fd);font-size:32px;color:var(--fire);letter-spacing:2px}
+.crtm{font-family:var(--fd);font-size:22px;color:var(--fire2);letter-spacing:2px}
+.crl{font-family:var(--fm);font-size:9px;color:var(--tx2);letter-spacing:1px;text-transform:uppercase;margin-bottom:2px;font-weight:600}
+.jr{background:linear-gradient(145deg,var(--s1),var(--s2));border:1px solid var(--br);border-radius:var(--r2);padding:16px 18px;margin-bottom:10px;display:grid;grid-template-columns:28px 1fr auto auto;gap:14px;align-items:center;transition:border-color .2s var(--ease),transform .2s,box-shadow .2s}
+.jr:hover{border-color:var(--br2);transform:translateX(2px)}
+.jr.jinp{border-color:rgba(255,69,0,.35);background:rgba(255,69,0,.03);box-shadow:0 0 20px rgba(255,69,0,.05)}
+.jr.jd{opacity:.3;filter:saturate(.3)}
+.jr.jdly{border-color:rgba(255,196,0,.25);background:rgba(255,196,0,.02)}
+.jnum{font-family:var(--fd);font-size:22px;color:var(--tx3);text-align:center}
+.jtit{font-family:var(--fm);font-size:12px;font-weight:700;color:var(--tx)}
+.jsub{font-family:var(--fm);font-size:10px;color:var(--tx2);margin-top:4px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.jq{font-family:var(--fd);font-size:22px;color:var(--tx2);text-align:right}
+.jql{font-family:var(--fm);font-size:9px;color:var(--tx3);text-transform:uppercase;letter-spacing:1px;text-align:right}
+.jac{display:flex;flex-direction:column;gap:5px}
+@media(max-width:500px){.jr{grid-template-columns:22px 1fr auto}.jq,.jql{display:none}}
+.ss{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:20px}
+@media(max-width:500px){.ss{grid-template-columns:1fr 1fr}}
+.sc2{background:linear-gradient(145deg,var(--s1),var(--s2));border:1px solid var(--br);border-radius:var(--r2);padding:18px;text-align:center;transition:border-color .2s}
+.sc2:hover{border-color:var(--br2)}
+.scv{font-family:var(--fd);font-size:44px}
+.scl{font-family:var(--fm);font-size:9px;color:var(--tx2);letter-spacing:2px;text-transform:uppercase;margin-top:4px;font-weight:600}
+.ig{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:12px;margin-bottom:20px}
+.ic{background:linear-gradient(145deg,var(--s1),var(--s2));border:1px solid var(--br);border-radius:var(--r2);padding:16px;position:relative;overflow:hidden;transition:border-color .2s,transform .2s}
+.ic:hover{border-color:var(--br2);transform:translateY(-2px)}
+.ic::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;border-radius:0 0 var(--r2) var(--r2)}
+.iv::after{background:linear-gradient(90deg,var(--vc),rgba(255,69,0,.3))}
+.ib::after{background:linear-gradient(90deg,var(--bc),rgba(0,170,255,.3))}
+.iep::after{background:linear-gradient(90deg,var(--ec),rgba(0,229,160,.3))}
+.im{font-family:var(--fm);font-size:9px;letter-spacing:2px;color:var(--tx2);text-transform:uppercase;margin-bottom:4px;font-weight:700}
+.isz{font-family:var(--fd);font-size:20px;letter-spacing:3px;color:var(--tx);margin-bottom:10px}
+.ii{width:100%;background:var(--s2);border:1px solid var(--br);color:var(--tx);font-family:var(--fd);font-size:28px;padding:6px 10px;border-radius:var(--r);outline:none;text-align:center;letter-spacing:3px;-webkit-appearance:none;transition:border-color .2s;min-height:44px}
+.ii:focus{border-color:var(--fire);box-shadow:0 0 0 3px rgba(255,69,0,.08)}
+.iu{font-family:var(--fm);font-size:8px;color:var(--tx3);text-align:center;margin-top:4px;letter-spacing:2px;text-transform:uppercase;font-weight:600}
+.il{border-color:rgba(255,51,85,.3)}
+.il::before{content:'LOW';position:absolute;top:8px;right:10px;font-family:var(--fm);font-size:7px;color:var(--red);letter-spacing:1px;font-weight:700;animation:lowPulse 1.5s ease-in-out infinite}
+@keyframes lowPulse{0%,100%{opacity:1}50%{opacity:.3}}
+.prow{display:grid;grid-template-columns:1fr auto auto auto auto;gap:16px;align-items:center;padding:14px 18px;border-bottom:1px solid var(--br);transition:background .15s}
+.prow:last-child{border-bottom:none}
+.prow:hover{background:rgba(255,255,255,.012)}
+.pnm{font-family:var(--fm);font-size:12px;font-weight:700;color:var(--tx)}
+.pds{font-family:var(--fm);font-size:10px;color:var(--tx3);margin-top:3px}
+.pv{font-family:var(--fm);font-size:11px}
+.he{background:linear-gradient(145deg,var(--s1),var(--s2));border:1px solid var(--br);border-left:3px solid var(--fire);border-radius:var(--r2);padding:16px;margin-bottom:12px;transition:border-color .2s}
+.he:hover{border-color:var(--br2)}
+.hm{font-family:var(--fm);font-size:9px;color:var(--tx2);letter-spacing:1px;margin-bottom:10px;font-weight:600}
+.hb{font-family:var(--fm);font-size:11px;color:var(--tx);line-height:1.9;white-space:pre-wrap}
+.ref-toggle{display:flex;gap:8px;margin-bottom:12px}
+.rtb{font-family:var(--fm);font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:7px 14px;border-radius:var(--r);border:1px solid var(--br);background:transparent;color:var(--tx2);cursor:pointer;transition:all .2s var(--ease);-webkit-appearance:none;font-weight:600;min-height:44px}
+.rtb.on{border-color:var(--fire);color:var(--fire);background:rgba(255,69,0,.08);box-shadow:0 0 12px rgba(255,69,0,.08)}
+.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:500;align-items:center;justify-content:center;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:20px}
+.ov.open{display:flex}
+.modal{background:linear-gradient(160deg,var(--s1),var(--s2));border:1px solid var(--br2);border-radius:var(--r2);padding:30px;width:100%;max-width:500px;position:relative;max-height:90vh;overflow-y:auto;box-shadow:0 24px 80px rgba(0,0,0,.6);animation:modalIn .25s var(--ease-out)}
+@keyframes modalIn{from{opacity:0;transform:scale(.95) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.mtit{font-family:var(--fd);font-size:26px;letter-spacing:5px;color:var(--tx);margin-bottom:22px}
+.mx{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--tx3);font-family:var(--fm);font-size:16px;cursor:pointer;padding:4px 8px;transition:color .15s;border-radius:4px;min-height:44px;min-width:44px;display:flex;align-items:center;justify-content:center}
+.mx:hover{color:var(--tx);background:rgba(255,255,255,.04)}
+.confirm-body{font-family:var(--fb);font-size:14px;color:var(--tx2);line-height:1.7;margin-bottom:22px}
+.confirm-btns{display:flex;gap:12px}
+.nst{position:fixed;top:72px;right:18px;z-index:600;display:flex;flex-direction:column;gap:8px;pointer-events:none}
+.ntf{background:linear-gradient(135deg,var(--s1),var(--s2));border:1px solid var(--br);border-radius:var(--r);padding:12px 16px;font-family:var(--fm);font-size:11px;color:var(--tx);min-width:260px;max-width:320px;display:flex;align-items:center;gap:10px;animation:ni .3s var(--ease-out);pointer-events:all;box-shadow:0 4px 24px rgba(0,0,0,.4);font-weight:500}
+.ntf.nok{border-color:var(--green);box-shadow:0 4px 24px rgba(0,0,0,.4),0 0 20px rgba(0,229,160,.08)}
+.ntf.nwn{border-color:var(--yellow);box-shadow:0 4px 24px rgba(0,0,0,.4),0 0 20px rgba(255,196,0,.06)}
+.ntf.ner{border-color:var(--red);box-shadow:0 4px 24px rgba(0,0,0,.4),0 0 20px rgba(255,51,85,.06)}
+.ntf.nif{border-color:var(--fire);box-shadow:0 4px 24px rgba(0,0,0,.4),0 0 20px rgba(255,69,0,.08)}
+@keyframes ni{from{transform:translateX(110%) scale(.9);opacity:0}to{transform:translateX(0) scale(1);opacity:1}}
+.nd{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.ntf.nok .nd{background:var(--green);box-shadow:0 0 6px var(--green)}
+.ntf.nwn .nd{background:var(--yellow);box-shadow:0 0 6px var(--yellow)}
+.ntf.ner .nd{background:var(--red);box-shadow:0 0 6px var(--red)}
+.ntf.nif .nd{background:var(--fire);box-shadow:0 0 6px var(--fire)}
+.delay-info{font-family:var(--fm);font-size:11px;color:var(--tx2);margin-bottom:16px;line-height:1.6}
+/* OEE Gauge */
+.oee-ring{width:140px;height:140px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-direction:column;margin:0 auto 12px;position:relative}
+.oee-ring::before{content:'';position:absolute;inset:0;border-radius:50%;border:6px solid var(--br)}
+.oee-val{font-family:var(--fd);font-size:48px;letter-spacing:2px;line-height:1}
+.oee-lbl{font-family:var(--fm);font-size:9px;color:var(--tx2);letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-top:2px}
+/* Audit Log */
+.audit-row{font-family:var(--fm);font-size:10px;padding:8px 14px;border-bottom:1px solid rgba(30,30,46,.4);display:grid;grid-template-columns:140px 70px 1fr;gap:12px;align-items:center;transition:background .12s}
+.audit-row:hover{background:rgba(255,255,255,.012)}
+.audit-ts{color:var(--tx3)}
+.audit-type{font-weight:700;text-transform:uppercase;letter-spacing:1px}
+.audit-msg{color:var(--tx2)}
+/* Version bar */
+/* PDF PRINT */
+@media print{
+  *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+  body{background:#fff !important;color:#111 !important;margin:0;padding:0}
+  body::after,body::before{display:none !important}
+  #hdr,#nav,.nst{display:none !important}
+  .pg{display:none !important;padding:0 !important}
+  #pdf-page{display:block !important}
+  #pdf-page{position:fixed;inset:0;z-index:10000;background:#fff;padding:0;font-family:Arial,Helvetica,sans-serif}
+  .pdf-wrap{width:100%;min-height:100vh;background:#fff;padding:40px 48px;box-sizing:border-box}
+  .pdf-header{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid #ff4500;padding-bottom:20px;margin-bottom:28px}
+  .pdf-logo{font-family:'Bebas Neue',Impact,Arial,sans-serif;font-size:42px;letter-spacing:6px;color:#ff4500;line-height:1}
+  .pdf-sub{font-family:Arial,sans-serif;font-size:10px;letter-spacing:3px;color:#999;text-transform:uppercase;margin-top:4px}
+  .pdf-meta{text-align:right;font-family:Arial,sans-serif;font-size:11px;color:#555;line-height:1.8}
+  .pdf-meta strong{color:#111}
+  .pdf-section-title{font-family:Arial,sans-serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#ff4500;font-weight:700;margin:24px 0 12px;border-bottom:1px solid #eee;padding-bottom:6px}
+  .pdf-kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+  .pdf-kpi{background:#f7f7f7;border-radius:6px;padding:14px 16px;border-left:3px solid #ff4500}
+  .pdf-kpi-val{font-family:'Bebas Neue',Impact,Arial,sans-serif;font-size:36px;color:#111;line-height:1}
+  .pdf-kpi-lbl{font-family:Arial,sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#888;margin-top:3px}
+  .pdf-mat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:24px}
+  .pdf-mat{background:#f7f7f7;border-radius:6px;padding:12px 14px;text-align:center}
+  .pdf-mat-val{font-family:'Bebas Neue',Impact,Arial,sans-serif;font-size:28px}
+  .pdf-mat-lbl{font-family:Arial,sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#888;margin-top:2px}
+  .pdf-mat.viton .pdf-mat-val{color:#ff4500}
+  .pdf-mat.buna .pdf-mat-val{color:#00aaff}
+  .pdf-mat.epdm .pdf-mat-val{color:#00c880}
+  .pdf-table{width:100%;border-collapse:collapse;font-size:11px}
+  .pdf-table th{background:#111;color:#fff;font-family:Arial,sans-serif;font-size:8px;letter-spacing:2px;text-transform:uppercase;padding:8px 10px;text-align:left}
+  .pdf-table td{padding:8px 10px;border-bottom:1px solid #eee;font-family:Arial,sans-serif;font-size:10px;color:#333}
+  .pdf-table tr:nth-child(even) td{background:#fafafa}
+  .pdf-table .pass{color:#00a870;font-weight:700}
+  .pdf-table .fail{color:#e0002a;font-weight:700}
+  .pdf-table .delay{color:#cc8800;font-weight:700}
+  .pdf-red{color:#e0002a}.pdf-green{color:#00a870}.pdf-orange{color:#ff4500}
+  .pdf-notes{background:#f7f7f7;border-radius:6px;padding:14px 16px;font-family:Arial,sans-serif;font-size:11px;color:#444;line-height:1.7;white-space:pre-wrap;min-height:60px}
+  .pdf-footer{margin-top:32px;padding-top:16px;border-top:1px solid #eee;display:flex;justify-content:space-between;align-items:center}
+  .pdf-footer-txt{font-family:Arial,sans-serif;font-size:9px;color:#bbb;letter-spacing:1px;text-transform:uppercase}
+}
+#pdf-page{display:none}
+</style>
+</head>
+<body>
+<div class="nst" id="NS"></div>
+
+<header id="hdr">
+  <div style="display:flex;align-items:baseline">
+    <span class="logo-name">VULCANEX</span>
+    <span class="logo-tag">Production Intelligence</span>
+  </div>
+  <div class="hdr-r">
+    <div class="spill"><div class="pdot"></div> ONLINE</div>
+    <div class="clk" id="CLK">00:00:00</div>
+  </div>
+</header>
+
+<nav id="nav">
+  <button class="tab on" onclick="nav(this,'pg-dash')">Dashboard</button>
+  <button class="tab" onclick="nav(this,'pg-press')">Presses</button>
+  <button class="tab" onclick="nav(this,'pg-jobs')">Jobs</button>
+  <button class="tab" onclick="nav(this,'pg-scrap')">Scrap / Redo</button>
+  <button class="tab" onclick="nav(this,'pg-calc')">Calculator</button>
+  <button class="tab" onclick="nav(this,'pg-inv')">Inventory</button>
+  <button class="tab" onclick="nav(this,'pg-parts')">Parts</button>
+  <button class="tab" onclick="nav(this,'pg-audit')">Audit Log</button>
+  <button class="tab" onclick="nav(this,'pg-hoff')">Handoff</button>
+</nav>
+
+<!-- ═══ DASHBOARD ═══ -->
+<div class="pg on" id="pg-dash">
+  <div class="g4 gap">
+    <div class="card cg"><div class="lbl">O-Rings Out</div><div class="bnum" id="d-out" style="color:var(--green)">0</div><div class="unit">pieces completed</div></div>
+    <div class="card cg"><div class="lbl">Press Cycles</div><div class="bnum" id="d-cyc" style="color:var(--fire)">0</div><div class="unit">total cycles</div></div>
+    <div class="card cg"><div class="lbl">Jobs Done</div><div class="bnum"><span id="d-jobs">0</span><span style="font-size:28px;color:var(--tx3)">/<span id="d-tot">0</span></span></div><div class="unit">completed</div></div>
+    <div class="card cg"><div class="lbl">Scrap Rate</div><div class="bnum" id="d-scr" style="color:var(--red)">0%</div><div class="unit">pieces discarded</div></div>
+  </div>
+
+  <!-- OEE Section -->
+  <div class="sh">OEE Metrics</div>
+  <div class="g5 gap">
+    <div class="card" style="text-align:center">
+      <div class="oee-ring"><div class="oee-val" id="oee-total" style="color:var(--fire)">0%</div><div class="oee-lbl">OEE</div></div>
+    </div>
+    <div class="card"><div class="lbl">Availability</div><div class="bnum" id="oee-a" style="font-size:40px;color:var(--green)">0%</div><div class="unit">runtime / planned</div></div>
+    <div class="card"><div class="lbl">Performance</div><div class="bnum" id="oee-p" style="font-size:40px;color:var(--blue)">0%</div><div class="unit">ideal / actual</div></div>
+    <div class="card"><div class="lbl">Quality</div><div class="bnum" id="oee-q" style="font-size:40px;color:var(--yellow)">0%</div><div class="unit">good / total</div></div>
+    <div class="card"><div class="lbl">Shift Projection</div><div class="bnum" id="oee-proj" style="font-size:40px;color:var(--tx2)">—</div><div class="unit">estimated output</div></div>
+  </div>
+
+  <!-- Cycle Stats -->
+  <div class="sh">Cycle Statistics</div>
+  <div class="g4 gap">
+    <div class="card"><div class="lbl">Avg Cycle Time</div><div class="bnum" id="cs-avg" style="font-size:36px;color:var(--tx)">—</div><div class="unit">seconds</div></div>
+    <div class="card"><div class="lbl">Std Deviation</div><div class="bnum" id="cs-std" style="font-size:36px;color:var(--tx2)">—</div><div class="unit">σ seconds</div></div>
+    <div class="card"><div class="lbl">Fastest</div><div class="bnum" id="cs-fast" style="font-size:36px;color:var(--green)">—</div><div class="unit">seconds</div></div>
+    <div class="card"><div class="lbl">Slowest</div><div class="bnum" id="cs-slow" style="font-size:36px;color:var(--red)">—</div><div class="unit">seconds</div></div>
+  </div>
+
+  <div class="sh">Press Status</div>
+  <div class="g2 gap">
+    <div class="dpm"><div class="dpmt"><span class="dpmn">Press 1</span><span class="sb si" id="dp1st">IDLE</span></div><div class="dptm" id="dp1t">--:--</div><div class="dpsb" id="dp1j">No active job</div></div>
+    <div class="dpm"><div class="dpmt"><span class="dpmn">Press 2</span><span class="sb si" id="dp2st">IDLE</span></div><div class="dptm" id="dp2t">--:--</div><div class="dpsb" id="dp2j">No active job</div></div>
+  </div>
+
+  <div class="sh">Material Output</div>
+  <div class="card gap">
+    <div class="barr"><div class="barl" style="color:var(--vc)">Viton</div><div class="bart"><div class="barf" id="bfv" style="width:0%;background:var(--vc)"></div></div><div class="barv" id="bvv">0</div></div>
+    <div class="barr"><div class="barl" style="color:var(--bc)">Buna</div><div class="bart"><div class="barf" id="bfb" style="width:0%;background:var(--bc)"></div></div><div class="barv" id="bvb">0</div></div>
+    <div class="barr"><div class="barl" style="color:var(--ec)">EPDM</div><div class="bart"><div class="barf" id="bfe" style="width:0%;background:var(--ec)"></div></div><div class="barv" id="bve">0</div></div>
+  </div>
+
+  <div class="sh">Activity Feed</div>
+  <div class="card" style="font-family:var(--fm);font-size:11px;line-height:2;max-height:260px;overflow-y:auto" id="d-act">
+    <span style="color:var(--tx3)">No activity yet.</span>
+  </div>
+
+  <div style="display:flex;gap:12px;margin-top:20px;flex-wrap:wrap">
+    <button class="btn bf" onclick="exportPDF()">&#9660; Export PDF</button>
+    <button class="btn bg" onclick="exportBackupJSON()">&#9660; Backup JSON</button>
+    <button class="btn brd" onclick="openM('CLR')">Clear All Data</button>
+  </div>
+</div>
+
+<!-- ═══ PRESSES ═══ -->
+<div class="pg" id="pg-press">
+  <div class="pw">
+    <!-- PRESS 1 -->
+    <div class="pc" id="PC1">
+      <div class="pc-top"><span class="pn">PRESS 1</span><span class="sb si" id="PS1">IDLE</span></div>
+      <div class="pc-job-zone">
+        <div id="PNJ1" class="pc-no-job">No job loaded. Select from queue below.</div>
+        <div id="PJSEL1" style="display:block"><select class="sel" id="PJDD1" onchange="loadJobToPress(1)" style="margin-bottom:8px"><option value="">-- select pending job --</option></select></div>
+        <div id="PAJ1" class="pc-active-job" style="display:none">
+          <div class="paj-ref" id="PAJ1REF"></div>
+          <div class="paj-info" id="PAJ1INFO"></div>
+          <div class="paj-cut" id="PAJ1CUT"></div>
+          <div class="cycle-progress" id="CP1" style="display:none"><div class="cp-bar-wrap"><div class="cp-bar" id="CPB1" style="width:0%"></div></div><div class="cp-label" id="CPL1"></div></div>
+        </div>
+      </div>
+      <div class="pc-timer"><div class="tf" id="TF1">0:00</div><div class="ptrk"><div class="pfill" id="PB1" style="width:0%"></div></div></div>
+      <div class="pc-btns" id="PCBTNS1">
+        <button class="btn bf" id="B1S" onclick="startPress(1)" disabled>&#9654; Start</button>
+        <button class="btn byel" id="B1P" onclick="pausePress(1)" disabled>&#10074;&#10074; Pause</button>
+        <button class="btn brd" id="B1R" onclick="resetPress(1)" disabled>&#8634; Reset</button>
+      </div>
+      <div class="pc-result-btns" id="PCRBTNS1" style="display:none">
+        <button class="btn bgr" id="B1NX" onclick="nextCycle(1)">&#9654; Next</button>
+        <button class="btn byel" onclick="redoCycle(1)">&#8634; Redo</button>
+        <button class="btn brd" onclick="scrapPiece(1)">&#10005; Scrap</button>
+        <button class="btn bf" onclick="closeJob(1)">&#10003; Close Job</button>
+        <button class="btn brd" onclick="openDelayModal(1)">&#9888; Delay</button>
+      </div>
+      <div style="padding:0 20px 16px;display:flex;gap:10px">
+        <button class="btn bg" style="flex:1" id="B1U" onclick="unloadPress(1)" disabled>Unload Job</button>
+        <button class="btn bgr" style="flex:1" id="B1CJ" onclick="completeJobEarly(1)" style="display:none">&#10003; Complete Job</button>
+      </div>
+    </div>
+    <!-- PRESS 2 -->
+    <div class="pc" id="PC2">
+      <div class="pc-top"><span class="pn">PRESS 2</span><span class="sb si" id="PS2">IDLE</span></div>
+      <div class="pc-job-zone">
+        <div id="PNJ2" class="pc-no-job">No job loaded. Select from queue below.</div>
+        <div id="PJSEL2" style="display:block"><select class="sel" id="PJDD2" onchange="loadJobToPress(2)" style="margin-bottom:8px"><option value="">-- select pending job --</option></select></div>
+        <div id="PAJ2" class="pc-active-job" style="display:none">
+          <div class="paj-ref" id="PAJ2REF"></div>
+          <div class="paj-info" id="PAJ2INFO"></div>
+          <div class="paj-cut" id="PAJ2CUT"></div>
+          <div class="cycle-progress" id="CP2" style="display:none"><div class="cp-bar-wrap"><div class="cp-bar" id="CPB2" style="width:0%"></div></div><div class="cp-label" id="CPL2"></div></div>
+        </div>
+      </div>
+      <div class="pc-timer"><div class="tf" id="TF2">0:00</div><div class="ptrk"><div class="pfill" id="PB2" style="width:0%"></div></div></div>
+      <div class="pc-btns" id="PCBTNS2">
+        <button class="btn bf" id="B2S" onclick="startPress(2)" disabled>&#9654; Start</button>
+        <button class="btn byel" id="B2P" onclick="pausePress(2)" disabled>&#10074;&#10074; Pause</button>
+        <button class="btn brd" id="B2R" onclick="resetPress(2)" disabled>&#8634; Reset</button>
+      </div>
+      <div class="pc-result-btns" id="PCRBTNS2" style="display:none">
+        <button class="btn bgr" id="B2NX" onclick="nextCycle(2)">&#9654; Next</button>
+        <button class="btn byel" onclick="redoCycle(2)">&#8634; Redo</button>
+        <button class="btn brd" onclick="scrapPiece(2)">&#10005; Scrap</button>
+        <button class="btn bf" onclick="closeJob(2)">&#10003; Close Job</button>
+        <button class="btn brd" onclick="openDelayModal(2)">&#9888; Delay</button>
+      </div>
+      <div style="padding:0 20px 16px;display:flex;gap:10px">
+        <button class="btn bg" style="flex:1" id="B2U" onclick="unloadPress(2)" disabled>Unload Job</button>
+        <button class="btn bgr" style="flex:1" id="B2CJ" onclick="completeJobEarly(2)" style="display:none">&#10003; Complete Job</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sh">Press Log</div>
+  <div class="card" style="overflow-x:auto">
+    <table class="tbl"><thead><tr><th>Time</th><th>Press</th><th>Ref</th><th>Material</th><th>Size</th><th>Temp</th><th>Duration</th><th>Result</th></tr></thead><tbody id="PL"></tbody></table>
+  </div>
+  <div style="margin-top:12px;display:flex;gap:8px">
+    <button class="btn bg" onclick="confirmClearCat('pLog','press log')">Clear Log</button>
+  </div>
+</div>
+
+<!-- ═══ JOBS ═══ -->
+<div class="pg" id="pg-jobs">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:12px">
+    <div class="sh" style="margin-bottom:0">Job Queue</div>
+    <div style="display:flex;gap:8px"><button class="btn bf" onclick="openM('JM')">+ New Job</button><button class="btn bg" onclick="confirmClearCat('jobs','job queue')">Clear Done</button></div>
+  </div>
+  <div id="JQ"></div>
+</div>
+
+<!-- ═══ SCRAP ═══ -->
+<div class="pg" id="pg-scrap">
+  <div class="ss">
+    <div class="sc2"><div class="scv" id="SC-T" style="color:var(--red)">0</div><div class="scl">Scrapped (Discarded)</div></div>
+    <div class="sc2"><div class="scv" id="SC-RD" style="color:var(--yellow)">0</div><div class="scl">Redos (Re-cured)</div></div>
+    <div class="sc2"><div class="scv" id="SC-R" style="color:var(--fire)">0%</div><div class="scl">Scrap Rate</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:12px">
+    <div class="sh" style="margin-bottom:0">Scrap Log (Discarded Pieces)</div>
+    <div style="display:flex;gap:8px"><button class="btn bf" onclick="openM('SM')">+ Log Scrap</button><button class="btn bg" onclick="confirmClearCat('scrap','scrap log')">Clear</button></div>
+  </div>
+  <div class="card" style="overflow-x:auto;margin-bottom:24px">
+    <table class="tbl"><thead><tr><th>Date/Time</th><th>Press</th><th>Material</th><th>Size</th><th>Reference</th><th>Reason</th></tr></thead><tbody id="SL"></tbody></table>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:12px">
+    <div class="sh" style="margin-bottom:0">Redo Log (Re-cured Pieces)</div>
+    <button class="btn bg" onclick="confirmClearCat('redos','redo log')">Clear</button>
+  </div>
+  <div class="card" style="overflow-x:auto">
+    <table class="tbl"><thead><tr><th>Date/Time</th><th>Press</th><th>Material</th><th>Size</th><th>Reference</th><th>Reason</th></tr></thead><tbody id="RL"></tbody></table>
+  </div>
+</div>
+
+<!-- ═══ CALCULATOR ═══ -->
+<div class="pg" id="pg-calc">
+  <div class="sh">Cut Length Calculator</div>
+  <div class="card gap">
+    <div class="cr">
+      <div class="fg"><label class="fl">Mean Dia (in)</label><input class="inp" id="CMD" type="number" step="0.001" placeholder="0.000" oninput="calcLen()"></div>
+      <div class="fg"><label class="fl">Cross-Section</label><select class="sel" id="CSZ" onchange="calcLen()"><option value="4">4mm</option><option value="5">5mm</option><option value="6">6mm</option></select></div>
+      <div class="fg"><label class="fl">Material</label><select class="sel" id="CMT" onchange="calcLen()"><option>Viton</option><option>Buna</option><option>EPDM</option></select></div>
+      <div><div class="crl">Cut Length</div><div class="crb"><span class="crv" id="CRV">-- in</span></div><div style="margin-top:6px"><div class="crl">Press Time</div><div class="crb"><span class="crtm" id="CPT">--s</span></div></div></div>
+    </div>
+    <button class="btn bgr bfull" onclick="saveCalc()">Save Calculation</button>
+  </div>
+  <div class="sh">History</div>
+  <div class="card" style="overflow-x:auto">
+    <table class="tbl"><thead><tr><th>Time</th><th>MD</th><th>Size</th><th>Material</th><th>Cut Length</th><th>Press Time</th></tr></thead><tbody id="CH"></tbody></table>
+  </div>
+  <div style="margin-top:12px"><button class="btn bg" onclick="confirmClearCat('calc','calculation history')">Clear History</button></div>
+</div>
+
+<!-- ═══ INVENTORY ═══ -->
+<div class="pg" id="pg-inv">
+  <div class="sh">Raw Material Inventory</div>
+  <div id="INV-V"></div><div id="INV-B"></div><div id="INV-E"></div>
+  <button class="btn bgr" style="margin-top:12px" onclick="saveInv()">Save Inventory</button>
+</div>
+
+<!-- ═══ PARTS ═══ -->
+<div class="pg" id="pg-parts">
+  <div class="sh">Part Number Reference</div>
+  <div class="card" style="overflow-x:auto" id="PTBL"></div>
+</div>
+
+<!-- ═══ AUDIT LOG ═══ -->
+<div class="pg" id="pg-audit">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:12px">
+    <div class="sh" style="margin-bottom:0">Event Ledger</div>
+    <div style="display:flex;gap:8px">
+      <button class="btn bg" onclick="exportAuditJSON()">&#9660; JSON</button>
+      <button class="btn bg" onclick="exportAuditCSV()">&#9660; CSV</button>
+    </div>
+  </div>
+  <div class="card" style="font-family:var(--fm);font-size:10px;color:var(--tx3);margin-bottom:8px;padding:12px 16px">
+    Immutable event ledger — <span id="audit-count">0</span> events recorded. Events cannot be deleted.
+  </div>
+  <div class="card" style="max-height:600px;overflow-y:auto;padding:0" id="AUDIT-LOG">
+    <div style="text-align:center;color:var(--tx3);padding:32px;font-family:var(--fm);font-size:11px">No events recorded yet.</div>
+  </div>
+</div>
+
+<!-- ═══ HANDOFF ═══ -->
+<div class="pg" id="pg-hoff">
+  <div class="sh">Shift Handoff Report</div>
+  <div class="card gap">
+    <div class="lbl">Auto-Generated Summary</div>
+    <pre style="font-family:var(--fm);font-size:11px;color:var(--tx);line-height:1.9;white-space:pre-wrap;background:var(--s2);border:1px solid var(--br);border-radius:var(--r);padding:16px;max-height:360px;overflow-y:auto" id="HA"></pre>
+    <div class="ff"><label class="fl">Technician Notes</label><textarea class="ta" id="HN" placeholder="Add notes for the incoming shift..."></textarea></div>
+    <div style="display:flex;gap:12px">
+      <button class="btn bf" onclick="submitHandoff()">Submit Handoff</button>
+      <button class="btn bg" onclick="printHandoff()">Print</button>
+    </div>
+  </div>
+  <div class="sh" style="margin-top:24px">Previous Handoffs</div>
+  <div id="HH"></div>
+  <div style="margin-top:12px"><button class="btn bg" onclick="confirmClearCat('handoffs','handoff history')">Clear History</button></div>
+</div>
+
+<!-- ═══ PDF EXPORT ═══ -->
+<div id="pdf-page"><div class="pdf-wrap" id="pdf-content"></div></div>
+
+<!-- ═══ MODALS ═══ -->
+<!-- Add Job -->
+<div class="ov" id="JM">
+  <div class="modal">
+    <button class="mx" onclick="closeM('JM')">&times;</button>
+    <div class="mtit">New Job</div>
+    <div class="ref-toggle">
+      <button class="rtb on" id="RT-vo" onclick="setRefType('vessel')">Vessel #</button>
+      <button class="rtb" id="RT-so" onclick="setRefType('sales')">Sales Order</button>
+    </div>
+    <div class="ff"><label class="fl" id="ref-lbl">Vessel Number</label><input class="inp" id="JREF" placeholder="VES-0001"></div>
+    <div class="ff"><label class="fl">Part Number (optional)</label><input class="inp" id="JPN" placeholder="Auto-generated if blank"></div>
+    <div class="fr2">
+      <div class="fg"><label class="fl">Material</label><select class="sel" id="JMT"><option>Viton</option><option>Buna</option><option>EPDM</option></select></div>
+      <div class="fg"><label class="fl">Cross-Section</label><select class="sel" id="JSZ"><option value="4">4mm</option><option value="5">5mm</option><option value="6">6mm</option></select></div>
+    </div>
+    <div class="fr2">
+      <div class="fg"><label class="fl">Mean Dia (in)</label><input class="inp" id="JMD" type="number" step="0.001" placeholder="Optional"></div>
+      <div class="fg"><label class="fl">Quantity</label><input class="inp" id="JQT" type="number" min="1" value="1"></div>
+    </div>
+    <div class="ff"><label class="fl">Priority</label><select class="sel" id="JPR"><option value="normal">Normal</option><option value="urgent">Urgent</option><option value="rush">Rush</option></select></div>
+    <button class="btn bf bfull" onclick="addJob()">Add to Queue</button>
+  </div>
+</div>
+
+<!-- Scrap Modal -->
+<div class="ov" id="SM">
+  <div class="modal">
+    <button class="mx" onclick="closeM('SM')">&times;</button>
+    <div class="mtit">Log Scrap (Discarded)</div>
+    <div class="fr2">
+      <div class="fg"><label class="fl">Press</label><select class="sel" id="SMPR"><option value="1">Press 1</option><option value="2">Press 2</option></select></div>
+      <div class="fg"><label class="fl">Material</label><select class="sel" id="SMMT"><option>Viton</option><option>Buna</option><option>EPDM</option></select></div>
+    </div>
+    <div class="fr2">
+      <div class="fg"><label class="fl">Cross-Section</label><select class="sel" id="SMSZ"><option value="4">4mm</option><option value="5">5mm</option><option value="6">6mm</option></select></div>
+      <div class="fg"><label class="fl">Reference</label><input class="inp" id="SMPN" placeholder="Job ref or part #"></div>
+    </div>
+    <div class="ff"><label class="fl">Failure Reason</label><textarea class="ta" id="SMRS" placeholder="Describe the failure..."></textarea></div>
+    <button class="btn brd bfull" onclick="logScrap()">Log Failure</button>
+  </div>
+</div>
+
+<!-- Redo Reason Modal -->
+<div class="ov" id="REDOM">
+  <div class="modal">
+    <div class="mtit">Redo Reason</div>
+    <div class="confirm-body">This piece will go back through the press. The cycle count will NOT change. Provide a reason for the redo.</div>
+    <div class="ff"><label class="fl">Redo Reason</label><textarea class="ta" id="REDORS" placeholder="Why does this piece need to be re-cured?"></textarea></div>
+    <button class="btn byel bfull" onclick="confirmRedo()">Confirm Redo</button>
+  </div>
+</div>
+
+<!-- Scrap Piece Modal (piece is thrown out) -->
+<div class="ov" id="SCRAPM">
+  <div class="modal">
+    <div class="mtit">Scrap Piece</div>
+    <div class="confirm-body">This piece will be discarded and thrown out. The cycle that just completed will be REVERTED (count goes back down by 1). A scrap entry will be logged. This cannot be undone.</div>
+    <div class="ff"><label class="fl">Scrap Reason</label><textarea class="ta" id="SCRAPRS" placeholder="Why is this piece being scrapped?"></textarea></div>
+    <button class="btn brd bfull" onclick="confirmScrapPiece()">Confirm Scrap</button>
+  </div>
+</div>
+
+<!-- Delay Modal -->
+<div class="ov" id="DLY">
+  <div class="modal">
+    <button class="mx" onclick="closeM('DLY')">&times;</button>
+    <div class="mtit">Delay Job</div>
+    <div class="delay-info">This job will return to the queue with a DELAYED status. Provide a reason.</div>
+    <div class="ff"><label class="fl">Delay Reason</label><textarea class="ta" id="DLYREASON" placeholder="Why is this job being delayed?"></textarea></div>
+    <button class="btn byel bfull" onclick="confirmDelay()">Confirm Delay</button>
+  </div>
+</div>
+
+<!-- Clear All -->
+<div class="ov" id="CLR">
+  <div class="modal">
+    <button class="mx" onclick="closeM('CLR')">&times;</button>
+    <div class="mtit">Clear All Data</div>
+    <div class="confirm-body">This will permanently delete ALL production data including jobs, scrap logs, inventory counts, handoffs, and press logs. The audit ledger will NOT be cleared. This cannot be undone.</div>
+    <div class="confirm-btns"><button class="btn brd" onclick="clearAll()">Yes, Clear Everything</button><button class="btn bg" onclick="closeM('CLR')">Cancel</button></div>
+  </div>
+</div>
+
+<!-- Category Clear -->
+<div class="ov" id="CATCLR">
+  <div class="modal">
+    <button class="mx" onclick="closeM('CATCLR')">&times;</button>
+    <div class="mtit" id="CATCLR-TITLE">Clear Data</div>
+    <div class="confirm-body" id="CATCLR-BODY"></div>
+    <div class="confirm-btns"><button class="btn brd" onclick="doClearCat()">Yes, Clear</button><button class="btn bg" onclick="closeM('CATCLR')">Cancel</button></div>
+  </div>
+</div>
+
+<script>
+(function(){
+'use strict';
+
+/* ╔══════════════════════════════════════════════════════════════╗
+   ║  VULCANEX — Micro-MES Production Intelligence               ║
+   ║  Fil-Trek Manufacturing · Cambridge, ON                     ║
+   ║  Architecture: Centralized State + FSM + Audit Ledger       ║
+   ╚══════════════════════════════════════════════════════════════╝ */
+
+var VERSION = '3.0.0';
+var BUILD_TS = new Date().toISOString();
+var SCHEMA_VERSION = 5;
+var STORAGE_KEY = 'vx_mes_v' + SCHEMA_VERSION;
+var BACKUP_INTERVAL = 4 * 60 * 60 * 1000; // 4 hours
+
+/* ── CONSTANTS ── */
+var CURE_TIMES = { Viton: {4:240,5:300,6:360}, Buna: {4:240,5:300,6:360}, EPDM: {4:180,5:240,6:300} };
+var CURE_TEMPS = { Viton: {4:310,5:310,6:310}, Buna: {4:385,5:385,6:385}, EPDM: {4:385,5:385,6:385} };
+var PART_PREFIXES = { Buna:'009001', EPDM:'009002', Viton:'009003' };
+var SHIFT_START_H = 7.5;  // 07:30
+var SHIFT_END_H = 16.5;   // 16:30
+var SHIFT_DURATION_S = (SHIFT_END_H - SHIFT_START_H) * 3600;
+var LOW_STOCK_THRESHOLD = 5;
+
+/* ── PRESS STATES (FSM) ── */
+var PS = Object.freeze({ IDLE:'idle', RUNNING:'running', PAUSED:'paused', COMPLETE:'complete', ERROR:'error' });
+var VALID_TRANSITIONS = Object.freeze({
+  idle:     ['running'],
+  running:  ['paused', 'complete', 'error'],
+  paused:   ['running', 'idle', 'error'],
+  complete: ['idle'],
+  error:    ['idle']
+});
+
+/* ╔══════════════════════════════════════════════════════════════╗
+   ║  UUID GENERATOR                                             ║
+   ╚══════════════════════════════════════════════════════════════╝ */
+function uuid(){
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c){
+    var r = Math.random()*16|0;
+    return (c==='x' ? r : (r&0x3|0x8)).toString(16);
+  });
+}
+
+/* ╔══════════════════════════════════════════════════════════════╗
+   ║  AUDIO ENGINE (Web Audio API for kiosk signals)             ║
+   ╚══════════════════════════════════════════════════════════════╝ */
+var audioCtx = null;
+function getAudioCtx(){ if(!audioCtx) try{ audioCtx = new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} return audioCtx; }
+function beep(freq, duration, type){
+  var ctx = getAudioCtx(); if(!ctx) return;
+  var osc = ctx.createOscillator();
+  var gain = ctx.createGain();
+  osc.connect(gain); gain.connect(ctx.destination);
+  osc.type = type || 'sine';
+  osc.frequency.value = freq;
+  gain.gain.value = 0.15;
+  osc.start(); osc.stop(ctx.currentTime + (duration||0.2));
+}
+function audioComplete(){ beep(880,0.1); setTimeout(function(){ beep(1100,0.15); },120); setTimeout(function(){ beep(1320,0.2); },260); }
+function audioError(){ beep(220,0.3,'square'); setTimeout(function(){ beep(180,0.4,'square'); },350); }
+function audioScrap(){ beep(300,0.15,'sawtooth'); setTimeout(function(){ beep(250,0.2,'sawtooth'); },200); }
+
+/* ╔══════════════════════════════════════════════════════════════╗
+   ║  CENTRALIZED STATE ENGINE                                   ║
+   ╚══════════════════════════════════════════════════════════════╝ */
+var AppState = {
+  schema: SCHEMA_VERSION,
+  presses: {
+    1: { fsm: PS.IDLE, elapsed: 0, duration: 240, mat: '', sz: '', jobId: null, startedAt: null, pausedAt: null, pausedElapsed: 0, isRedo: false },
+    2: { fsm: PS.IDLE, elapsed: 0, duration: 240, mat: '', sz: '', jobId: null, startedAt: null, pausedAt: null, pausedElapsed: 0, isRedo: false }
+  },
+  pressLog: [],
+  jobs: [],
+  scrap: [],
+  redos: [],
+  calc: [],
+  handoffs: [],
+  inventory: {},
+  parts: [
+    {num:'009001-000100',mat:'Buna', sz:4,md:10.0,desc:'Standard shaft seal'},
+    {num:'009001-000150',mat:'Buna', sz:5,md:15.0,desc:'Hydraulic piston seal'},
+    {num:'009001-000200',mat:'Buna', sz:6,md:20.0,desc:'Face seal'},
+    {num:'009002-000120',mat:'EPDM', sz:4,md:12.0,desc:'Water resistant service'},
+    {num:'009002-000180',mat:'EPDM', sz:5,md:18.0,desc:'Steam service'},
+    {num:'009002-000250',mat:'EPDM', sz:6,md:25.0,desc:'Outdoor / UV service'},
+    {num:'009003-000100',mat:'Viton',sz:4,md:10.0,desc:'Chemical resistant'},
+    {num:'009003-000160',mat:'Viton',sz:5,md:16.0,desc:'High temp service'},
+    {num:'009003-000220',mat:'Viton',sz:6,md:22.0,desc:'Fuel / oil service'}
+  ],
+  stats: { out:0, cyc:0, mat:{Viton:0,Buna:0,EPDM:0}, cycleTimes:[], runtimeSeconds:0, shiftStart:null },
+  activity: [],
+  auditLog: [],
+  refType: 'vessel',
+  inventoryDeltas: [],
+  lastBackup: null
+};
+
+/* Timers held outside state (non-serializable) */
+var pressTimers = { 1: null, 2: null };
+var curCalc = null;
+var delayPressNum = 0;
+var scrapContext = null; // { press, action } for mandatory scrap reason
+var backupTimer = null;
+
+/* ╔══════════════════════════════════════════════════════════════╗
+   ║  DISPATCH — All state mutations flow through here           ║
+   ╚══════════════════════════════════════════════════════════════╝ */
+function dispatch(action, payload){
+  var p = payload || {};
+  switch(action){
+    case 'PRESS_TRANSITION': pressTransition(p.press, p.to, p.meta); break;
+    case 'ADD_JOB': doAddJob(p); break;
+    case 'REMOVE_JOB': doRemoveJob(p.id); break;
+    case 'LOAD_JOB': doLoadJob(p.press, p.jobId); break;
+    case 'UNLOAD_JOB': doUnloadJob(p.press); break;
+    case 'CYCLE_COMPLETE': doCycleComplete(p.press); break;
+    case 'NEXT_CYCLE': doNextCycle(p.press); break;
+    case 'REDO_CYCLE': doRedoCycle(p.press); break;
+    case 'CLOSE_JOB': doCloseJob(p.press); break;
+    case 'DELAY_JOB': doDelayJob(p.press, p.reason); break;
+    case 'LOG_SCRAP': doLogScrap(p); break;
+    case 'SAVE_CALC': doSaveCalc(p); break;
+    case 'UPDATE_INV': doUpdateInv(p.key, p.value); break;
+    case 'SAVE_INV': break; // just persist
+    case 'SUBMIT_HANDOFF': doSubmitHandoff(p.body, p.notes); break;
+    case 'CLEAR_CAT': doClearCat(p.key, p.name); break;
+    case 'CLEAR_ALL': doClearAll(); break;
+    case 'SET_REF_TYPE': AppState.refType = p.type; break;
+    default: console.warn('Unknown dispatch action:', action);
+  }
+  persist();
+}
+
+/* ╔══════════════════════════════════════════════════════════════╗
+   ║  AUDIT LEDGER — Append-only, immutable event log            ║
+   ╚══════════════════════════════════════════════════════════════╝ */
+function audit(eventType, payload, jobId, operator){
+  var entry = {
+    id: uuid(),
+    ts: new Date().toISOString(),
+    operator: operator || 'TECH',
+    jobId: jobId || null,
+    type: eventType,
+    payload: payload || {}
+  };
+  AppState.auditLog.push(entry);
+  return entry;
+}
+
+/* ╔══════════════════════════════════════════════════════════════╗
+   ║  PERSISTENCE + CRASH RECOVERY                               ║
+   ╚══════════════════════════════════════════════════════════════╝ */
+function persist(){
+  try{
+    var data = JSON.parse(JSON.stringify(AppState));
+    // Strip non-serializable
+    data.presses[1] = serializePress(AppState.presses[1]);
+    data.presses[2] = serializePress(AppState.presses[2]);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }catch(e){ console.error('Persist failed:', e); }
+}
+
+function serializePress(pr){
+  return {
+    fsm: pr.fsm, elapsed: pr.elapsed, duration: pr.duration,
+    mat: pr.mat, sz: pr.sz, jobId: pr.jobId,
+    startedAt: pr.startedAt, pausedAt: pr.pausedAt, pausedElapsed: pr.pausedElapsed,
+    isRedo: pr.isRedo || false
+  };
+}
+
+function loadState(){
+  try{
+    var raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return migrateOldData();
+    var data = JSON.parse(raw);
+    if(!data || typeof data !== 'object'){ audit('CORRUPT_LOAD', {reason:'invalid JSON'}); return; }
+    if(data.schema !== SCHEMA_VERSION){
+      audit('SCHEMA_MISMATCH', {found: data.schema, expected: SCHEMA_VERSION});
+      // Attempt soft migration
+      data.schema = SCHEMA_VERSION;
+    }
+    // Validate critical arrays
+    var arrays = ['pressLog','jobs','scrap','redos','calc','handoffs','activity','auditLog','inventoryDeltas'];
+    for(var i=0;i<arrays.length;i++){
+      if(!Array.isArray(data[arrays[i]])) data[arrays[i]] = [];
+    }
+    if(!data.stats || typeof data.stats !== 'object') data.stats = AppState.stats;
+    if(!Array.isArray(data.stats.cycleTimes)) data.stats.cycleTimes = [];
+    if(typeof data.stats.runtimeSeconds !== 'number') data.stats.runtimeSeconds = 0;
+    if(!data.inventory || typeof data.inventory !== 'object') data.inventory = {};
+    if(!data.presses) data.presses = AppState.presses;
+
+    // Restore state
+    AppState.pressLog = data.pressLog;
+    AppState.jobs = data.jobs;
+    AppState.scrap = data.scrap;
+    AppState.redos = data.redos || [];
+    AppState.calc = data.calc;
+    AppState.handoffs = data.handoffs;
+    AppState.inventory = data.inventory;
+    if(data.parts && data.parts.length) AppState.parts = data.parts;
+    AppState.stats = data.stats;
+    AppState.activity = data.activity;
+    AppState.auditLog = data.auditLog;
+    AppState.refType = data.refType || 'vessel';
+    AppState.inventoryDeltas = data.inventoryDeltas || [];
+    AppState.lastBackup = data.lastBackup || null;
+
+    // Crash recovery for presses
+    recoverPress(1, data.presses[1]);
+    recoverPress(2, data.presses[2]);
+
+    audit('SYSTEM_LOAD', {recovered: true});
+  }catch(e){
+    console.error('Load failed:', e);
+    audit('CORRUPT_LOAD', {error: String(e)});
+  }
+}
+
+function migrateOldData(){
+  // Try to migrate from old vx5 key
+  try{
+    var old = localStorage.getItem('vx5');
+    if(!old) return;
+    var p = JSON.parse(old);
+    if(p.jobs) AppState.jobs = p.jobs;
+    if(p.scrap) AppState.scrap = p.scrap;
+    if(p.calc) AppState.calc = p.calc;
+    if(p.handoffs) AppState.handoffs = p.handoffs;
+    if(p.inv) AppState.inventory = p.inv;
+    if(p.parts && p.parts.length) AppState.parts = p.parts;
+    if(p.stats) {
+      AppState.stats.out = p.stats.out || 0;
+      AppState.stats.cyc = p.stats.cyc || 0;
+      AppState.stats.mat = p.stats.mat || {Viton:0,Buna:0,EPDM:0};
+    }
+    if(p.act) AppState.activity = p.act;
+    if(p.pLog) AppState.pressLog = p.pLog;
+    AppState.refType = p.refType || 'vessel';
+    audit('DATA_MIGRATED', {from:'vx5', to: STORAGE_KEY});
+    persist();
+  }catch(e){}
+}
+
+function recoverPress(num, saved){
+  if(!saved) return;
+  var pr = AppState.presses[num];
+  pr.mat = saved.mat || '';
+  pr.sz = saved.sz || '';
+  pr.jobId = saved.jobId || null;
+  pr.duration = saved.duration || 240;
+  pr.pausedElapsed = saved.pausedElapsed || 0;
+  pr.isRedo = saved.isRedo || false;
+
+  if(saved.fsm === PS.RUNNING && saved.startedAt){
+    // Recover mid-cycle: calculate elapsed from wall clock
+    var now = Date.now();
+    var startMs = new Date(saved.startedAt).getTime();
+    var totalPauseMs = (saved.pausedElapsed || 0) * 1000;
+    var elapsedS = Math.floor((now - startMs - totalPauseMs) / 1000);
+    if(elapsedS >= pr.duration){
+      // Cycle would have completed — mark complete
+      pr.fsm = PS.COMPLETE;
+      pr.elapsed = pr.duration;
+      pr.startedAt = null;
+      audit('CRASH_RECOVERY', {press:num, result:'completed_during_absence', elapsed:elapsedS, isRedo:pr.isRedo}, pr.jobId);
+      // Credit the cycle ONLY if not a redo
+      if(!pr.isRedo){
+        var job = findJob(pr.jobId);
+        if(job){
+          if(typeof job.cyclesDone === 'undefined') job.cyclesDone = 0;
+          job.cyclesDone++;
+        }
+        AppState.stats.cyc++;
+        logPressEntry(num, 'cycle');
+      } else {
+        logPressEntry(num, 'redo-complete');
+        pr.isRedo = false;
+      }
+    } else {
+      // Resume mid-cycle
+      pr.fsm = PS.RUNNING;
+      pr.elapsed = elapsedS;
+      pr.startedAt = saved.startedAt;
+      audit('CRASH_RECOVERY', {press:num, result:'resumed', elapsed:elapsedS, remaining:pr.duration-elapsedS}, pr.jobId);
+      startPressTimer(num);
+    }
+  } else if(saved.fsm === PS.PAUSED){
+    pr.fsm = PS.PAUSED;
+    pr.elapsed = saved.elapsed || 0;
+    pr.pausedAt = saved.pausedAt;
+    audit('CRASH_RECOVERY', {press:num, result:'paused_restored', elapsed:pr.elapsed}, pr.jobId);
+  } else if(saved.fsm === PS.COMPLETE){
+    pr.fsm = PS.COMPLETE;
+    pr.elapsed = saved.elapsed || pr.duration;
+  } else {
+    pr.fsm = PS.IDLE;
+    pr.elapsed = 0;
+    pr.startedAt = null;
+    // Restore job to pending if it was stuck in-progress
+    if(pr.jobId){
+      var j2 = findJob(pr.jobId);
+      if(j2 && j2.status === 'in-progress'){
+        var otherNum = num===1?2:1;
+        if(AppState.presses[otherNum].jobId !== pr.jobId){
+          j2.status = 'pending'; j2.pressNum = null;
+        }
+      }
+    }
+  }
+}
+
+/* ╔══════════════════════════════════════════════════════════════╗
+   ║  PRESS FINITE STATE MACHINE                                 ║
+   ╚══════════════════════════════════════════════════════════════╝ */
+function pressTransition(num, toState, meta){
+  var pr = AppState.presses[num];
+  var from = pr.fsm;
+  var allowed = VALID_TRANSITIONS[from];
+  if(!allowed || allowed.indexOf(toState) === -1){
+    var msg = 'Illegal press transition: ' + from + ' -> ' + toState;
+    audit('FSM_ERROR', {press:num, from:from, to:toState}, pr.jobId);
+    notify(msg, 'er');
+    audioError();
+    return false;
+  }
+  // Debounce: prevent rapid double-transitions
+  if(pr._lastTransition && (Date.now() - pr._lastTransition) < 300) return false;
+  pr._lastTransition = Date.now();
+
+  pr.fsm = toState;
+  audit('PRESS_TRANSITION', {press:num, from:from, to:toState, meta:meta||{}}, pr.jobId);
+
+  switch(toState){
+    case PS.RUNNING:
+      if(from === PS.IDLE){
+        pr.elapsed = 0;
+        pr.startedAt = new Date().toISOString();
+        pr.pausedElapsed = 0;
+      } else if(from === PS.PAUSED){
+        // Resume: adjust startedAt to account for pause duration
+        var pauseDur = pr.pausedAt ? (Date.now() - new Date(pr.pausedAt).getTime()) : 0;
+        pr.pausedElapsed += Math.floor(pauseDur / 1000);
+        pr.pausedAt = null;
+      }
+      startPressTimer(num);
+      break;
+    case PS.PAUSED:
+      stopPressTimer(num);
+      pr.pausedAt = new Date().toISOString();
+      break;
+    case PS.COMPLETE:
+      stopPressTimer(num);
+      pr.startedAt = null;
+      doCycleComplete(num);
+      break;
+    case PS.ERROR:
+      stopPressTimer(num);
+      pr.startedAt = null;
+      break;
+    case PS.IDLE:
+      stopPressTimer(num);
+      pr.elapsed = 0;
+      pr.startedAt = null;
+      pr.pausedAt = null;
+      pr.pausedElapsed = 0;
+      break;
+  }
+  persist();
+  renderPressUI(num);
+  renderDashPressUI(num);
+  return true;
+}
+
+function startPressTimer(num){
+  stopPressTimer(num);
+  pressTimers[num] = setInterval(function(){
+    var pr = AppState.presses[num];
+    if(pr.fsm !== PS.RUNNING) { stopPressTimer(num); return; }
+    pr.elapsed++;
+    var rem = pr.duration - pr.elapsed;
+    renderPressTimerTick(num, rem);
+    if(rem <= 0){
+      pr.fsm = PS.COMPLETE;
+      stopPressTimer(num);
+      pr.startedAt = null;
+      doCycleComplete(num);
+      renderPressUI(num);
+      renderDashPressUI(num);
+      persist();
+    }
+  }, 1000);
+}
+
+function stopPressTimer(num){
+  if(pressTimers[num]){ clearInterval(pressTimers[num]); pressTimers[num] = null; }
+}
+
+/* ╔══════════════════════════════════════════════════════════════╗
+   ║  CORE ACTION HANDLERS                                       ║
+   ╚══════════════════════════════════════════════════════════════╝ */
+function findJob(id){ if(!id) return null; return AppState.jobs.find(function(j){return j.id===id;})||null; }
+
+function doCycleComplete(num){
+  var pr = AppState.presses[num];
+  var job = findJob(pr.jobId);
+  var wasRedo = pr.isRedo;
+  pr.isRedo = false; // Reset flag
+
+  if(wasRedo){
+    // Redo cycle — do NOT increment cyclesDone, do NOT credit output
+    logPressEntry(num, 'redo-complete');
+    logActivity('Press '+num+' redo cycle done — '+(job?job.ref+' · ':'')+pr.mat+' '+pr.sz+'mm (piece re-cured, count unchanged)');
+    audit('REDO_CYCLE_COMPLETE', {press:num, duration:pr.duration, mat:pr.mat, sz:pr.sz, cyclesDone:job?job.cyclesDone:0, qty:job?job.qty:0}, pr.jobId);
+    audioComplete();
+    notify('Press '+num+' redo done — piece re-cured. Count unchanged at '+(job?job.cyclesDone+'/'+job.qty:'—'),'ok');
+    renderAll();
+    return;
+  }
+
+  if(job){
+    if(typeof job.cyclesDone === 'undefined') job.cyclesDone = 0;
+    job.cyclesDone++;
+  }
+  AppState.stats.cyc++;
+  // Record cycle time for statistics
+  AppState.stats.cycleTimes.push(pr.duration);
+  AppState.stats.runtimeSeconds += pr.duration;
+  if(!AppState.stats.shiftStart) AppState.stats.shiftStart = new Date().toISOString();
+
+  logPressEntry(num, 'cycle');
+  logActivity('Press '+num+' cycle — '+(job?job.ref+' · ':'')+pr.mat+' '+pr.sz+'mm ('+(job?job.cyclesDone+'/'+job.qty:'1')+')');
+  audit('CYCLE_COMPLETE', {press:num, duration:pr.duration, mat:pr.mat, sz:pr.sz, cyclesDone:job?job.cyclesDone:1, qty:job?job.qty:1}, pr.jobId);
+
+  audioComplete();
+  if(job && job.cyclesDone >= job.qty){
+    notify('All '+job.qty+' pcs done on Press '+num+' — close the job!','ok');
+  } else {
+    notify('Press '+num+' done — '+(job?job.cyclesDone+'/'+job.qty+' pcs':'Cycle complete'),'ok');
+  }
+  renderAll();
+}
+
+function doNextCycle(num){
+  var pr = AppState.presses[num];
+  if(!pr.jobId) return;
+  var job = findJob(pr.jobId);
+  if(!job) return;
+  if(job.cyclesDone >= job.qty){ notify('All pieces already logged — close the job','wn'); return; }
+  audit('NEXT_CYCLE', {press:num, cyclesDone:job.cyclesDone, qty:job.qty}, pr.jobId);
+  pressTransition(num, PS.IDLE);
+  setTimeout(function(){ pressTransition(num, PS.RUNNING, {auto:'next_cycle'}); }, 100);
+}
+
+function doRedoCycle(num){
+  var pr = AppState.presses[num];
+  if(!pr.jobId) return;
+  // Open redo reason modal (not scrap modal)
+  scrapContext = { press: num, action: 'redo' };
+  g('REDORS').value = '';
+  openM('REDOM');
+}
+
+function executeRedo(num, reason){
+  var pr = AppState.presses[num];
+  var job = findJob(pr.jobId);
+  logPressEntry(num, 'redo');
+  logActivity('Press '+num+' REDO — '+(job?job.ref:'')+(pr.mat?' · '+pr.mat+' '+pr.sz+'mm':'')+' — '+reason);
+  // Log to redos (NOT scrap — piece goes back through the press)
+  var now = new Date();
+  AppState.redos.unshift({
+    id: uuid(), date: now.toISOString().slice(0,10),
+    time: pad(now.getHours())+':'+pad(now.getMinutes()),
+    press: String(num), mat: pr.mat, sz: pr.sz+'mm',
+    ref: job?job.ref:'--', reason: reason, jobId: pr.jobId
+  });
+  audit('REDO', {press:num, reason:reason, mat:pr.mat, sz:pr.sz}, pr.jobId);
+  notify('Press '+num+' — ring going back through. Count unchanged.','wn');
+  pr.isRedo = true;
+  pressTransition(num, PS.IDLE);
+  setTimeout(function(){ pressTransition(num, PS.RUNNING, {auto:'redo'}); }, 100);
+  renderAll();
+}
+
+function executeScrap(num, reason){
+  var pr = AppState.presses[num];
+  var job = findJob(pr.jobId);
+  // Piece is thrown out — revert the cyclesDone that was credited when cycle completed
+  if(job && job.cyclesDone > 0){
+    job.cyclesDone--;
+  }
+  // Also revert the global cycle count and stats
+  if(AppState.stats.cyc > 0) AppState.stats.cyc--;
+  if(AppState.stats.cycleTimes.length > 0) AppState.stats.cycleTimes.pop();
+  if(pr.duration > 0) AppState.stats.runtimeSeconds = Math.max(0, AppState.stats.runtimeSeconds - pr.duration);
+
+  logPressEntry(num, 'scrap');
+  logActivity('Press '+num+' SCRAP — '+(job?job.ref:'')+(pr.mat?' · '+pr.mat+' '+pr.sz+'mm':'')+' — '+reason+' (piece discarded, count reverted)');
+  var now = new Date();
+  AppState.scrap.unshift({
+    id: uuid(), date: now.toISOString().slice(0,10),
+    time: pad(now.getHours())+':'+pad(now.getMinutes()),
+    press: String(num), mat: pr.mat, sz: pr.sz+'mm',
+    ref: job?job.ref:'--', reason: reason, jobId: pr.jobId
+  });
+  audit('SCRAP', {press:num, reason:reason, mat:pr.mat, sz:pr.sz, cycleReverted:true}, pr.jobId);
+  audioScrap();
+  notify('Press '+num+' — piece scrapped and discarded. Count reverted to '+(job?job.cyclesDone+'/'+job.qty:'—'),'er');
+  // Reset press to idle so they can start the next cycle for the same piece
+  pressTransition(num, PS.IDLE);
+  renderAll();
+}
+
+function doCloseJob(num){
+  var pr = AppState.presses[num];
+  var job = findJob(pr.jobId);
+  if(job){
+    var credited = job.cyclesDone || 0;
+    AppState.stats.out += credited;
+    if(pr.mat) AppState.stats.mat[pr.mat] = (AppState.stats.mat[pr.mat]||0) + credited;
+    // Auto-deduct inventory
+    var invKey = pr.mat + '-' + pr.sz;
+    if(AppState.inventory[invKey] !== undefined){
+      var newVal = Math.max(0, (AppState.inventory[invKey]||0) - credited);
+      var delta = AppState.inventory[invKey] - newVal;
+      AppState.inventory[invKey] = newVal;
+      if(delta > 0){
+        AppState.inventoryDeltas.push({ts: new Date().toISOString(), key:invKey, delta:-delta, reason:'Job close: '+job.ref, jobId:job.id});
+        audit('INV_DEDUCT', {key:invKey, deducted:delta, remaining:newVal}, job.id);
+        if(newVal <= LOW_STOCK_THRESHOLD) notify('LOW STOCK: '+pr.mat+' '+pr.sz+'mm — '+newVal+' remaining','wn');
+      }
+    }
+    job.status = 'done'; job.pressNum = null;
+    // Unload from other press if shared
+    var other = num===1?2:1;
+    if(AppState.presses[other].jobId === job.id){
+      AppState.presses[other].jobId = null; AppState.presses[other].mat = ''; AppState.presses[other].sz = '';
+      pressTransition(other, PS.IDLE);
+    }
+    audit('JOB_CLOSED', {credited:credited, qty:job.qty, ref:job.ref}, job.id);
+  }
+  logActivity('Press '+num+' — '+(job?job.ref:'job')+' CLOSED ('+(job?job.cyclesDone:0)+'/'+(job?job.qty:'?')+' pcs)');
+  notify('Job closed — '+(job?job.cyclesDone+' pcs logged':''),'ok');
+  pr.jobId = null; pr.mat = ''; pr.sz = '';
+  pressTransition(num, PS.IDLE);
+  renderAll();
+}
+
+function doDelayJob(num, reason){
+  var pr = AppState.presses[num];
+  var job = findJob(pr.jobId);
+  if(job){
+    var credited = job.cyclesDone || 0;
+    AppState.stats.out += credited;
+    if(pr.mat) AppState.stats.mat[pr.mat] = (AppState.stats.mat[pr.mat]||0) + credited;
+    job.status = 'delayed'; job.delayReason = reason; job.pressNum = null;
+    var other = num===1?2:1;
+    if(AppState.presses[other].jobId === job.id){
+      AppState.presses[other].jobId = null; AppState.presses[other].mat = ''; AppState.presses[other].sz = '';
+      pressTransition(other, PS.IDLE);
+    }
+    audit('JOB_DELAYED', {reason:reason, credited:credited, ref:job.ref}, job.id);
+  }
+  logPressEntry(num, 'delayed');
+  logActivity('Press '+num+' — '+(job?job.ref:'')+' DELAYED: '+reason);
+  notify('Job delayed — back in queue','wn');
+  pr.jobId = null; pr.mat = ''; pr.sz = '';
+  pressTransition(num, PS.IDLE);
+  renderAll();
+}
+
+function doAddJob(p){
+  var ref = p.ref, pn = p.part, mat = p.mat, sz = p.sz, md = p.md, qty = p.qty, pri = p.pri;
+  if(!ref){ notify('Enter a '+(AppState.refType==='vessel'?'vessel number':'sales order'),'wn'); return; }
+  if(!qty||qty<1){ notify('Enter a valid quantity','wn'); return; }
+  // Validate inventory before allowing job
+  var invKey = mat + '-' + sz;
+  var stock = AppState.inventory[invKey] || 0;
+  if(stock < qty){ notify('WARNING: Only '+stock+' '+mat+' '+sz+'mm in stock (need '+qty+')','wn'); }
+  var cut = (!isNaN(md)&&md>0) ? (md*Math.PI).toFixed(2) : null;
+  var pt = (CURE_TIMES[mat]&&CURE_TIMES[mat][parseInt(sz)])||null;
+  var jobId = Date.now();
+  AppState.jobs.push({
+    id:jobId, refType:AppState.refType, ref:ref,
+    part:pn||(PART_PREFIXES[mat]+'-'+String(jobId).slice(-6)),
+    mat:mat, sz:sz, md:(!isNaN(md)?md:null), qty:qty, pri:pri,
+    cut:cut, pt:pt, status:'pending', cyclesDone:0
+  });
+  audit('JOB_ADDED', {ref:ref, mat:mat, sz:sz, qty:qty, pri:pri}, jobId);
+  closeM('JM');
+  g('JREF').value=''; g('JPN').value=''; g('JMD').value=''; g('JQT').value='1';
+  notify('Job added to queue','ok');
+  renderAll();
+}
+
+function doRemoveJob(id){
+  if(AppState.presses[1].jobId===id||AppState.presses[2].jobId===id){ notify('Unload job from press first','wn'); return; }
+  var job = findJob(id);
+  if(job) audit('JOB_REMOVED', {ref:job.ref}, id);
+  AppState.jobs = AppState.jobs.filter(function(j){return j.id!==id;});
+  renderAll();
+}
+
+function doLoadJob(num, jobId){
+  var job = findJob(jobId);
+  if(!job) return;
+  var pr = AppState.presses[num];
+  if(pr.fsm !== PS.IDLE){ notify('Press must be idle to load a job','wn'); return; }
+  if(typeof job.cyclesDone === 'undefined') job.cyclesDone = 0;
+  // Validate inventory
+  var invKey = job.mat + '-' + job.sz;
+  var stock = AppState.inventory[invKey] || 0;
+  var remaining = job.qty - job.cyclesDone;
+  if(stock < remaining){ notify('WARNING: Low stock — '+stock+' '+job.mat+' '+job.sz+'mm for '+remaining+' remaining pcs','wn'); }
+
+  pr.jobId = jobId;
+  pr.mat = job.mat;
+  pr.sz = job.sz;
+  var dur = (CURE_TIMES[job.mat]&&CURE_TIMES[job.mat][parseInt(job.sz)])||240;
+  pr.duration = dur;
+  job.status = 'in-progress';
+  if(!job.pressNum) job.pressNum = num; else job.pressNum = '1+2';
+  audit('JOB_LOADED', {press:num, ref:job.ref, mat:job.mat, sz:job.sz, dur:dur}, jobId);
+  notify('Press '+num+' loaded — '+job.mat+' '+job.sz+'mm · '+dur+'s · '+job.cyclesDone+'/'+job.qty+' done','if');
+  renderAll();
+}
+
+function doUnloadJob(num){
+  var pr = AppState.presses[num];
+  if(pr.fsm === PS.RUNNING || pr.fsm === PS.PAUSED){ notify('Stop the press before unloading','wn'); return; }
+  if(pr.jobId){
+    var job = findJob(pr.jobId);
+    if(job && job.status === 'in-progress'){
+      var other = num===1?2:1;
+      if(AppState.presses[other].jobId !== pr.jobId){ job.status='pending'; job.pressNum=null; }
+      else job.pressNum = other;
+    }
+    audit('JOB_UNLOADED', {press:num}, pr.jobId);
+  }
+  pr.jobId = null; pr.mat = ''; pr.sz = '';
+  pressTransition(num, PS.IDLE);
+  renderAll();
+}
+
+function doLogScrap(p){
+  var reason = (p.reason||'').trim();
+  if(!reason){ notify('Failure reason is required','wn'); return; }
+  var now = new Date();
+  AppState.scrap.unshift({
+    id: uuid(), date:now.toISOString().slice(0,10),
+    time:pad(now.getHours())+':'+pad(now.getMinutes()),
+    press:p.press, mat:p.mat, sz:p.sz+'mm', ref:p.ref||'--', reason:reason
+  });
+  audit('SCRAP_LOGGED', {press:p.press, mat:p.mat, sz:p.sz, reason:reason});
+  audioScrap();
+  closeM('SM'); g('SMPN').value=''; g('SMRS').value='';
+  notify('Splice failure logged','er');
+  renderAll();
+}
+
+function doSaveCalc(c){
+  var now = new Date();
+  AppState.calc.unshift({time:pad(now.getHours())+':'+pad(now.getMinutes()), md:c.md, sz:c.sz, mat:c.mat, cut:c.cut, pt:c.pt});
+  notify('Calculation saved','ok');
+}
+
+function doUpdateInv(key, value){
+  var oldVal = AppState.inventory[key] || 0;
+  var newVal = Math.max(0, parseInt(value)||0);
+  if(newVal < 0) newVal = 0; // No negative stock
+  if(oldVal !== newVal){
+    AppState.inventoryDeltas.push({ts:new Date().toISOString(), key:key, delta:newVal-oldVal, reason:'Manual adjustment'});
+    audit('INV_UPDATE', {key:key, from:oldVal, to:newVal});
+  }
+  AppState.inventory[key] = newVal;
+}
+
+function doSubmitHandoff(body, notes){
+  var now = new Date();
+  AppState.handoffs.unshift({
+    date:now.toISOString().slice(0,10),
+    time:pad(now.getHours())+':'+pad(now.getMinutes()),
+    body:body+(notes?'\n\n-- TECH NOTES --\n'+notes:'')
+  });
+  audit('HANDOFF_SUBMITTED', {hasNotes:!!notes});
+  notify('Handoff submitted','ok');
+}
+
+function doClearCat(key, name){
+  if(key==='pressLog'){ AppState.pressLog=[]; }
+  else if(key==='scrap'){ AppState.scrap=[]; }
+  else if(key==='redos'){ AppState.redos=[]; }
+  else if(key==='calc'){ AppState.calc=[]; }
+  else if(key==='handoffs'){ AppState.handoffs=[]; }
+  else if(key==='jobs'){
+    AppState.jobs=AppState.jobs.filter(function(j){
+      return AppState.presses[1].jobId===j.id||AppState.presses[2].jobId===j.id;
+    });
+  }
+  else if(key==='activity'){ AppState.activity=[]; }
+  audit('DATA_CLEARED', {category:key});
+  closeM('CATCLR');
+  notify(name+' cleared','ok');
+  renderAll();
+}
+
+function doClearAll(){
+  AppState.pressLog=[]; AppState.jobs=[]; AppState.scrap=[]; AppState.redos=[]; AppState.calc=[];
+  AppState.handoffs=[]; AppState.inventory={};
+  AppState.stats={out:0,cyc:0,mat:{Viton:0,Buna:0,EPDM:0},cycleTimes:[],runtimeSeconds:0,shiftStart:null};
+  AppState.activity=[]; AppState.inventoryDeltas=[];
+  initInv();
+  closeM('CLR');
+  AppState.presses[1].jobId=null; AppState.presses[1].mat=''; AppState.presses[1].sz='';
+  AppState.presses[2].jobId=null; AppState.presses[2].mat=''; AppState.presses[2].sz='';
+  pressTransition(1, PS.IDLE);
+  pressTransition(2, PS.IDLE);
+  audit('FULL_CLEAR', {});
+  notify('All data cleared','ok');
+  renderAll();
+}
+
+/* ── HELPERS ── */
+function pad(n){ return n<10?'0'+n:''+n; }
+function g(id){ return document.getElementById(id); }
+function st(id,v){ var e=g(id); if(e) e.textContent=v; }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function matChar(m){ return (m||'').toLowerCase().charAt(0); }
+function tsNow(){ var n=new Date(); return pad(n.getHours())+':'+pad(n.getMinutes()); }
+
+function logPressEntry(num, res){
+  var pr = AppState.presses[num];
+  var job = findJob(pr.jobId);
+  AppState.pressLog.unshift({
+    time:tsNow(), press:num, ref:job?job.ref:'--',
+    mat:pr.mat||'--', sz:pr.sz?pr.sz+'mm':'--',
+    temp:(CURE_TEMPS[pr.mat]&&CURE_TEMPS[pr.mat][parseInt(pr.sz)])?CURE_TEMPS[pr.mat][parseInt(pr.sz)]+'°F':'--',
+    dur:pr.duration+'s', res:res
+  });
+}
+
+function logActivity(msg){
+  AppState.activity.unshift('['+tsNow()+'] '+msg);
+  if(AppState.activity.length>50) AppState.activity = AppState.activity.slice(0,50);
+}
+
+function initInv(){
+  var ms=['Viton','Buna','EPDM'], szs=[4,5,6];
+  for(var m=0;m<ms.length;m++) for(var s=0;s<szs.length;s++){
+    var k=ms[m]+'-'+szs[s];
+    if(AppState.inventory[k]===undefined) AppState.inventory[k]=0;
+  }
+}
+
+
+/* ╔══════════════════════════════════════════════════════════════╗
+   ║  OEE + METRICS ENGINE                                      ║
+   ╚══════════════════════════════════════════════════════════════╝ */
+function computeOEE(){
+  var s = AppState.stats;
+  var now = new Date();
+  var shiftElapsed = (now.getHours() + now.getMinutes()/60 - SHIFT_START_H) * 3600;
+  if(shiftElapsed < 0) shiftElapsed = SHIFT_DURATION_S;
+  var plannedTime = Math.min(shiftElapsed, SHIFT_DURATION_S);
+  if(plannedTime <= 0) plannedTime = 1;
+
+  // Availability = actual runtime / planned time
+  var availability = Math.min(1, s.runtimeSeconds / plannedTime);
+
+  // Performance = ideal cycle time * total cycles / runtime
+  var idealCycleTime = 240; // baseline
+  if(s.cycleTimes.length > 0){
+    var sum = 0; for(var i=0;i<s.cycleTimes.length;i++) sum += s.cycleTimes[i];
+    idealCycleTime = Math.min.apply(null, s.cycleTimes); // best achievable
+  }
+  var performance = s.runtimeSeconds > 0 ? Math.min(1, (idealCycleTime * s.cyc) / s.runtimeSeconds) : 0;
+
+  // Quality = good parts / total parts
+  var totalParts = s.out + AppState.scrap.length;
+  var quality = totalParts > 0 ? s.out / totalParts : 1;
+
+  var oee = availability * performance * quality;
+
+  // Cycle time stats
+  var avg=0, stddev=0, fastest=0, slowest=0;
+  if(s.cycleTimes.length > 0){
+    var ct = s.cycleTimes;
+    var ctSum=0; for(var i=0;i<ct.length;i++) ctSum+=ct[i];
+    avg = ctSum / ct.length;
+    var variance=0; for(var j=0;j<ct.length;j++) variance += Math.pow(ct[j]-avg,2);
+    stddev = Math.sqrt(variance / ct.length);
+    fastest = Math.min.apply(null, ct);
+    slowest = Math.max.apply(null, ct);
+  }
+
+  // Shift projection
+  var ratePerHour = shiftElapsed > 0 ? (s.out / (shiftElapsed/3600)) : 0;
+  var remainingHours = Math.max(0, (SHIFT_END_H - now.getHours() - now.getMinutes()/60));
+  var projection = s.out + Math.round(ratePerHour * remainingHours);
+
+  return {
+    availability: availability, performance: performance, quality: quality, oee: oee,
+    avgCycle: avg, stddev: stddev, fastest: fastest, slowest: slowest,
+    projection: projection
+  };
+}
+
+function renderOEE(){
+  var m = computeOEE();
+  st('oee-total', Math.round(m.oee*100)+'%');
+  st('oee-a', Math.round(m.availability*100)+'%');
+  st('oee-p', Math.round(m.performance*100)+'%');
+  st('oee-q', Math.round(m.quality*100)+'%');
+  st('oee-proj', m.projection > 0 ? '~'+m.projection : '—');
+  // Color OEE based on value
+  var oeeEl = g('oee-total');
+  if(oeeEl){
+    var c = m.oee >= 0.85 ? 'var(--green)' : m.oee >= 0.6 ? 'var(--yellow)' : 'var(--red)';
+    oeeEl.style.color = c;
+  }
+  // Cycle stats
+  st('cs-avg', m.avgCycle > 0 ? m.avgCycle.toFixed(1) : '—');
+  st('cs-std', m.stddev > 0 ? '±'+m.stddev.toFixed(1) : '—');
+  st('cs-fast', m.fastest > 0 ? m.fastest.toString() : '—');
+  st('cs-slow', m.slowest > 0 ? m.slowest.toString() : '—');
+}
+
+/* ╔══════════════════════════════════════════════════════════════╗
+   ║  CLOCK                                                      ║
+   ╚══════════════════════════════════════════════════════════════╝ */
+function tick(){
+  var n=new Date();
+  var e=g('CLK');
+  if(e) e.textContent=pad(n.getHours())+':'+pad(n.getMinutes())+':'+pad(n.getSeconds());
+}
+setInterval(tick, 1000);
+tick();
+
+/* ╔══════════════════════════════════════════════════════════════╗
+   ║  NAVIGATION                                                 ║
+   ╚══════════════════════════════════════════════════════════════╝ */
+window.nav = function(btn, pid){
+  document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('on'); });
+  document.querySelectorAll('.pg').forEach(function(p){ p.classList.remove('on'); });
+  btn.classList.add('on');
+  var pg=g(pid); if(pg) pg.classList.add('on');
+  if(pid==='pg-hoff'){ buildHoff(); renderHandoffs(); }
+  if(pid==='pg-parts') renderParts();
+  if(pid==='pg-inv') renderInv();
+  if(pid==='pg-jobs') renderJobs();
+  if(pid==='pg-scrap') renderScrap();
+  if(pid==='pg-press'){ renderPressJobSelectors(); renderPressLog(); }
+  if(pid==='pg-audit') renderAuditLog();
+  if(pid==='pg-dash') renderOEE();
+};
+
+/* ── MODALS ── */
+window.openM = function(id){ var e=g(id); if(e) e.classList.add('open'); };
+window.closeM = function(id){ var e=g(id); if(e) e.classList.remove('open'); };
+document.addEventListener('click', function(e){ if(e.target && e.target.classList.contains('ov')) e.target.classList.remove('open'); });
+
+/* ── NOTIFICATIONS ── */
+function notify(msg, type){
+  var ns=g('NS'); if(!ns) return;
+  var n=document.createElement('div');
+  n.className='ntf n'+(type||'if');
+  n.innerHTML='<div class="nd"></div><span>'+esc(msg)+'</span>';
+  ns.appendChild(n);
+  setTimeout(function(){ if(n.parentNode){ n.style.opacity='0'; n.style.transition='opacity .3s'; setTimeout(function(){ if(n.parentNode) n.parentNode.removeChild(n); },300); }},4000);
+}
+
+/* ╔══════════════════════════════════════════════════════════════╗
+   ║  PRESS UI RENDERING                                         ║
+   ╚══════════════════════════════════════════════════════════════╝ */
+function renderPressUI(num){
+  var pr = AppState.presses[num];
+  var job = findJob(pr.jobId);
+  var pc = g('PC'+num);
+
+  // Card state class
+  var cls = 'pc';
+  if(pr.fsm===PS.RUNNING) cls+=' sr';
+  else if(pr.fsm===PS.COMPLETE) cls+=' sd';
+  else if(pr.fsm===PS.PAUSED) cls+=' sdly';
+  else if(pr.fsm===PS.ERROR) cls+=' serr';
+  if(pc) pc.className = cls;
+
+  // Status badge
+  var ps = g('PS'+num);
+  if(ps){
+    var badgeCls = 'sb ';
+    var badgeTxt = 'IDLE';
+    switch(pr.fsm){
+      case PS.RUNNING: badgeCls+='srun'; badgeTxt='RUNNING'; break;
+      case PS.PAUSED: badgeCls+='spau'; badgeTxt='PAUSED'; break;
+      case PS.COMPLETE: badgeCls+='sdone'; badgeTxt='DONE'; break;
+      case PS.ERROR: badgeCls+='serr2'; badgeTxt='ERROR'; break;
+      default: badgeCls+='si'; badgeTxt=pr.jobId?'LOADED':'IDLE';
+    }
+    ps.className = badgeCls;
+    ps.textContent = badgeTxt;
+  }
+
+  // Job zone
+  if(pr.jobId && job){
+    g('PNJ'+num).style.display='none';
+    g('PJSEL'+num).style.display='none';
+    var aj=g('PAJ'+num); aj.style.display='block';
+    var ref = (job.refType==='vessel'?'VES':'SO')+': '+job.ref;
+    g('PAJ'+num+'REF').textContent = ref;
+    var mc = matChar(job.mat);
+    g('PAJ'+num+'INFO').innerHTML = '<span class="badge b'+mc+'">'+job.mat+'</span>'
+      +'<span style="font-family:var(--fm);font-size:10px;color:var(--tx2)">'+job.sz+'mm</span>'
+      +'<span style="font-family:var(--fm);font-size:10px;color:var(--tx2)">'+job.qty+' pcs</span>'
+      +'<span class="badge binp">'+pr.duration+'s</span>';
+    var cut = job.md ? (job.md*Math.PI).toFixed(3)+'" cut' : 'No MD';
+    g('PAJ'+num+'CUT').textContent = cut;
+    // Cycle progress
+    var cp=g('CP'+num);
+    if(job.qty>1){
+      cp.style.display='block';
+      var done=job.cyclesDone||0;
+      var pct=Math.min(100, Math.round(done/job.qty*100));
+      var bar=g('CPB'+num); if(bar) bar.style.width=pct+'%';
+      var lbl=g('CPL'+num);
+      if(lbl){
+        var nextCycleNum = Math.min(done+1, job.qty);
+        if(done >= job.qty) lbl.textContent='ALL '+job.qty+' PIECES COMPLETE — 100% DONE';
+        else lbl.textContent='CYCLE '+nextCycleNum+' OF '+job.qty+' — '+pct+'% DONE';
+      }
+    } else if(cp) cp.style.display='none';
+  } else {
+    g('PNJ'+num).style.display='block';
+    g('PJSEL'+num).style.display='block';
+    g('PAJ'+num).style.display='none';
+    g('PJDD'+num).value='';
+    var cp2=g('CP'+num); if(cp2) cp2.style.display='none';
+  }
+
+  // Timer display
+  var tf=g('TF'+num);
+  if(pr.fsm===PS.COMPLETE){
+    tf.textContent='DONE'; tf.className='tf fdone';
+    var pb2=g('PB'+num); pb2.style.width='100%'; pb2.className='pfill dn';
+  } else if(pr.fsm===PS.PAUSED){
+    var rem2=pr.duration-pr.elapsed;
+    tf.textContent=Math.floor(rem2/60)+':'+pad(rem2%60); tf.className='tf fpau';
+  } else if(pr.fsm===PS.ERROR){
+    tf.textContent='ERR'; tf.className='tf ferr';
+  } else if(pr.fsm===PS.IDLE){
+    if(pr.jobId){
+      tf.textContent=Math.floor(pr.duration/60)+':'+pad(pr.duration%60); tf.className='tf';
+    } else {
+      tf.textContent='0:00'; tf.className='tf';
+    }
+    var pb3=g('PB'+num); pb3.style.width='0%'; pb3.className='pfill';
+  }
+
+  // Buttons
+  var bs=g('B'+num+'S'), bp=g('B'+num+'P'), br=g('B'+num+'R'), bu=g('B'+num+'U');
+  var cj=g('B'+num+'CJ');
+  var btns=g('PCBTNS'+num), rbtns=g('PCRBTNS'+num);
+
+  // Complete Job button: visible when job loaded and press is NOT running
+  if(cj){
+    if(pr.jobId && pr.fsm !== PS.RUNNING){
+      cj.style.display=''; cj.disabled=false;
+    } else {
+      cj.style.display='none';
+    }
+  }
+
+  switch(pr.fsm){
+    case PS.IDLE:
+      btns.style.display='grid'; rbtns.style.display='none';
+      bs.disabled=!pr.jobId; bp.disabled=true; br.disabled=true; bu.disabled=!pr.jobId;
+      break;
+    case PS.RUNNING:
+      btns.style.display='grid'; rbtns.style.display='none';
+      bs.disabled=true; bp.disabled=false; br.disabled=false; bu.disabled=true;
+      break;
+    case PS.PAUSED:
+      btns.style.display='grid'; rbtns.style.display='none';
+      bs.disabled=false; bs.innerHTML='&#9654; Resume';
+      bp.disabled=true; br.disabled=false; bu.disabled=true;
+      break;
+    case PS.COMPLETE:
+      btns.style.display='none'; rbtns.style.display='grid';
+      bu.disabled=true;
+      // Contextual next button
+      var nxBtn=g('B'+num+'NX');
+      var allDone = job && job.cyclesDone >= job.qty;
+      if(nxBtn){
+        if(allDone) nxBtn.style.display='none';
+        else { nxBtn.style.display=''; nxBtn.textContent='▶ NEXT ('+(job.qty-job.cyclesDone)+' left)'; }
+      }
+      break;
+    case PS.ERROR:
+      btns.style.display='grid'; rbtns.style.display='none';
+      bs.disabled=true; bp.disabled=true; br.disabled=false; bu.disabled=true;
+      break;
+  }
+  // Reset start button text if not paused
+  if(pr.fsm !== PS.PAUSED && bs) bs.innerHTML='&#9654; Start';
+}
+
+function renderPressTimerTick(num, rem){
+  var tf=g('TF'+num); var pb=g('PB'+num);
+  var pr=AppState.presses[num];
+  if(rem < 0) rem = 0;
+  tf.textContent=Math.floor(rem/60)+':'+pad(rem%60);
+  var pct=(pr.elapsed/pr.duration)*100;
+  pb.style.width=Math.min(100,pct)+'%';
+  if(rem<=10 && rem>0){
+    tf.className='tf fwarn';
+    pb.style.background='var(--yellow)';
+  } else {
+    tf.className='tf frun';
+    pb.style.background='';
+  }
+  renderDashPressUI(num);
+}
+
+function renderDashPressUI(num){
+  var pr=AppState.presses[num];
+  var se=g('dp'+num+'st'), te=g('dp'+num+'t'), je=g('dp'+num+'j');
+  if(!se) return;
+  var job=findJob(pr.jobId);
+  if(pr.fsm===PS.RUNNING){
+    var rem=pr.duration-pr.elapsed;
+    se.className='sb srun'; se.textContent='RUNNING';
+    te.textContent=Math.floor(rem/60)+':'+pad(rem%60);
+    je.textContent=job?(job.ref+' · '+job.mat+' '+job.sz+'mm'):(pr.mat||'?')+' '+(pr.sz||'?')+'mm';
+  } else if(pr.fsm===PS.PAUSED){
+    var rem2=pr.duration-pr.elapsed;
+    se.className='sb spau'; se.textContent='PAUSED';
+    te.textContent=Math.floor(rem2/60)+':'+pad(rem2%60);
+    je.textContent=job?('PAUSED — '+job.ref):'Paused';
+  } else if(pr.fsm===PS.COMPLETE){
+    se.className='sb sdone'; se.textContent='DONE';
+    te.textContent='DONE';
+    je.textContent=job?('Awaiting result — '+job.ref):'Awaiting result';
+  } else if(pr.jobId){
+    se.className='sb si'; se.textContent='LOADED';
+    te.textContent='--:--';
+    je.textContent=job?(job.ref+' · '+job.mat+' '+job.sz+'mm · '+pr.duration+'s'):'Job loaded';
+  } else {
+    se.className='sb si'; se.textContent='IDLE';
+    te.textContent='--:--'; je.textContent='No active job';
+  }
+}
+
+function renderPressJobSelectors(){
+  var available = AppState.jobs.filter(function(j){ return j.status==='pending'||j.status==='delayed'||j.status==='in-progress'; });
+  [1,2].forEach(function(p){
+    var dd=g('PJDD'+p); if(!dd) return;
+    var html='<option value="">-- select pending job --</option>';
+    for(var i=0;i<available.length;i++){
+      var j=available[i];
+      if(AppState.presses[p].jobId===j.id) continue;
+      var shared=j.status==='in-progress'?' [ON PRESS '+(j.pressNum||'?')+']':'';
+      var delayed=j.status==='delayed'?' [DELAYED]':'';
+      var done=j.cyclesDone||0;
+      var prog=j.qty>1?' ('+done+'/'+j.qty+')':'';
+      var label=(j.refType==='vessel'?'VES':'SO')+': '+j.ref+' | '+j.mat+' '+j.sz+'mm | '+j.qty+' pcs'+prog+shared+delayed;
+      html+='<option value="'+j.id+'">'+esc(label)+'</option>';
+    }
+    dd.innerHTML=html;
+  });
+}
+
+/* ╔══════════════════════════════════════════════════════════════╗
+   ║  WINDOW-EXPOSED PRESS ACTIONS                               ║
+   ╚══════════════════════════════════════════════════════════════╝ */
+window.loadJobToPress = function(p){
+  var dd=g('PJDD'+p); if(!dd) return;
+  var jobId=parseInt(dd.value);
+  if(!jobId){ dispatch('UNLOAD_JOB',{press:p}); return; }
+  dispatch('LOAD_JOB',{press:p, jobId:jobId});
+};
+
+window.startPress = function(p){
+  var pr = AppState.presses[p];
+  if(!pr.jobId) return;
+  if(pr.fsm === PS.PAUSED){
+    dispatch('PRESS_TRANSITION',{press:p, to:PS.RUNNING, meta:{resumed:true}});
+  } else if(pr.fsm === PS.IDLE){
+    dispatch('PRESS_TRANSITION',{press:p, to:PS.RUNNING});
+  }
+};
+
+window.pausePress = function(p){
+  dispatch('PRESS_TRANSITION',{press:p, to:PS.PAUSED});
+};
+
+window.resetPress = function(p){
+  var pr = AppState.presses[p];
+  if(pr.fsm === PS.RUNNING || pr.fsm === PS.PAUSED){
+    // Transition to idle (via error if running, direct if paused allowed)
+    stopPressTimer(p);
+    pr.fsm = PS.IDLE;
+    pr.elapsed = 0;
+    pr.startedAt = null;
+    pr.pausedAt = null;
+    pr.pausedElapsed = 0;
+    audit('PRESS_RESET', {press:p, fromState:pr.fsm}, pr.jobId);
+  } else {
+    pr.fsm = PS.IDLE;
+    pr.elapsed = 0;
+    pr.startedAt = null;
+  }
+  persist();
+  renderPressUI(p);
+  renderDashPressUI(p);
+};
+
+window.unloadPress = function(p){ dispatch('UNLOAD_JOB',{press:p}); };
+window.nextCycle = function(p){ dispatch('NEXT_CYCLE',{press:p}); };
+
+window.redoCycle = function(p){
+  var pr = AppState.presses[p];
+  if(!pr.jobId) return;
+  scrapContext = {press:p, action:'redo'};
+  g('REDORS').value='';
+  openM('REDOM');
+};
+
+window.scrapPiece = function(p){
+  var pr = AppState.presses[p];
+  if(!pr.jobId) return;
+  scrapContext = {press:p, action:'scrap'};
+  g('SCRAPRS').value='';
+  openM('SCRAPM');
+};
+
+window.closeJob = function(p){ dispatch('CLOSE_JOB',{press:p}); };
+
+window.completeJobEarly = function(p){
+  var pr = AppState.presses[p];
+  if(!pr.jobId) return;
+  if(pr.fsm === PS.RUNNING){ notify('Stop the press before completing the job','wn'); return; }
+  var job = findJob(pr.jobId);
+  if(!job) return;
+  // Mark however many are done as the final count and close it out
+  var done = job.cyclesDone || 0;
+  audit('JOB_COMPLETED_EARLY', {press:p, ref:job.ref, cyclesDone:done, originalQty:job.qty, reason:'manual_complete'}, job.id);
+  logActivity('Press '+p+' — '+job.ref+' COMPLETED EARLY ('+done+'/'+job.qty+' pcs — marked done by operator)');
+  // Credit what's been done
+  AppState.stats.out += done;
+  if(pr.mat) AppState.stats.mat[pr.mat] = (AppState.stats.mat[pr.mat]||0) + done;
+  // Auto-deduct inventory for completed pieces
+  var invKey = pr.mat + '-' + pr.sz;
+  if(AppState.inventory[invKey] !== undefined && done > 0){
+    var newVal = Math.max(0, (AppState.inventory[invKey]||0) - done);
+    var delta = AppState.inventory[invKey] - newVal;
+    AppState.inventory[invKey] = newVal;
+    if(delta > 0){
+      AppState.inventoryDeltas.push({ts:new Date().toISOString(), key:invKey, delta:-delta, reason:'Early complete: '+job.ref, jobId:job.id});
+      audit('INV_DEDUCT', {key:invKey, deducted:delta, remaining:newVal}, job.id);
+    }
+  }
+  job.status = 'done'; job.pressNum = null;
+  // Unload from other press if shared
+  var other = p===1?2:1;
+  if(AppState.presses[other].jobId === job.id){
+    AppState.presses[other].jobId = null; AppState.presses[other].mat = ''; AppState.presses[other].sz = '';
+    pressTransition(other, PS.IDLE);
+  }
+  notify('Job completed — '+done+' of '+job.qty+' pcs credited','ok');
+  pr.jobId = null; pr.mat = ''; pr.sz = '';
+  pressTransition(p, PS.IDLE);
+  renderAll();
+};
+
+window.openDelayModal = function(p){
+  delayPressNum=p;
+  var ri=g('DLYREASON'); if(ri) ri.value='';
+  openM('DLY');
+};
+
+window.confirmDelay = function(){
+  var reason=(g('DLYREASON').value||'').trim()||'No reason given';
+  dispatch('DELAY_JOB',{press:delayPressNum, reason:reason});
+  closeM('DLY');
+};
+
+window.confirmRedo = function(){
+  var reason = (g('REDORS').value||'').trim();
+  if(!reason){ notify('Redo reason is required','er'); audioError(); return; }
+  closeM('REDOM');
+  if(scrapContext && scrapContext.action === 'redo'){
+    executeRedo(scrapContext.press, reason);
+  }
+  scrapContext = null;
+};
+
+window.confirmScrapPiece = function(){
+  var reason = (g('SCRAPRS').value||'').trim();
+  if(!reason){ notify('Scrap reason is mandatory — cannot bypass','er'); audioError(); return; }
+  closeM('SCRAPM');
+  if(scrapContext && scrapContext.action === 'scrap'){
+    executeScrap(scrapContext.press, reason);
+  }
+  scrapContext = null;
+};
+
+
+/* ═══ REF TYPE ═══ */
+window.setRefType = function(type){
+  dispatch('SET_REF_TYPE',{type:type});
+  var vo=g('RT-vo'),so=g('RT-so'),rl=g('ref-lbl'),rf=g('JREF');
+  if(type==='vessel'){
+    if(vo)vo.classList.add('on'); if(so)so.classList.remove('on');
+    if(rl)rl.textContent='Vessel Number'; if(rf)rf.placeholder='VES-0001';
+  } else {
+    if(so)so.classList.add('on'); if(vo)vo.classList.remove('on');
+    if(rl)rl.textContent='Sales Order'; if(rf)rf.placeholder='SO-0001';
+  }
+};
+
+/* ═══ DASHBOARD ═══ */
+function renderDashboard(){
+  st('d-out', AppState.stats.out); st('d-cyc', AppState.stats.cyc);
+  var done=0; for(var i=0;i<AppState.jobs.length;i++){if(AppState.jobs[i].status==='done')done++;}
+  st('d-jobs', done); st('d-tot', AppState.jobs.length);
+  var total=AppState.stats.out+AppState.scrap.length;
+  var rate=total>0?Math.round(AppState.scrap.length/total*100):0;
+  st('d-scr', rate+'%');
+  var max=Math.max(1,AppState.stats.mat.Viton||0,AppState.stats.mat.Buna||0,AppState.stats.mat.EPDM||0);
+  function setBar(fid,vid,mat){var v=AppState.stats.mat[mat]||0;var fb=g(fid);var vb=g(vid);if(fb)fb.style.width=Math.round(v/max*100)+'%';if(vb)vb.textContent=v;}
+  setBar('bfv','bvv','Viton'); setBar('bfb','bvb','Buna'); setBar('bfe','bve','EPDM');
+  var ae=g('d-act');
+  if(ae){
+    if(!AppState.activity.length){ae.innerHTML='<span style="color:var(--tx3)">No activity yet.</span>';}
+    else{var h='';var lines=AppState.activity.slice(0,15);
+      for(var i=0;i<lines.length;i++){
+        var col=lines[i].indexOf('CLOSED')>-1?'var(--green)':lines[i].indexOf('DELAYED')>-1?'var(--yellow)':lines[i].indexOf('FAIL')>-1||lines[i].indexOf('REDO')>-1?'var(--red)':'var(--tx2)';
+        h+='<div style="color:'+col+'">'+esc(lines[i])+'</div>';
+      }
+      ae.innerHTML=h;
+    }
+  }
+  renderOEE();
+}
+
+/* ═══ PRESS LOG ═══ */
+function renderPressLog(){
+  var tb=g('PL');if(!tb)return;
+  if(!AppState.pressLog.length){tb.innerHTML='<tr><td class="tbl-e" colspan="8">No cycles logged yet.</td></tr>';return;}
+  var h='';
+  for(var i=0;i<Math.min(AppState.pressLog.length,60);i++){
+    var e=AppState.pressLog[i];var mc=matChar(e.mat);
+    var rcls=e.res==='cycle'?'binp':e.res==='delayed'?'bdelay':e.res==='redo'?'brsh':'bf2';
+    h+='<tr><td>'+e.time+'</td><td>Press '+e.press+'</td><td>'+esc(e.ref||'--')+'</td>';
+    h+='<td><span class="badge b'+mc+'">'+e.mat+'</span></td>';
+    h+='<td>'+e.sz+'</td><td>'+(e.temp||'--')+'</td><td>'+e.dur+'</td>';
+    h+='<td><span class="badge '+rcls+'">'+e.res.toUpperCase()+'</span></td></tr>';
+  }
+  tb.innerHTML=h;
+}
+
+/* ═══ CALCULATOR ═══ */
+window.calcLen=function(){
+  var md=parseFloat(g('CMD').value);var sz=parseInt(g('CSZ').value);var mat=g('CMT').value;
+  if(isNaN(md)||md<=0){st('CRV','-- in');st('CPT','--s');curCalc=null;return;}
+  var cut=(md*Math.PI).toFixed(3);var pt=(CURE_TIMES[mat]&&CURE_TIMES[mat][sz])||null;
+  st('CRV',cut+'"');st('CPT',pt?pt+'s':'--s');
+  curCalc={md:md,sz:sz,mat:mat,cut:cut,pt:pt};
+};
+window.saveCalc=function(){
+  if(!curCalc){notify('Enter an MD value first','wn');return;}
+  dispatch('SAVE_CALC',curCalc); renderCalc();
+};
+function renderCalc(){
+  var tb=g('CH');if(!tb)return;
+  if(!AppState.calc.length){tb.innerHTML='<tr><td class="tbl-e" colspan="6">No calculations yet.</td></tr>';return;}
+  var h='';
+  for(var i=0;i<Math.min(AppState.calc.length,30);i++){
+    var c=AppState.calc[i];var mc=matChar(c.mat);
+    h+='<tr><td>'+c.time+'</td><td>'+c.md+'"</td><td>'+c.sz+'mm</td>';
+    h+='<td><span class="badge b'+mc+'">'+c.mat+'</span></td>';
+    h+='<td style="color:var(--fire);font-weight:700">'+c.cut+'"</td>';
+    h+='<td>'+(c.pt?c.pt+'s':'--')+'</td></tr>';
+  }
+  tb.innerHTML=h;
+}
+
+/* ═══ JOB QUEUE ═══ */
+window.addJob=function(){
+  dispatch('ADD_JOB',{ref:g('JREF').value.trim(),part:g('JPN').value.trim(),mat:g('JMT').value,sz:g('JSZ').value,md:parseFloat(g('JMD').value),qty:parseInt(g('JQT').value),pri:g('JPR').value});
+};
+window.removeJob=function(id){dispatch('REMOVE_JOB',{id:id});};
+function renderJobs(){
+  var el=g('JQ');if(!el)return;
+  if(!AppState.jobs.length){el.innerHTML='<div style="font-family:var(--fm);font-size:11px;color:var(--tx3);text-align:center;padding:48px;border:1px solid var(--br);border-radius:var(--r2)">No jobs in queue.</div>';return;}
+  var priOrd={rush:0,urgent:1,normal:2};
+  var sorted=AppState.jobs.slice().sort(function(a,b){return(priOrd[a.pri]||2)-(priOrd[b.pri]||2);});
+  var h='';
+  for(var i=0;i<sorted.length;i++){
+    var j=sorted[i];var mc=matChar(j.mat);
+    var isDone=j.status==='done',isInp=j.status==='in-progress',isDly=j.status==='delayed';
+    var rowCls='jr'+(isInp?' jinp':isDone?' jd':isDly?' jdly':'');
+    var statusBadge=isDone?'<span class="badge bp">DONE</span>':isInp?'<span class="badge binp">ON PRESS '+j.pressNum+'</span>':isDly?'<span class="badge bdelay">DELAYED</span>':'';
+    h+='<div class="'+rowCls+'"><div class="jnum">'+(i+1)+'</div><div>';
+    h+='<div class="jtit"><span style="color:var(--tx3);font-size:9px;text-transform:uppercase;letter-spacing:1px">'+(j.refType==='vessel'?'VES':'SO')+'</span> '+esc(j.ref)+' <span style="color:var(--tx2);font-weight:400;font-size:10px">'+esc(j.part)+'</span></div>';
+    h+='<div class="jsub"><span class="badge b'+mc+'">'+j.mat+'</span>'+j.sz+'mm';
+    if(j.cut)h+=' · Cut: <span style="color:var(--fire)">'+j.cut+'"</span>';
+    if(j.pt)h+=' · '+j.pt+'s';
+    h+=' <span class="badge b'+j.pri.slice(0,3)+'">'+j.pri+'</span>';
+    if(statusBadge)h+=' '+statusBadge;
+    if(isDly&&j.delayReason)h+=' <span style="color:var(--tx3)">— '+esc(j.delayReason)+'</span>';
+    if(j.cyclesDone>0)h+=' <span style="color:var(--green)">'+j.cyclesDone+'/'+j.qty+'</span>';
+    h+='</div></div>';
+    h+='<div><div class="jq">'+j.qty+'</div><div class="jql">pcs</div></div>';
+    h+='<div class="jac">';
+    if(!isDone&&!isInp)h+='<button class="btn brd" style="padding:6px 10px;font-size:9px" onclick="removeJob('+j.id+')">X</button>';
+    else h+='<div style="width:38px"></div>';
+    h+='</div></div>';
+  }
+  el.innerHTML=h;
+}
+
+/* ═══ SCRAP ═══ */
+window.logScrap=function(){
+  var reason=(g('SMRS').value||'').trim();
+  if(!reason){notify('Failure reason is required','wn');return;}
+  dispatch('LOG_SCRAP',{press:g('SMPR').value,mat:g('SMMT').value,sz:g('SMSZ').value,ref:g('SMPN').value.trim(),reason:reason});
+};
+function renderScrap(){
+  // Scrap = discarded pieces. Redos = re-cured pieces (separate counts).
+  var totalProduced = AppState.stats.out + AppState.scrap.length; // scrap pieces were attempted but thrown out
+  var scrapRate = totalProduced > 0 ? (AppState.scrap.length / totalProduced * 100).toFixed(1) : 0;
+  st('SC-T', AppState.scrap.length);
+  st('SC-RD', AppState.redos.length);
+  st('SC-R', scrapRate + '%');
+
+  // Scrap table
+  var tb = g('SL'); if(!tb) return;
+  if(!AppState.scrap.length){ tb.innerHTML='<tr><td class="tbl-e" colspan="6">No scrapped pieces.</td></tr>'; }
+  else {
+    var h='';
+    for(var i=0;i<AppState.scrap.length;i++){
+      var s=AppState.scrap[i]; var mc=matChar(s.mat);
+      h+='<tr><td>'+s.date+' '+s.time+'</td><td>Press '+s.press+'</td>';
+      h+='<td><span class="badge b'+mc+'">'+s.mat+'</span></td>';
+      h+='<td>'+s.sz+'</td><td>'+esc(s.ref)+'</td><td style="color:var(--red)">'+esc(s.reason)+'</td></tr>';
+    }
+    tb.innerHTML=h;
+  }
+
+  // Redo table
+  var rtb = g('RL'); if(!rtb) return;
+  if(!AppState.redos.length){ rtb.innerHTML='<tr><td class="tbl-e" colspan="6">No redos logged.</td></tr>'; }
+  else {
+    var rh='';
+    for(var i=0;i<AppState.redos.length;i++){
+      var r=AppState.redos[i]; var mc2=matChar(r.mat);
+      rh+='<tr><td>'+r.date+' '+r.time+'</td><td>Press '+r.press+'</td>';
+      rh+='<td><span class="badge b'+mc2+'">'+r.mat+'</span></td>';
+      rh+='<td>'+r.sz+'</td><td>'+esc(r.ref)+'</td><td style="color:var(--yellow)">'+esc(r.reason)+'</td></tr>';
+    }
+    rtb.innerHTML=rh;
+  }
+}
+
+/* ═══ INVENTORY ═══ */
+window.updateInv=function(k,v){dispatch('UPDATE_INV',{key:k,value:v});};
+window.saveInv=function(){dispatch('SAVE_INV');notify('Inventory saved','ok');};
+function renderInv(){
+  initInv();
+  var ms=['Viton','Buna','EPDM'],szs=[4,5,6],mcMap={Viton:'v',Buna:'b',EPDM:'ep'};
+  for(var m=0;m<ms.length;m++){
+    var mat=ms[m];var mc=mcMap[mat];
+    var container=g('INV-'+mat.charAt(0).toUpperCase());if(!container)continue;
+    var h='<div class="sh" style="margin-top:'+(m>0?'20px':'0')+'">'+mat+'</div><div class="ig">';
+    for(var s=0;s<szs.length;s++){
+      var k=mat+'-'+szs[s];var v=AppState.inventory[k]||0;
+      var low=v<=LOW_STOCK_THRESHOLD;
+      h+='<div class="ic i'+mc+(low?' il':'')+'">';
+      h+='<div class="im">'+mat+'</div><div class="isz">'+szs[s]+'mm</div>';
+      h+='<input class="ii" type="number" min="0" value="'+v+'" onchange="updateInv(\''+k+'\',this.value)">';
+      h+='<div class="iu">sheets</div></div>';
+    }
+    h+='</div>';container.innerHTML=h;
+  }
+}
+
+/* ═══ PARTS ═══ */
+function renderParts(){
+  var el=g('PTBL');if(!el)return;var h='';
+  for(var i=0;i<AppState.parts.length;i++){
+    var p=AppState.parts[i];var mc=matChar(p.mat);
+    var cut=(p.md*Math.PI).toFixed(3);
+    var pt=(CURE_TIMES[p.mat]&&CURE_TIMES[p.mat][p.sz])||'--';
+    h+='<div class="prow"><div><div class="pnm">'+p.num+'</div><div class="pds">'+esc(p.desc)+'</div></div>';
+    h+='<div class="pv"><span class="badge b'+mc+'">'+p.mat+'</span></div>';
+    h+='<div class="pv">'+p.sz+'mm</div><div class="pv" style="color:var(--fire)">'+cut+'"</div>';
+    h+='<div class="pv">'+pt+'s</div></div>';
+  }
+  el.innerHTML=h;
+}
+
+/* ═══ HANDOFF ═══ */
+function buildHoff(){
+  var lines=[];
+  lines.push('VULCANEX — SHIFT HANDOFF REPORT');
+  lines.push('Fil-Trek Manufacturing · Cambridge, ON');
+  lines.push('Date: '+new Date().toISOString().slice(0,10));
+  lines.push('Shift: Day (07:30–16:30)');
+  lines.push('Generated: '+tsNow());lines.push('');
+  var done=0,delayed=0,pending=[];
+  for(var i=0;i<AppState.jobs.length;i++){var j=AppState.jobs[i];if(j.status==='done')done++;if(j.status==='delayed')delayed++;if(j.status==='pending'||j.status==='delayed'||j.status==='in-progress')pending.push(j);}
+  var today=new Date().toISOString().slice(0,10);
+  var tf=0;for(var i=0;i<AppState.scrap.length;i++){if(AppState.scrap[i].date===today)tf++;}
+  var total=AppState.stats.out+AppState.scrap.length;
+  var rate=total>0?(AppState.scrap.length/total*100).toFixed(1):0;
+  lines.push('-- PRODUCTION SUMMARY --');
+  lines.push('Total O-rings completed:  '+AppState.stats.out);
+  lines.push('Press cycles run:         '+AppState.stats.cyc);
+  lines.push('Jobs completed:           '+done+' of '+AppState.jobs.length);
+  if(delayed)lines.push('Jobs delayed:             '+delayed);
+  lines.push('');lines.push('-- MATERIAL OUTPUT --');
+  lines.push('Viton:  '+(AppState.stats.mat.Viton||0)+' pcs');
+  lines.push('Buna:   '+(AppState.stats.mat.Buna||0)+' pcs');
+  lines.push('EPDM:   '+(AppState.stats.mat.EPDM||0)+' pcs');
+  lines.push('');lines.push('-- QUALITY --');
+  lines.push('Scrapped (discarded):     '+AppState.scrap.length);
+  lines.push('Redos (re-cured):         '+AppState.redos.length);
+  lines.push('Scrap rate:               '+rate+'%');
+  var oee=computeOEE();
+  lines.push('');lines.push('-- OEE --');
+  lines.push('OEE: '+Math.round(oee.oee*100)+'%  |  A: '+Math.round(oee.availability*100)+'%  |  P: '+Math.round(oee.performance*100)+'%  |  Q: '+Math.round(oee.quality*100)+'%');
+  if(oee.avgCycle>0)lines.push('Avg cycle: '+oee.avgCycle.toFixed(1)+'s (σ '+oee.stddev.toFixed(1)+')');
+  lines.push('');lines.push('-- PENDING / DELAYED JOBS --');
+  if(pending.length){for(var i=0;i<pending.length;i++){var j=pending[i];lines.push('  * '+(j.refType==='vessel'?'VES':'SO')+': '+j.ref+' — '+j.mat+' '+j.sz+'mm x '+j.qty+' ['+j.pri.toUpperCase()+']'+(j.status==='delayed'?' DELAYED: '+j.delayReason:''));}}
+  else lines.push('  None.');
+  var el=g('HA');if(el)el.textContent=lines.join('\n');
+}
+window.submitHandoff=function(){
+  var notes=g('HN').value.trim();var auto=g('HA').textContent;
+  dispatch('SUBMIT_HANDOFF',{body:auto,notes:notes});
+  renderHandoffs();g('HN').value='';
+};
+function renderHandoffs(){
+  var el=g('HH');if(!el)return;
+  if(!AppState.handoffs.length){el.innerHTML='<div style="font-family:var(--fm);font-size:11px;color:var(--tx3);text-align:center;padding:32px">No previous handoffs.</div>';return;}
+  var h='';
+  for(var i=0;i<AppState.handoffs.length;i++){var hf=AppState.handoffs[i];h+='<div class="he"><div class="hm">'+hf.date+' — '+hf.time+' — Day Shift</div><div class="hb">'+esc(hf.body)+'</div></div>';}
+  el.innerHTML=h;
+}
+window.printHandoff=function(){
+  var content=g('HA').textContent+'\n\nNOTES:\n'+(g('HN').value||'');
+  var w=window.open('','_blank');
+  if(w){w.document.write('<html><head><title>VULCANEX Handoff</title></head><body><pre style="font-family:monospace;font-size:13px;padding:24px;line-height:1.8">'+esc(content)+'</pre></body></html>');w.document.close();w.focus();setTimeout(function(){w.print();},300);}
+};
+
+/* ═══ CLEAR CATEGORIES ═══ */
+var _clearCatKey='',_clearCatName='';
+window.confirmClearCat=function(key,name){
+  _clearCatKey=key;_clearCatName=name;
+  var t=g('CATCLR-TITLE');if(t)t.textContent='CLEAR '+name.toUpperCase();
+  var b=g('CATCLR-BODY');if(b)b.textContent='This will permanently delete all '+name+' data. Audit ledger is unaffected.';
+  openM('CATCLR');
+};
+window.doClearCat=function(){if(!_clearCatKey)return;dispatch('CLEAR_CAT',{key:_clearCatKey,name:_clearCatName});};
+window.clearAll=function(){dispatch('CLEAR_ALL');};
+
+
+/* ═══ AUDIT LOG ═══ */
+function renderAuditLog(){
+  st('audit-count',AppState.auditLog.length);
+  var el=g('AUDIT-LOG');if(!el)return;
+  if(!AppState.auditLog.length){el.innerHTML='<div style="text-align:center;color:var(--tx3);padding:32px;font-family:var(--fm);font-size:11px">No events recorded yet.</div>';return;}
+  var h='';var logs=AppState.auditLog.slice().reverse().slice(0,200);
+  for(var i=0;i<logs.length;i++){
+    var e=logs[i];
+    var tc='var(--tx2)';
+    if(e.type.indexOf('ERROR')>-1||e.type.indexOf('CORRUPT')>-1||e.type.indexOf('SCRAP')>-1)tc='var(--red)';
+    else if(e.type.indexOf('COMPLETE')>-1||e.type.indexOf('CLOSED')>-1||e.type==='SYSTEM_LOAD')tc='var(--green)';
+    else if(e.type.indexOf('DELAY')>-1||e.type.indexOf('RECOVERY')>-1)tc='var(--yellow)';
+    else if(e.type.indexOf('TRANSITION')>-1)tc='var(--fire)';
+    h+='<div class="audit-row"><div class="audit-ts">'+e.ts.replace('T',' ').slice(0,19)+'</div>';
+    h+='<div class="audit-type" style="color:'+tc+';font-size:8px">'+e.type+'</div>';
+    h+='<div class="audit-msg">'+(e.jobId?'['+e.jobId+'] ':'')+esc(JSON.stringify(e.payload).slice(0,120))+'</div></div>';
+  }
+  el.innerHTML=h;
+}
+window.exportAuditJSON=function(){
+  var blob=new Blob([JSON.stringify(AppState.auditLog,null,2)],{type:'application/json'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='vulcanex-audit-'+new Date().toISOString().slice(0,10)+'.json';a.click();
+  URL.revokeObjectURL(a.href);notify('Audit log exported (JSON)','ok');
+};
+window.exportAuditCSV=function(){
+  var rows=['ID,Timestamp,Operator,JobID,EventType,Payload'];
+  for(var i=0;i<AppState.auditLog.length;i++){var e=AppState.auditLog[i];
+    rows.push([e.id,e.ts,e.operator,e.jobId||'',e.type,'"'+JSON.stringify(e.payload).replace(/"/g,'""')+'"'].join(','));}
+  var blob=new Blob([rows.join('\n')],{type:'text/csv'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='vulcanex-audit-'+new Date().toISOString().slice(0,10)+'.csv';a.click();
+  URL.revokeObjectURL(a.href);notify('Audit log exported (CSV)','ok');
+};
+
+/* ═══ PDF EXPORT ═══ */
+window.exportPDF=function(){
+  var today=new Date().toISOString().slice(0,10);
+  var now=new Date();var nowStr=pad(now.getHours())+':'+pad(now.getMinutes());
+  var tf=0;for(var i=0;i<AppState.scrap.length;i++){if(AppState.scrap[i].date===today)tf++;}
+  var done=0,delayed=0;
+  for(var i=0;i<AppState.jobs.length;i++){if(AppState.jobs[i].status==='done')done++;if(AppState.jobs[i].status==='delayed')delayed++;}
+  var total=AppState.stats.out+AppState.scrap.length;
+  var rate=total>0?(AppState.scrap.length/total*100).toFixed(1):0;
+  var notes=(g('HN')&&g('HN').value.trim())||'No additional notes.';
+  var oee=computeOEE();
+  var pLogHTML='';
+  if(AppState.pressLog.length){
+    for(var i=0;i<Math.min(AppState.pressLog.length,25);i++){
+      var e=AppState.pressLog[i];var rcls=e.res==='cycle'?'pass':e.res==='delayed'?'delay':'fail';
+      pLogHTML+='<tr><td>'+e.time+'</td><td>Press '+e.press+'</td><td>'+esc(e.ref||'--')+'</td><td>'+e.mat+'</td><td>'+e.sz+'</td><td>'+(e.temp||'--')+'</td><td>'+e.dur+'</td><td class="'+rcls+'">'+e.res.toUpperCase()+'</td></tr>';
+    }
+  } else { pLogHTML='<tr><td colspan="8" style="text-align:center;color:#999;padding:12px">No press cycles recorded.</td></tr>'; }
+  var html='';
+  html+='<div class="pdf-header"><div><div class="pdf-logo">VULCANEX</div><div class="pdf-sub">Fil-Trek Production Intelligence</div></div>';
+  html+='<div class="pdf-meta"><strong>End-of-Day Report</strong><br>'+today+'<br>Day Shift 07:30–16:30<br>Generated: '+nowStr+'</div></div>';
+  html+='<div class="pdf-section-title">Key Performance Indicators</div><div class="pdf-kpi-grid">';
+  html+='<div class="pdf-kpi"><div class="pdf-kpi-val pdf-green">'+AppState.stats.out+'</div><div class="pdf-kpi-lbl">O-Rings Out</div></div>';
+  html+='<div class="pdf-kpi"><div class="pdf-kpi-val pdf-orange">'+AppState.stats.cyc+'</div><div class="pdf-kpi-lbl">Press Cycles</div></div>';
+  html+='<div class="pdf-kpi"><div class="pdf-kpi-val">'+done+'/'+AppState.jobs.length+'</div><div class="pdf-kpi-lbl">Jobs Done</div></div>';
+  html+='<div class="pdf-kpi"><div class="pdf-kpi-val '+(parseFloat(rate)>5?'pdf-red':'pdf-green')+'">'+rate+'%</div><div class="pdf-kpi-lbl">Scrap Rate</div></div></div>';
+  html+='<div class="pdf-section-title">OEE</div><div class="pdf-kpi-grid">';
+  html+='<div class="pdf-kpi"><div class="pdf-kpi-val pdf-orange">'+Math.round(oee.oee*100)+'%</div><div class="pdf-kpi-lbl">OEE</div></div>';
+  html+='<div class="pdf-kpi"><div class="pdf-kpi-val pdf-green">'+Math.round(oee.availability*100)+'%</div><div class="pdf-kpi-lbl">Availability</div></div>';
+  html+='<div class="pdf-kpi"><div class="pdf-kpi-val">'+Math.round(oee.performance*100)+'%</div><div class="pdf-kpi-lbl">Performance</div></div>';
+  html+='<div class="pdf-kpi"><div class="pdf-kpi-val">'+Math.round(oee.quality*100)+'%</div><div class="pdf-kpi-lbl">Quality</div></div></div>';
+  html+='<div class="pdf-section-title">Material Output</div><div class="pdf-mat-grid">';
+  html+='<div class="pdf-mat viton"><div class="pdf-mat-val">'+(AppState.stats.mat.Viton||0)+'</div><div class="pdf-mat-lbl">Viton</div></div>';
+  html+='<div class="pdf-mat buna"><div class="pdf-mat-val">'+(AppState.stats.mat.Buna||0)+'</div><div class="pdf-mat-lbl">Buna</div></div>';
+  html+='<div class="pdf-mat epdm"><div class="pdf-mat-val">'+(AppState.stats.mat.EPDM||0)+'</div><div class="pdf-mat-lbl">EPDM</div></div></div>';
+  if(delayed){
+    html+='<div class="pdf-section-title">Delayed Jobs</div><div class="pdf-notes">';
+    var dj=AppState.jobs.filter(function(j){return j.status==='delayed';});
+    for(var i=0;i<dj.length;i++){var j=dj[i];html+=esc((j.refType==='vessel'?'VES':'SO')+': '+j.ref+' — '+j.mat+' '+j.sz+'mm x '+j.qty+' — '+(j.delayReason||'No reason'))+'\n';}
+    html+='</div>';
+  }
+  html+='<div class="pdf-section-title">Press Log</div>';
+  html+='<table class="pdf-table"><thead><tr><th>Time</th><th>Press</th><th>Ref</th><th>Mat</th><th>Size</th><th>Temp</th><th>Dur</th><th>Result</th></tr></thead><tbody>'+pLogHTML+'</tbody></table>';
+  html+='<div class="pdf-section-title">Shift Notes</div><div class="pdf-notes">'+esc(notes)+'</div>';
+  html+='<div class="pdf-footer"><div class="pdf-footer-txt">VULCANEX · Fil-Trek Manufacturing · Cambridge, ON</div><div>'+today+' '+nowStr+'</div></div>';
+  var pc=g('pdf-content');if(pc)pc.innerHTML=html;
+  setTimeout(function(){window.print();},150);
+};
+
+/* ═══ BACKUP SYSTEM ═══ */
+window.exportBackupJSON=function(){
+  var data=JSON.parse(JSON.stringify(AppState));
+  data._exportedAt=new Date().toISOString();
+  var blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='vulcanex-backup-'+new Date().toISOString().slice(0,10)+'-'+Date.now()+'.json';
+  a.click();URL.revokeObjectURL(a.href);
+  AppState.lastBackup=new Date().toISOString();
+  persist();
+  audit('BACKUP_EXPORTED',{});
+  notify('Full backup exported','ok');
+};
+
+function autoBackupCheck(){
+  if(!AppState.lastBackup) return;
+  var last=new Date(AppState.lastBackup).getTime();
+  if(Date.now()-last >= BACKUP_INTERVAL){
+    notify('Auto-backup: 4hrs since last backup. Downloading...','if');
+    setTimeout(function(){ window.exportBackupJSON(); },1000);
+  }
+}
+
+/* ═══ RENDER ALL ═══ */
+function renderAll(){
+  renderDashboard();
+  renderPressUI(1); renderPressUI(2);
+  renderDashPressUI(1); renderDashPressUI(2);
+  renderPressJobSelectors();
+  renderPressLog(); renderCalc(); renderHandoffs();
+  renderScrap(); renderJobs(); renderInv(); renderParts();
+}
+
+/* ╔══════════════════════════════════════════════════════════════╗
+   ║  INITIALIZATION                                             ║
+   ╚══════════════════════════════════════════════════════════════╝ */
+loadState();
+initInv();
+
+// Restore ref type UI
+if(AppState.refType==='sales'){
+  var vo=g('RT-vo'),so=g('RT-so'),rl=g('ref-lbl'),rf=g('JREF');
+  if(vo)vo.classList.remove('on');if(so)so.classList.add('on');
+  if(rl)rl.textContent='Sales Order';if(rf)rf.placeholder='SO-0001';
+}
+
+persist();
+renderAll();
+
+// Auto-backup check every 30 min
+setInterval(autoBackupCheck, 30*60*1000);
+autoBackupCheck();
+
+// Initialize audio context on first user interaction (required by browsers)
+document.addEventListener('click', function initAudio(){
+  getAudioCtx();
+  document.removeEventListener('click', initAudio);
+}, {once:true});
+
+/* ═══ SERVICE WORKER (Inline Registration for PWA/Offline) ═══ */
+if('serviceWorker' in navigator){
+  var swCode = "var CACHE='vulcanex-v"+VERSION+"';"+
+    "self.addEventListener('install',function(e){e.waitUntil(caches.open(CACHE).then(function(c){return c.addAll(['./'])}));self.skipWaiting()});"+
+    "self.addEventListener('activate',function(e){e.waitUntil(caches.keys().then(function(ks){return Promise.all(ks.filter(function(k){return k!==CACHE}).map(function(k){return caches.delete(k)}))}));self.clients.claim()});"+
+    "self.addEventListener('fetch',function(e){e.respondWith(caches.match(e.request).then(function(r){return r||fetch(e.request).catch(function(){return caches.match('./')})}))})";
+  var swBlob = new Blob([swCode], {type:'application/javascript'});
+  var swUrl = URL.createObjectURL(swBlob);
+  navigator.serviceWorker.register(swUrl).then(function(reg){
+    console.log('VULCANEX SW registered');
+  }).catch(function(err){
+    console.log('SW registration skipped:', err.message);
+  });
+}
+
+})();
+</script>
+</body>
+</html>
