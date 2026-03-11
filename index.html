@@ -2404,11 +2404,8 @@ window.exportPDF=function(){
   }
   var totalParts=AppState.stats.out+AppState.scrap.length;
   var scrapRate=totalParts>0?(AppState.scrap.length/totalParts*100).toFixed(1):'0.0';
-  // Count redo cycles from press log
-  var redoCycles=0;
-  for(var i=0;i<AppState.pressLog.length;i++){
-    if(AppState.pressLog[i].res==='redo'||AppState.pressLog[i].res==='redo-complete'||AppState.pressLog[i].res==='redo-30s'||AppState.pressLog[i].res==='redo-30s-complete') redoCycles++;
-  }
+  // Count redo cycles from press log — only count initiations, not completions
+  var redoCycles=AppState.redos.length;
   var totalCyclesIncRedos=AppState.stats.cyc+redoCycles;
   var redoRate=totalCyclesIncRedos>0?(redoCycles/totalCyclesIncRedos*100).toFixed(1):'0.0';
   var notes=(g('HN')&&g('HN').value.trim())||'No additional notes.';
