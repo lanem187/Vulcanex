@@ -327,18 +327,74 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <div class="card cg"><div class="lbl">Scrap Rate</div><div class="bnum" id="d-scr" style="color:var(--red)">0%</div><div class="unit">pieces discarded</div></div>
   </div>
 
-  <div class="sh">OEE Metrics</div>
+  <!-- V5: Per-Press OEE + Combined -->
+  <div class="sh">Press Performance</div>
+  <div class="g3 gap" id="PRESS-OEE">
+    <!-- Press 1 -->
+    <div class="card" style="border-top:2px solid var(--fire)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <div class="lbl" style="margin:0;color:var(--fire)">Press 1</div>
+        <div style="font-family:var(--fd);font-size:28px;color:var(--fire)" id="p1-oee">—</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-family:var(--fm);font-size:9px">
+        <div><span style="color:var(--tx3)">AVAIL</span><br><span id="p1-a" style="color:var(--green);font-size:14px;font-family:var(--fd)">—</span></div>
+        <div><span style="color:var(--tx3)">PERF</span><br><span id="p1-p" style="color:var(--blue);font-size:14px;font-family:var(--fd)">—</span></div>
+        <div><span style="color:var(--tx3)">QUALITY</span><br><span id="p1-q" style="color:var(--yellow);font-size:14px;font-family:var(--fd)">—</span></div>
+        <div><span style="color:var(--tx3)">CYCLES</span><br><span id="p1-cyc" style="color:var(--tx);font-size:14px;font-family:var(--fd)">0</span></div>
+        <div><span style="color:var(--tx3)">RUNTIME</span><br><span id="p1-rt" style="color:var(--tx2);font-size:14px;font-family:var(--fd)">0m</span></div>
+        <div><span style="color:var(--tx3)">DOWNTIME</span><br><span id="p1-dt" style="color:var(--red);font-size:14px;font-family:var(--fd)">—</span></div>
+        <div><span style="color:var(--tx3)">AVG CYCLE</span><br><span id="p1-avg" style="color:var(--tx2);font-size:14px;font-family:var(--fd)">—</span></div>
+        <div><span style="color:var(--tx3)">σ STD DEV</span><br><span id="p1-std" style="color:var(--tx3);font-size:14px;font-family:var(--fd)">—</span></div>
+      </div>
+    </div>
+    <!-- Press 2 -->
+    <div class="card" style="border-top:2px solid var(--blue)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <div class="lbl" style="margin:0;color:var(--blue)">Press 2</div>
+        <div style="font-family:var(--fd);font-size:28px;color:var(--blue)" id="p2-oee">—</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-family:var(--fm);font-size:9px">
+        <div><span style="color:var(--tx3)">AVAIL</span><br><span id="p2-a" style="color:var(--green);font-size:14px;font-family:var(--fd)">—</span></div>
+        <div><span style="color:var(--tx3)">PERF</span><br><span id="p2-p" style="color:var(--blue);font-size:14px;font-family:var(--fd)">—</span></div>
+        <div><span style="color:var(--tx3)">QUALITY</span><br><span id="p2-q" style="color:var(--yellow);font-size:14px;font-family:var(--fd)">—</span></div>
+        <div><span style="color:var(--tx3)">CYCLES</span><br><span id="p2-cyc" style="color:var(--tx);font-size:14px;font-family:var(--fd)">0</span></div>
+        <div><span style="color:var(--tx3)">RUNTIME</span><br><span id="p2-rt" style="color:var(--tx2);font-size:14px;font-family:var(--fd)">0m</span></div>
+        <div><span style="color:var(--tx3)">DOWNTIME</span><br><span id="p2-dt" style="color:var(--red);font-size:14px;font-family:var(--fd)">—</span></div>
+        <div><span style="color:var(--tx3)">AVG CYCLE</span><br><span id="p2-avg" style="color:var(--tx2);font-size:14px;font-family:var(--fd)">—</span></div>
+        <div><span style="color:var(--tx3)">σ STD DEV</span><br><span id="p2-std" style="color:var(--tx3);font-size:14px;font-family:var(--fd)">—</span></div>
+      </div>
+    </div>
+    <!-- Press 3 -->
+    <div class="card" style="border-top:2px solid var(--green)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <div class="lbl" style="margin:0;color:var(--green)">Press 3</div>
+        <div style="font-family:var(--fd);font-size:28px;color:var(--green)" id="p3-oee">—</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-family:var(--fm);font-size:9px">
+        <div><span style="color:var(--tx3)">AVAIL</span><br><span id="p3-a" style="color:var(--green);font-size:14px;font-family:var(--fd)">—</span></div>
+        <div><span style="color:var(--tx3)">PERF</span><br><span id="p3-p" style="color:var(--blue);font-size:14px;font-family:var(--fd)">—</span></div>
+        <div><span style="color:var(--tx3)">QUALITY</span><br><span id="p3-q" style="color:var(--yellow);font-size:14px;font-family:var(--fd)">—</span></div>
+        <div><span style="color:var(--tx3)">CYCLES</span><br><span id="p3-cyc" style="color:var(--tx);font-size:14px;font-family:var(--fd)">0</span></div>
+        <div><span style="color:var(--tx3)">RUNTIME</span><br><span id="p3-rt" style="color:var(--tx2);font-size:14px;font-family:var(--fd)">0m</span></div>
+        <div><span style="color:var(--tx3)">DOWNTIME</span><br><span id="p3-dt" style="color:var(--red);font-size:14px;font-family:var(--fd)">—</span></div>
+        <div><span style="color:var(--tx3)">AVG CYCLE</span><br><span id="p3-avg" style="color:var(--tx2);font-size:14px;font-family:var(--fd)">—</span></div>
+        <div><span style="color:var(--tx3)">σ STD DEV</span><br><span id="p3-std" style="color:var(--tx3);font-size:14px;font-family:var(--fd)">—</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sh">Combined Totals</div>
   <div class="g5 gap">
     <div class="card" style="text-align:center">
       <div class="oee-ring"><div class="oee-val" id="oee-total" style="color:var(--fire)">0%</div><div class="oee-lbl">OEE</div></div>
     </div>
-    <div class="card"><div class="lbl">Availability</div><div class="bnum" id="oee-a" style="font-size:40px;color:var(--green)">0%</div><div class="unit">runtime / planned</div></div>
+    <div class="card"><div class="lbl">Availability</div><div class="bnum" id="oee-a" style="font-size:40px;color:var(--green)">0%</div><div class="unit">combined runtime / planned</div></div>
     <div class="card"><div class="lbl">Performance</div><div class="bnum" id="oee-p" style="font-size:40px;color:var(--blue)">0%</div><div class="unit">ideal / actual</div></div>
     <div class="card"><div class="lbl">Quality</div><div class="bnum" id="oee-q" style="font-size:40px;color:var(--yellow)">0%</div><div class="unit">good / total</div></div>
     <div class="card"><div class="lbl">Shift Projection</div><div class="bnum" id="oee-proj" style="font-size:40px;color:var(--tx2)">—</div><div class="unit">estimated output</div></div>
   </div>
 
-  <div class="sh">Cycle Statistics</div>
+  <div class="sh">Combined Cycle Statistics</div>
   <div class="g4 gap">
     <div class="card"><div class="lbl">Avg Cycle Time</div><div class="bnum" id="cs-avg" style="font-size:36px;color:var(--tx)">—</div><div class="unit">seconds</div></div>
     <div class="card"><div class="lbl">Std Deviation</div><div class="bnum" id="cs-std" style="font-size:36px;color:var(--tx2)">—</div><div class="unit">σ seconds</div></div>
@@ -1183,16 +1239,7 @@ function pressTransition(num,toState,meta){
 
   switch(toState){
     case PS.RUNNING:
-      // V5: Track downtime between cycles
       if(from===PS.IDLE){
-        if(pr.lastCycleEndAt){
-          var dtMs=Date.now()-new Date(pr.lastCycleEndAt).getTime();
-          var dtS=Math.floor(dtMs/1000);
-          if(dtS>0&&dtS<SHIFT_DURATION_S){
-            AppState.stats.downtimeSeconds+=dtS;
-            audit('DOWNTIME_RECORDED',{press:num,seconds:dtS},pr.jobId);
-          }
-        }
         pr.elapsed=0;pr.startedAt=new Date().toISOString();pr.pausedElapsed=0;
       } else if(from===PS.PAUSED){
         var pauseDur=pr.pausedAt?(Date.now()-new Date(pr.pausedAt).getTime()):0;
@@ -1593,86 +1640,178 @@ function batchRenderAll(){
 }
 
 /* ╔══════════════════════════════════════════════════════════╗
-   ║  OEE + METRICS ENGINE (V5: Precision overhaul)          ║
+   ║  OEE + METRICS ENGINE (V5: Per-Press + Combined)        ║
    ╚══════════════════════════════════════════════════════════╝ */
+
+/* Compute stats for a single press's cycle array */
+function computePressStats(cycles, scrapCount, cappedShift, pressIsActive){
+  var r={cyc:0,runtime:0,idealRuntime:0,avg:0,stddev:0,fastest:0,slowest:0,availability:0,performance:0,quality:0,oee:0,downtime:0,active:false,planned:0};
+  if(!cycles.length) return r;
+  r.active=true;r.cyc=cycles.length;
+  var durs=[];
+  var earliestTs=null,latestTs=null,lastDur=0;
+  for(var i=0;i<cycles.length;i++){
+    var d=typeof cycles[i]==='object'?cycles[i].dur:cycles[i];
+    r.runtime+=d;r.idealRuntime+=d;durs.push(d);
+    if(typeof cycles[i]==='object'&&cycles[i].ts){
+      var ts=new Date(cycles[i].ts).getTime();
+      if(!earliestTs||ts<earliestTs) earliestTs=ts;
+      if(!latestTs||ts>latestTs){latestTs=ts;lastDur=d;}
+    }
+  }
+  // Planned time logic:
+  // - If press currently has a job loaded (active): first cycle to NOW
+  //   (press is committed to production, idle time since last cycle counts against it)
+  // - If press has NO job loaded (idle/done for the day): first cycle to last cycle end
+  //   (only charges the window the press was actually in service)
+  var planned;
+  if(earliestTs&&latestTs){
+    if(pressIsActive){
+      // Active press: charged from first cycle to now
+      planned=Math.floor((Date.now()-earliestTs)/1000);
+    } else {
+      // Idle press: charged from first cycle to last cycle completion
+      // lastCycleEnd ≈ latestTs (cycle complete timestamp) — the ts IS the completion time
+      planned=Math.floor((latestTs-earliestTs)/1000)+lastDur;
+    }
+    planned=Math.max(r.runtime,planned); // Can't be less than actual runtime
+    planned=Math.min(planned,cappedShift); // Can't exceed shift
+  } else {
+    planned=cappedShift; // Legacy data fallback
+  }
+  if(planned<=0)planned=1;
+  r.planned=planned;
+  r.availability=Math.min(1,r.runtime/planned);
+  r.performance=r.runtime>0?Math.min(1,r.idealRuntime/r.runtime):0;
+  var totalParts=r.cyc+scrapCount;
+  r.quality=totalParts>0?r.cyc/totalParts:1;
+  r.oee=r.availability*r.performance*r.quality;
+  r.downtime=Math.max(0,planned-r.runtime);
+  // Cycle stats
+  var sum=0;for(var i=0;i<durs.length;i++)sum+=durs[i];
+  r.avg=sum/durs.length;
+  var variance=0;for(var i=0;i<durs.length;i++)variance+=Math.pow(durs[i]-r.avg,2);
+  r.stddev=Math.sqrt(variance/durs.length);
+  r.fastest=Math.min.apply(null,durs);
+  r.slowest=Math.max.apply(null,durs);
+  return r;
+}
+
 function computeOEE(){
   var s=AppState.stats;var now=new Date();
   var shiftElapsed=(now.getHours()+now.getMinutes()/60-SHIFT_START_H)*3600;
   if(shiftElapsed<0)shiftElapsed=SHIFT_DURATION_S;
+  var cappedShift=Math.min(shiftElapsed,SHIFT_DURATION_S);
 
-  // V5: True planned time = shift elapsed × number of presses that have done work
-  var activePresses=0;
+  // Partition cycles by press
+  var pressCycles={1:[],2:[],3:[]};
   for(var i=0;i<s.cycleTimes.length;i++){
-    var pn=typeof s.cycleTimes[i]==='object'?s.cycleTimes[i].press:0;
-    if(pn>=1&&pn<=3)activePresses=Math.max(activePresses,pn);// rough
+    var e=s.cycleTimes[i];
+    var pn=typeof e==='object'?e.press:0;
+    if(pn>=1&&pn<=3) pressCycles[pn].push(e);
   }
-  // Count distinct presses used
-  var pressesUsed={};
+
+  // Count scrap per press
+  var pressScrap={1:0,2:0,3:0};
+  for(var i=0;i<AppState.scrap.length;i++){
+    var sp=parseInt(AppState.scrap[i].press)||0;
+    if(sp>=1&&sp<=3) pressScrap[sp]++;
+  }
+
+  // Per-press OEE — pass whether each press currently has a job loaded
+  var p1=computePressStats(pressCycles[1],pressScrap[1],cappedShift,!!AppState.presses[1].jobId);
+  var p2=computePressStats(pressCycles[2],pressScrap[2],cappedShift,!!AppState.presses[2].jobId);
+  var p3=computePressStats(pressCycles[3],pressScrap[3],cappedShift,!!AppState.presses[3].jobId);
+
+  // Combined stats
+  var numActive=0;
+  if(p1.active)numActive++;if(p2.active)numActive++;if(p3.active)numActive++;
+  numActive=Math.max(1,numActive);
+  var totalRuntime=p1.runtime+p2.runtime+p3.runtime;
+  var totalIdeal=p1.idealRuntime+p2.idealRuntime+p3.idealRuntime;
+  var totalCyc=p1.cyc+p2.cyc+p3.cyc;
+  var totalScrap=AppState.scrap.length;
+  var totalPartsForQuality=totalCyc+totalScrap;
+
+  // Combined availability: sum of per-press planned windows
+  var combinedPlanned=p1.planned+p2.planned+p3.planned;
+  if(combinedPlanned<=0)combinedPlanned=1;
+  var combinedAvail=Math.min(1,totalRuntime/combinedPlanned);
+  var combinedPerf=totalRuntime>0?Math.min(1,totalIdeal/totalRuntime):0;
+  // Quality uses same basis as per-press: cycles / (cycles + scrap)
+  // NOT s.out — s.out is only credited on job close, would show 0% mid-shift
+  var combinedQuality=totalPartsForQuality>0?totalCyc/totalPartsForQuality:1;
+  var combinedOEE=combinedAvail*combinedPerf*combinedQuality;
+
+  // Combined cycle stats (across all presses)
+  var allDurs=[];
   for(var i=0;i<s.cycleTimes.length;i++){
-    var pn2=typeof s.cycleTimes[i]==='object'?s.cycleTimes[i].press:0;
-    if(pn2)pressesUsed[pn2]=true;
+    allDurs.push(typeof s.cycleTimes[i]==='object'?s.cycleTimes[i].dur:s.cycleTimes[i]);
   }
-  var numPresses=Math.max(1,Object.keys(pressesUsed).length);
-  var plannedTime=Math.min(shiftElapsed,SHIFT_DURATION_S)*numPresses;
-  if(plannedTime<=0)plannedTime=1;
-
-  // V5: Availability = (runtime) / (planned - scheduled breaks)
-  var availability=Math.min(1,s.runtimeSeconds/plannedTime);
-
-  // V5: Performance = sum(designed cure time per cycle) / actual runtime
-  // Each cycle's duration IS its designed cure time (set from CURE_TIMES on job load)
-  // So ideal total runtime = sum of all cycle durations
-  var idealTotalRuntime=0;
-  for(var i=0;i<s.cycleTimes.length;i++){
-    var ctEntry=s.cycleTimes[i];
-    idealTotalRuntime+=typeof ctEntry==='object'?ctEntry.dur:ctEntry;
-  }
-  var performance=s.runtimeSeconds>0?Math.min(1,idealTotalRuntime/s.runtimeSeconds):0;
-
-  var totalParts=s.out+AppState.scrap.length;
-  var quality=totalParts>0?s.out/totalParts:1;
-  var oee=availability*performance*quality;
-
-  // Cycle time stats
-  var avg=0,stddev=0,fastest=0,slowest=0;
-  if(s.cycleTimes.length>0){
-    var ct=[];for(var i=0;i<s.cycleTimes.length;i++)ct.push(typeof s.cycleTimes[i]==='object'?s.cycleTimes[i].dur:s.cycleTimes[i]);
-    var ctSum=0;for(var i=0;i<ct.length;i++)ctSum+=ct[i];
-    avg=ctSum/ct.length;
-    var variance=0;for(var j=0;j<ct.length;j++)variance+=Math.pow(ct[j]-avg,2);
-    stddev=Math.sqrt(variance/ct.length);
-    fastest=Math.min.apply(null,ct);slowest=Math.max.apply(null,ct);
+  var cAvg=0,cStd=0,cFast=0,cSlow=0;
+  if(allDurs.length>0){
+    var cSum=0;for(var i=0;i<allDurs.length;i++)cSum+=allDurs[i];
+    cAvg=cSum/allDurs.length;
+    var cVar=0;for(var i=0;i<allDurs.length;i++)cVar+=Math.pow(allDurs[i]-cAvg,2);
+    cStd=Math.sqrt(cVar/allDurs.length);
+    cFast=Math.min.apply(null,allDurs);cSlow=Math.max.apply(null,allDurs);
   }
 
-  var press1Stats={cyc:0,runtime:0},press2Stats={cyc:0,runtime:0},press3Stats={cyc:0,runtime:0};
-  for(var i=0;i<s.cycleTimes.length;i++){
-    var entry=s.cycleTimes[i];var d=typeof entry==='object'?entry.dur:entry;
-    var pn3=typeof entry==='object'?entry.press:0;
-    if(pn3===1){press1Stats.cyc++;press1Stats.runtime+=d;}
-    else if(pn3===2){press2Stats.cyc++;press2Stats.runtime+=d;}
-    else if(pn3===3){press3Stats.cyc++;press3Stats.runtime+=d;}
-  }
-
+  // Shift projection
   var ratePerHour=shiftElapsed>0?(s.out/(shiftElapsed/3600)):0;
   var remainingHours=Math.max(0,(SHIFT_END_H-now.getHours()-now.getMinutes()/60));
   var projection=s.out+Math.round(ratePerHour*remainingHours);
 
-  return{availability:availability,performance:performance,quality:quality,oee:oee,avgCycle:avg,stddev:stddev,fastest:fastest,slowest:slowest,projection:projection,press1:press1Stats,press2:press2Stats,press3:press3Stats,downtimeSeconds:s.downtimeSeconds,numPresses:numPresses};
+  // Combined downtime = total planned minus total runtime
+  var combinedDowntime=Math.max(0,combinedPlanned-totalRuntime);
+
+  return{
+    press1:p1,press2:p2,press3:p3,
+    combined:{availability:combinedAvail,performance:combinedPerf,quality:combinedQuality,oee:combinedOEE,avgCycle:cAvg,stddev:cStd,fastest:cFast,slowest:cSlow,downtime:combinedDowntime},
+    projection:projection,numActive:numActive
+  };
 }
 
 function renderOEE(){
   var m=computeOEE();
-  st('oee-total',Math.round(m.oee*100)+'%');
-  st('oee-a',Math.round(m.availability*100)+'%');
-  st('oee-p',Math.round(m.performance*100)+'%');
-  st('oee-q',Math.round(m.quality*100)+'%');
+
+  // Per-press rendering
+  var presses=[{key:'p1',data:m.press1},{key:'p2',data:m.press2},{key:'p3',data:m.press3}];
+  for(var i=0;i<presses.length;i++){
+    var k=presses[i].key;var d=presses[i].data;
+    if(!d.active){
+      st(k+'-oee','—');st(k+'-a','—');st(k+'-p','—');st(k+'-q','—');
+      st(k+'-cyc','0');st(k+'-rt','0m');st(k+'-dt','—');
+      st(k+'-avg','—');st(k+'-std','—');
+      continue;
+    }
+    st(k+'-oee',Math.round(d.oee*100)+'%');
+    st(k+'-a',Math.round(d.availability*100)+'%');
+    st(k+'-p',Math.round(d.performance*100)+'%');
+    st(k+'-q',Math.round(d.quality*100)+'%');
+    st(k+'-cyc',d.cyc.toString());
+    st(k+'-rt',Math.round(d.runtime/60)+'m');
+    st(k+'-dt',Math.round(d.downtime/60)+'m');
+    st(k+'-avg',d.avg>0?d.avg.toFixed(1)+'s':'—');
+    st(k+'-std',d.stddev>0?'±'+d.stddev.toFixed(1):'—');
+    // Color OEE value
+    var oeeEl=g(k+'-oee');
+    if(oeeEl){var c=d.oee>=0.85?'var(--green)':d.oee>=0.6?'var(--yellow)':'var(--red)';oeeEl.style.color=c;}
+  }
+
+  // Combined rendering
+  var c=m.combined;
+  st('oee-total',Math.round(c.oee*100)+'%');
+  st('oee-a',Math.round(c.availability*100)+'%');
+  st('oee-p',Math.round(c.performance*100)+'%');
+  st('oee-q',Math.round(c.quality*100)+'%');
   st('oee-proj',m.projection>0?'~'+m.projection:'—');
   var oeeEl=g('oee-total');
-  if(oeeEl){var c=m.oee>=0.85?'var(--green)':m.oee>=0.6?'var(--yellow)':'var(--red)';oeeEl.style.color=c;}
-  st('cs-avg',m.avgCycle>0?m.avgCycle.toFixed(1):'—');
-  st('cs-std',m.stddev>0?'±'+m.stddev.toFixed(1):'—');
-  st('cs-fast',m.fastest>0?m.fastest.toString():'—');
-  st('cs-slow',m.slowest>0?m.slowest.toString():'—');
+  if(oeeEl){var cc=c.oee>=0.85?'var(--green)':c.oee>=0.6?'var(--yellow)':'var(--red)';oeeEl.style.color=cc;}
+  st('cs-avg',c.avgCycle>0?c.avgCycle.toFixed(1):'—');
+  st('cs-std',c.stddev>0?'±'+c.stddev.toFixed(1):'—');
+  st('cs-fast',c.fastest>0?c.fastest.toString():'—');
+  st('cs-slow',c.slowest>0?c.slowest.toString():'—');
 }
 
 /* ╔══════════════════════════════════════════════════════════╗
@@ -2149,13 +2288,16 @@ function buildHoff(){
   lines.push('Scrapped (discarded):     '+AppState.scrap.length);
   lines.push('Redos (re-cured):         '+AppState.redos.length);
   lines.push('Scrap rate:               '+rate+'%');
-  lines.push('Downtime (total):         '+Math.round(AppState.stats.downtimeSeconds/60)+'m');
-  lines.push('');lines.push('-- OEE --');
-  lines.push('OEE: '+Math.round(oee.oee*100)+'%  |  A: '+Math.round(oee.availability*100)+'%  |  P: '+Math.round(oee.performance*100)+'%  |  Q: '+Math.round(oee.quality*100)+'%');
-  if(oee.avgCycle>0)lines.push('Avg cycle: '+oee.avgCycle.toFixed(1)+'s (σ '+oee.stddev.toFixed(1)+')');
-  lines.push('Press 1: '+oee.press1.cyc+' cycles ('+Math.round(oee.press1.runtime/60)+'min runtime)');
-  lines.push('Press 2: '+oee.press2.cyc+' cycles ('+Math.round(oee.press2.runtime/60)+'min runtime)');
-  lines.push('Press 3: '+oee.press3.cyc+' cycles ('+Math.round(oee.press3.runtime/60)+'min runtime)');
+  lines.push('');lines.push('-- OEE (COMBINED) --');
+  lines.push('OEE: '+Math.round(oee.combined.oee*100)+'%  |  A: '+Math.round(oee.combined.availability*100)+'%  |  P: '+Math.round(oee.combined.performance*100)+'%  |  Q: '+Math.round(oee.combined.quality*100)+'%');
+  lines.push('Combined downtime:        '+Math.round(oee.combined.downtime/60)+'m');
+  if(oee.combined.avgCycle>0)lines.push('Avg cycle: '+oee.combined.avgCycle.toFixed(1)+'s (σ '+oee.combined.stddev.toFixed(1)+')');
+  lines.push('');lines.push('-- PER-PRESS OEE --');
+  var ppNames=['Press 1','Press 2','Press 3'];var ppData=[oee.press1,oee.press2,oee.press3];
+  for(var pi=0;pi<3;pi++){var pp=ppData[pi];
+    if(!pp.active){lines.push(ppNames[pi]+': No cycles');continue;}
+    lines.push(ppNames[pi]+': OEE '+Math.round(pp.oee*100)+'% | A '+Math.round(pp.availability*100)+'% | P '+Math.round(pp.performance*100)+'% | Q '+Math.round(pp.quality*100)+'% | '+pp.cyc+' cycles | '+Math.round(pp.runtime/60)+'min runtime | '+Math.round(pp.downtime/60)+'min downtime');
+  }
   lines.push('');lines.push('-- PENDING / DELAYED JOBS --');
   if(pending.length){for(var i=0;i<pending.length;i++){var j2=pending[i];lines.push('  * '+(j2.refType==='vessel'?'VES':'SO')+': '+j2.ref+' — '+j2.mat+' '+j2.sz+'mm x '+j2.qty+' ['+j2.pri.toUpperCase()+']'+(j2.status==='delayed'?' DELAYED: '+j2.delayReason:''));}}
   else lines.push('  None.');
@@ -2237,26 +2379,37 @@ window.exportPDF=function(){
   html+='<div class="pdf-kpi"><div class="pdf-kpi-val" style="color:#cc8800">'+redoRate+'%</div><div class="pdf-kpi-lbl">Redo Rate</div></div>';
   html+='<div class="pdf-kpi"><div class="pdf-kpi-val">'+AppState.scrap.length+'</div><div class="pdf-kpi-lbl">Scrapped Pieces</div></div>';
   html+='<div class="pdf-kpi"><div class="pdf-kpi-val" style="color:#00aaff">'+(totalStock>0?totalStock:'0')+'</div><div class="pdf-kpi-lbl">Stock O-Rings Used</div></div></div>';
-  // V5: Downtime KPI
+  // V5: Combined OEE
   html+='<div class="pdf-kpi-grid" style="margin-bottom:24px">';
-  html+='<div class="pdf-kpi"><div class="pdf-kpi-val">'+Math.round(AppState.stats.downtimeSeconds/60)+'m</div><div class="pdf-kpi-lbl">Total Downtime</div></div>';
-  html+='<div class="pdf-kpi"><div class="pdf-kpi-val pdf-orange">'+Math.round(oee.oee*100)+'%</div><div class="pdf-kpi-lbl">OEE</div></div>';
-  html+='<div class="pdf-kpi"><div class="pdf-kpi-val pdf-green">'+Math.round(oee.availability*100)+'%</div><div class="pdf-kpi-lbl">Availability</div></div>';
-  html+='<div class="pdf-kpi"><div class="pdf-kpi-val">'+Math.round(oee.quality*100)+'%</div><div class="pdf-kpi-lbl">Quality</div></div></div>';
-  if(oee.avgCycle>0){
-    html+='<div class="pdf-section-title">Cycle Statistics</div><div class="pdf-kpi-grid">';
-    html+='<div class="pdf-kpi"><div class="pdf-kpi-val">'+oee.avgCycle.toFixed(1)+'s</div><div class="pdf-kpi-lbl">Avg Cycle</div></div>';
-    html+='<div class="pdf-kpi"><div class="pdf-kpi-val">'+oee.stddev.toFixed(1)+'s</div><div class="pdf-kpi-lbl">Std Dev</div></div>';
-    html+='<div class="pdf-kpi"><div class="pdf-kpi-val pdf-green">'+oee.fastest+'s</div><div class="pdf-kpi-lbl">Fastest</div></div>';
-    html+='<div class="pdf-kpi"><div class="pdf-kpi-val pdf-red">'+oee.slowest+'s</div><div class="pdf-kpi-lbl">Slowest</div></div></div>';
+  html+='<div class="pdf-kpi"><div class="pdf-kpi-val pdf-orange">'+Math.round(oee.combined.oee*100)+'%</div><div class="pdf-kpi-lbl">Combined OEE</div></div>';
+  html+='<div class="pdf-kpi"><div class="pdf-kpi-val pdf-green">'+Math.round(oee.combined.availability*100)+'%</div><div class="pdf-kpi-lbl">Availability</div></div>';
+  html+='<div class="pdf-kpi"><div class="pdf-kpi-val">'+Math.round(oee.combined.performance*100)+'%</div><div class="pdf-kpi-lbl">Performance</div></div>';
+  html+='<div class="pdf-kpi"><div class="pdf-kpi-val">'+Math.round(oee.combined.quality*100)+'%</div><div class="pdf-kpi-lbl">Quality</div></div></div>';
+  if(oee.combined.avgCycle>0){
+    html+='<div class="pdf-section-title">Combined Cycle Statistics</div><div class="pdf-kpi-grid">';
+    html+='<div class="pdf-kpi"><div class="pdf-kpi-val">'+oee.combined.avgCycle.toFixed(1)+'s</div><div class="pdf-kpi-lbl">Avg Cycle</div></div>';
+    html+='<div class="pdf-kpi"><div class="pdf-kpi-val">'+oee.combined.stddev.toFixed(1)+'s</div><div class="pdf-kpi-lbl">Std Dev</div></div>';
+    html+='<div class="pdf-kpi"><div class="pdf-kpi-val pdf-green">'+oee.combined.fastest+'s</div><div class="pdf-kpi-lbl">Fastest</div></div>';
+    html+='<div class="pdf-kpi"><div class="pdf-kpi-val pdf-red">'+oee.combined.slowest+'s</div><div class="pdf-kpi-lbl">Slowest</div></div></div>';
   }
-  html+='<div class="pdf-section-title">Press Breakdown</div><div class="pdf-kpi-grid">';
-  html+='<div class="pdf-kpi"><div class="pdf-kpi-val pdf-orange">'+oee.press1.cyc+'</div><div class="pdf-kpi-lbl">Press 1 Cycles</div></div>';
-  html+='<div class="pdf-kpi"><div class="pdf-kpi-val">'+Math.round(oee.press1.runtime/60)+'m</div><div class="pdf-kpi-lbl">Press 1 Runtime</div></div>';
-  html+='<div class="pdf-kpi"><div class="pdf-kpi-val pdf-orange">'+oee.press2.cyc+'</div><div class="pdf-kpi-lbl">Press 2 Cycles</div></div>';
-  html+='<div class="pdf-kpi"><div class="pdf-kpi-val">'+Math.round(oee.press2.runtime/60)+'m</div><div class="pdf-kpi-lbl">Press 2 Runtime</div></div></div>';
-  html+='<div class="pdf-kpi-grid"><div class="pdf-kpi"><div class="pdf-kpi-val pdf-orange">'+oee.press3.cyc+'</div><div class="pdf-kpi-lbl">Press 3 Cycles</div></div>';
-  html+='<div class="pdf-kpi"><div class="pdf-kpi-val">'+Math.round(oee.press3.runtime/60)+'m</div><div class="pdf-kpi-lbl">Press 3 Runtime</div></div><div class="pdf-kpi"></div><div class="pdf-kpi"></div></div>';
+  // V5: Per-Press OEE Breakdown
+  html+='<div class="pdf-section-title">Per-Press Performance</div>';
+  html+='<table class="pdf-table"><thead><tr><th>Press</th><th>OEE</th><th>Avail</th><th>Perf</th><th>Quality</th><th>Cycles</th><th>Runtime</th><th>Downtime</th><th>Avg Cycle</th><th>σ</th></tr></thead><tbody>';
+  var ppd=[{n:'Press 1',d:oee.press1},{n:'Press 2',d:oee.press2},{n:'Press 3',d:oee.press3}];
+  for(var pi=0;pi<3;pi++){var pp=ppd[pi];
+    if(!pp.d.active){html+='<tr><td>'+pp.n+'</td><td colspan="9" style="color:#999">No cycles</td></tr>';continue;}
+    html+='<tr><td><b>'+pp.n+'</b></td>';
+    html+='<td style="color:#ff4500;font-weight:700">'+Math.round(pp.d.oee*100)+'%</td>';
+    html+='<td>'+Math.round(pp.d.availability*100)+'%</td>';
+    html+='<td>'+Math.round(pp.d.performance*100)+'%</td>';
+    html+='<td>'+Math.round(pp.d.quality*100)+'%</td>';
+    html+='<td>'+pp.d.cyc+'</td>';
+    html+='<td>'+Math.round(pp.d.runtime/60)+'m</td>';
+    html+='<td>'+Math.round(pp.d.downtime/60)+'m</td>';
+    html+='<td>'+pp.d.avg.toFixed(1)+'s</td>';
+    html+='<td>±'+pp.d.stddev.toFixed(1)+'</td></tr>';
+  }
+  html+='</tbody></table>';
   html+='<div class="pdf-section-title">Material Output</div><div class="pdf-mat-grid">';
   html+='<div class="pdf-mat viton"><div class="pdf-mat-val">'+(AppState.stats.mat.Viton||0)+'</div><div class="pdf-mat-lbl">Viton</div></div>';
   html+='<div class="pdf-mat buna"><div class="pdf-mat-val">'+(AppState.stats.mat.Buna||0)+'</div><div class="pdf-mat-lbl">Buna</div></div>';
