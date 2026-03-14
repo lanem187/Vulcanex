@@ -1643,50 +1643,57 @@ function batchRenderAll(){
    ║  OEE + METRICS ENGINE (V5: Per-Press + Combined)        ║
    ╚══════════════════════════════════════════════════════════╝ */
 
-/* Compute stats for a single press's cycle array */
-function computePressStats(cycles, scrapCount, cappedShift, pressIsActive){
-  var r={cyc:0,runtime:0,idealRuntime:0,avg:0,stddev:0,fastest:0,slowest:0,availability:0,performance:0,quality:0,oee:0,downtime:0,active:false,planned:0};
+/* Compute stats for a single press's cycle array
+   Downtime = sum of gaps between consecutive cycles (inter-cycle idle time)
+   Only counts when a job was loaded — empty press is not "down" */
+function computePressStats(cycles, scrapCount, pressIsActive){
+  var r={cyc:0,runtime:0,idealRuntime:0,avg:0,stddev:0,fastest:0,slowest:0,availability:0,performance:0,quality:0,oee:0,downtime:0,active:false};
   if(!cycles.length) return r;
   r.active=true;r.cyc=cycles.length;
   var durs=[];
-  var earliestTs=null,latestTs=null,lastDur=0;
+
+  // Build sorted list of {ts (ms), dur (s)} from cycle entries
+  var timed=[];
   for(var i=0;i<cycles.length;i++){
     var d=typeof cycles[i]==='object'?cycles[i].dur:cycles[i];
     r.runtime+=d;r.idealRuntime+=d;durs.push(d);
     if(typeof cycles[i]==='object'&&cycles[i].ts){
-      var ts=new Date(cycles[i].ts).getTime();
-      if(!earliestTs||ts<earliestTs) earliestTs=ts;
-      if(!latestTs||ts>latestTs){latestTs=ts;lastDur=d;}
+      timed.push({ts:new Date(cycles[i].ts).getTime(),dur:d});
     }
   }
-  // Planned time logic:
-  // - If press currently has a job loaded (active): first cycle to NOW
-  //   (press is committed to production, idle time since last cycle counts against it)
-  // - If press has NO job loaded (idle/done for the day): first cycle to last cycle end
-  //   (only charges the window the press was actually in service)
-  var planned;
-  if(earliestTs&&latestTs){
-    if(pressIsActive){
-      // Active press: charged from first cycle to now
-      planned=Math.floor((Date.now()-earliestTs)/1000);
-    } else {
-      // Idle press: charged from first cycle to last cycle completion
-      // lastCycleEnd ≈ latestTs (cycle complete timestamp) — the ts IS the completion time
-      planned=Math.floor((latestTs-earliestTs)/1000)+lastDur;
-    }
-    planned=Math.max(r.runtime,planned); // Can't be less than actual runtime
-    planned=Math.min(planned,cappedShift); // Can't exceed shift
-  } else {
-    planned=cappedShift; // Legacy data fallback
+
+  // Sort by timestamp ascending (ts is cycle COMPLETION time)
+  timed.sort(function(a,b){return a.ts-b.ts;});
+
+  // Downtime = sum of gaps between consecutive cycles
+  // Each cycle's start ≈ ts - dur (completion time minus cure duration)
+  // Gap between cycle N ending and cycle N+1 starting = (ts[N+1] - dur[N+1]) - ts[N]
+  var totalGap=0;
+  for(var i=1;i<timed.length;i++){
+    var prevEnd=timed[i-1].ts; // previous cycle completed at this time
+    var curStart=timed[i].ts-timed[i].dur*1000; // current cycle started at this time
+    var gap=Math.max(0,Math.floor((curStart-prevEnd)/1000));
+    totalGap+=gap;
   }
-  if(planned<=0)planned=1;
-  r.planned=planned;
-  r.availability=Math.min(1,r.runtime/planned);
+
+  // If press currently has a job loaded, add gap from last cycle to now
+  if(pressIsActive&&timed.length>0){
+    var lastEnd=timed[timed.length-1].ts;
+    var sinceLastCycle=Math.max(0,Math.floor((Date.now()-lastEnd)/1000));
+    totalGap+=sinceLastCycle;
+  }
+
+  r.downtime=totalGap;
+
+  // Availability = runtime / (runtime + downtime)
+  // This is the fraction of committed press-time spent actually curing
+  var committedTime=r.runtime+r.downtime;
+  r.availability=committedTime>0?r.runtime/committedTime:0;
   r.performance=r.runtime>0?Math.min(1,r.idealRuntime/r.runtime):0;
   var totalParts=r.cyc+scrapCount;
   r.quality=totalParts>0?r.cyc/totalParts:1;
   r.oee=r.availability*r.performance*r.quality;
-  r.downtime=Math.max(0,planned-r.runtime);
+
   // Cycle stats
   var sum=0;for(var i=0;i<durs.length;i++)sum+=durs[i];
   r.avg=sum/durs.length;
@@ -1701,7 +1708,6 @@ function computeOEE(){
   var s=AppState.stats;var now=new Date();
   var shiftElapsed=(now.getHours()+now.getMinutes()/60-SHIFT_START_H)*3600;
   if(shiftElapsed<0)shiftElapsed=SHIFT_DURATION_S;
-  var cappedShift=Math.min(shiftElapsed,SHIFT_DURATION_S);
 
   // Partition cycles by press
   var pressCycles={1:[],2:[],3:[]};
@@ -1719,9 +1725,9 @@ function computeOEE(){
   }
 
   // Per-press OEE — pass whether each press currently has a job loaded
-  var p1=computePressStats(pressCycles[1],pressScrap[1],cappedShift,!!AppState.presses[1].jobId);
-  var p2=computePressStats(pressCycles[2],pressScrap[2],cappedShift,!!AppState.presses[2].jobId);
-  var p3=computePressStats(pressCycles[3],pressScrap[3],cappedShift,!!AppState.presses[3].jobId);
+  var p1=computePressStats(pressCycles[1],pressScrap[1],!!AppState.presses[1].jobId);
+  var p2=computePressStats(pressCycles[2],pressScrap[2],!!AppState.presses[2].jobId);
+  var p3=computePressStats(pressCycles[3],pressScrap[3],!!AppState.presses[3].jobId);
 
   // Combined stats
   var numActive=0;
@@ -1733,13 +1739,13 @@ function computeOEE(){
   var totalScrap=AppState.scrap.length;
   var totalPartsForQuality=totalCyc+totalScrap;
 
-  // Combined availability: sum of per-press planned windows
-  var combinedPlanned=p1.planned+p2.planned+p3.planned;
-  if(combinedPlanned<=0)combinedPlanned=1;
-  var combinedAvail=Math.min(1,totalRuntime/combinedPlanned);
+  // Combined downtime = sum of per-press inter-cycle gaps (real idle time only)
+  var combinedDowntime=p1.downtime+p2.downtime+p3.downtime;
+
+  // Combined availability = total runtime / (total runtime + total downtime)
+  var combinedCommitted=totalRuntime+combinedDowntime;
+  var combinedAvail=combinedCommitted>0?totalRuntime/combinedCommitted:0;
   var combinedPerf=totalRuntime>0?Math.min(1,totalIdeal/totalRuntime):0;
-  // Quality uses same basis as per-press: cycles / (cycles + scrap)
-  // NOT s.out — s.out is only credited on job close, would show 0% mid-shift
   var combinedQuality=totalPartsForQuality>0?totalCyc/totalPartsForQuality:1;
   var combinedOEE=combinedAvail*combinedPerf*combinedQuality;
 
@@ -1761,9 +1767,6 @@ function computeOEE(){
   var ratePerHour=shiftElapsed>0?(s.out/(shiftElapsed/3600)):0;
   var remainingHours=Math.max(0,(SHIFT_END_H-now.getHours()-now.getMinutes()/60));
   var projection=s.out+Math.round(ratePerHour*remainingHours);
-
-  // Combined downtime = total planned minus total runtime
-  var combinedDowntime=Math.max(0,combinedPlanned-totalRuntime);
 
   return{
     press1:p1,press2:p2,press3:p3,
