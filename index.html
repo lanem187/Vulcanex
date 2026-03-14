@@ -1193,6 +1193,8 @@ function recoverPress(num,saved){
         logPressEntry(num,'cycle');
       } else {
         var crashWas30s=(pr.duration===30&&pr._originalDuration&&pr._originalDuration!==30);
+        // Push to cycleTimes so downtime gap calc knows press was running during redo
+        AppState.stats.cycleTimes.push({dur:pr.duration,press:num,ts:new Date().toISOString(),isRedo:true});
         logPressEntry(num,crashWas30s?'redo-30s-complete':'redo-complete');
         if(pr._originalDuration){pr.duration=pr._originalDuration;delete pr._originalDuration;}
         pr.isRedo=false;
@@ -1329,9 +1331,13 @@ function doCycleComplete(num){
   if(wasRedo){
     var was30s=(pr.duration===30&&pr._originalDuration&&pr._originalDuration!==30);
     var redoResTag=was30s?'redo-30s-complete':'redo-complete';
+    var redoDur=pr.duration; // capture before _originalDuration restore
     logPressEntry(num,redoResTag);
     logActivity('Press '+num+' '+(was30s?'30s redo':'redo')+' cycle done — '+(job?job.ref+' · ':'')+pr.mat+' '+pr.sz+'mm (piece re-cured, count unchanged)');
-    audit('REDO_CYCLE_COMPLETE',{press:num,duration:pr.duration,mat:pr.mat,sz:pr.sz,cyclesDone:job?job.cyclesDone:0,qty:job?job.qty:0,redoType:was30s?'30s':'full'},pr.jobId);
+    // Push to cycleTimes so downtime gap calculation knows the press was running
+    // Tagged as isRedo so it's excluded from cycle counts, output, and throughput
+    AppState.stats.cycleTimes.push({dur:redoDur,press:num,ts:new Date().toISOString(),isRedo:true});
+    audit('REDO_CYCLE_COMPLETE',{press:num,duration:redoDur,mat:pr.mat,sz:pr.sz,cyclesDone:job?job.cyclesDone:0,qty:job?job.qty:0,redoType:was30s?'30s':'full'},pr.jobId);
     if(pr._originalDuration){pr.duration=pr._originalDuration;delete pr._originalDuration;}
     audioComplete();
     notify('Press '+num+' '+(was30s?'30s ':'')+'redo done — piece re-cured. Count unchanged at '+(job?job.cyclesDone+'/'+job.qty:'—'),'ok');
@@ -1395,7 +1401,7 @@ function executeScrap(num,reason){
   if(job&&job.cyclesDone>0)job.cyclesDone--;
   if(AppState.stats.cyc>0)AppState.stats.cyc--;
   var ctArr=AppState.stats.cycleTimes;
-  for(var ci=ctArr.length-1;ci>=0;ci--){if(ctArr[ci].press===num){ctArr.splice(ci,1);break;}}
+  for(var ci=ctArr.length-1;ci>=0;ci--){if(ctArr[ci].press===num&&!ctArr[ci].isRedo){ctArr.splice(ci,1);break;}}
   if(pr.duration>0)AppState.stats.runtimeSeconds=Math.max(0,AppState.stats.runtimeSeconds-pr.duration);
   unbucketCycle(); // V5: Revert hourly throughput count for scrapped piece
   logPressEntry(num,'scrap');
@@ -1643,64 +1649,90 @@ function batchRenderAll(){
    ║  OEE + METRICS ENGINE (V5: Per-Press + Combined)        ║
    ╚══════════════════════════════════════════════════════════╝ */
 
-/* Compute stats for a single press's cycle array
-   Downtime = sum of gaps between consecutive cycles (inter-cycle idle time)
-   Only counts when a job was loaded — empty press is not "down" */
-function computePressStats(cycles, scrapCount, pressIsActive){
+/* Compute stats for a single press's cycle+redo array
+   ALL entries (cycles AND redos) are used for downtime gap calculation
+   because the press was physically running during redos.
+   Only real cycles (isRedo !== true) count for cycle stats and OEE quality. */
+function computePressStats(entries, scrapCount, pressIsActive){
   var r={cyc:0,runtime:0,idealRuntime:0,avg:0,stddev:0,fastest:0,slowest:0,availability:0,performance:0,quality:0,oee:0,downtime:0,active:false};
-  if(!cycles.length) return r;
-  r.active=true;r.cyc=cycles.length;
-  var durs=[];
+  if(!entries.length) return r;
 
-  // Build sorted list of {ts (ms), dur (s)} from cycle entries
-  var timed=[];
-  for(var i=0;i<cycles.length;i++){
-    var d=typeof cycles[i]==='object'?cycles[i].dur:cycles[i];
-    r.runtime+=d;r.idealRuntime+=d;durs.push(d);
-    if(typeof cycles[i]==='object'&&cycles[i].ts){
-      timed.push({ts:new Date(cycles[i].ts).getTime(),dur:d});
+  var cycleDurs=[]; // durations of real cycles only (for avg/stddev/fast/slow)
+  var timed=[];     // ALL entries sorted by time (for gap calculation)
+
+  for(var i=0;i<entries.length;i++){
+    var e=entries[i];
+    var d=typeof e==='object'?e.dur:e;
+    var isRedo=typeof e==='object'&&e.isRedo;
+
+    // All entries contribute to runtime (press was physically curing)
+    r.runtime+=d;
+
+    if(!isRedo){
+      // Real cycle — counts toward output, ideal runtime, cycle stats
+      r.cyc++;
+      r.idealRuntime+=d;
+      cycleDurs.push(d);
+    }
+    // Redos contribute runtime but NOT cycle count, ideal runtime, or stats
+
+    // All entries go into timestamp list for gap calculation
+    if(typeof e==='object'&&e.ts){
+      timed.push({ts:new Date(e.ts).getTime(),dur:d});
     }
   }
 
-  // Sort by timestamp ascending (ts is cycle COMPLETION time)
+  if(r.cyc===0&&timed.length===0) return r;
+  r.active=true;
+
+  // Sort ALL entries by timestamp ascending (ts is completion time)
   timed.sort(function(a,b){return a.ts-b.ts;});
 
-  // Downtime = sum of gaps between consecutive cycles
-  // Each cycle's start ≈ ts - dur (completion time minus cure duration)
-  // Gap between cycle N ending and cycle N+1 starting = (ts[N+1] - dur[N+1]) - ts[N]
+  // Downtime = sum of gaps between ALL consecutive entries (cycles + redos)
+  // Gap = next_entry_start - prev_entry_end
+  // next_entry_start = next.ts - next.dur*1000
+  // prev_entry_end = prev.ts
   var totalGap=0;
   for(var i=1;i<timed.length;i++){
-    var prevEnd=timed[i-1].ts; // previous cycle completed at this time
-    var curStart=timed[i].ts-timed[i].dur*1000; // current cycle started at this time
+    var prevEnd=timed[i-1].ts;
+    var curStart=timed[i].ts-timed[i].dur*1000;
     var gap=Math.max(0,Math.floor((curStart-prevEnd)/1000));
     totalGap+=gap;
   }
 
-  // If press currently has a job loaded, add gap from last cycle to now
+  // If press currently has a job loaded, add gap from last entry to now
   if(pressIsActive&&timed.length>0){
     var lastEnd=timed[timed.length-1].ts;
-    var sinceLastCycle=Math.max(0,Math.floor((Date.now()-lastEnd)/1000));
-    totalGap+=sinceLastCycle;
+    var sinceLastEntry=Math.max(0,Math.floor((Date.now()-lastEnd)/1000));
+    totalGap+=sinceLastEntry;
   }
 
   r.downtime=totalGap;
 
   // Availability = runtime / (runtime + downtime)
-  // This is the fraction of committed press-time spent actually curing
   var committedTime=r.runtime+r.downtime;
   r.availability=committedTime>0?r.runtime/committedTime:0;
-  r.performance=r.runtime>0?Math.min(1,r.idealRuntime/r.runtime):0;
+
+  // Performance = ideal runtime (real cycles only) / actual runtime of real cycles
+  // Redos don't factor into performance — they ran their designed time too
+  var realCycleRuntime=0;
+  for(var i=0;i<cycleDurs.length;i++) realCycleRuntime+=cycleDurs[i];
+  r.performance=realCycleRuntime>0?Math.min(1,r.idealRuntime/realCycleRuntime):0;
+
+  // Quality = good cycles / (good cycles + scrap)
   var totalParts=r.cyc+scrapCount;
   r.quality=totalParts>0?r.cyc/totalParts:1;
   r.oee=r.availability*r.performance*r.quality;
 
-  // Cycle stats
-  var sum=0;for(var i=0;i<durs.length;i++)sum+=durs[i];
-  r.avg=sum/durs.length;
-  var variance=0;for(var i=0;i<durs.length;i++)variance+=Math.pow(durs[i]-r.avg,2);
-  r.stddev=Math.sqrt(variance/durs.length);
-  r.fastest=Math.min.apply(null,durs);
-  r.slowest=Math.max.apply(null,durs);
+  // Cycle stats (real cycles only, not redos)
+  if(cycleDurs.length>0){
+    var sum=0;for(var i=0;i<cycleDurs.length;i++)sum+=cycleDurs[i];
+    r.avg=sum/cycleDurs.length;
+    var variance=0;for(var i=0;i<cycleDurs.length;i++)variance+=Math.pow(cycleDurs[i]-r.avg,2);
+    r.stddev=Math.sqrt(variance/cycleDurs.length);
+    r.fastest=Math.min.apply(null,cycleDurs);
+    r.slowest=Math.max.apply(null,cycleDurs);
+  }
   return r;
 }
 
@@ -1749,10 +1781,12 @@ function computeOEE(){
   var combinedQuality=totalPartsForQuality>0?totalCyc/totalPartsForQuality:1;
   var combinedOEE=combinedAvail*combinedPerf*combinedQuality;
 
-  // Combined cycle stats (across all presses)
+  // Combined cycle stats (real cycles only, exclude redos)
   var allDurs=[];
   for(var i=0;i<s.cycleTimes.length;i++){
-    allDurs.push(typeof s.cycleTimes[i]==='object'?s.cycleTimes[i].dur:s.cycleTimes[i]);
+    var entry=s.cycleTimes[i];
+    if(typeof entry==='object'&&entry.isRedo) continue; // skip redos
+    allDurs.push(typeof entry==='object'?entry.dur:entry);
   }
   var cAvg=0,cStd=0,cFast=0,cSlow=0;
   if(allDurs.length>0){
