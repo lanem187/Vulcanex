@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#000000">
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiVlVMQ0FORVgiLCJzaG9ydF9uYW1lIjoiVlVMQ0FORVgiLCJzdGFydF91cmwiOiIuIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiIzA1MDUwNyIsInRoZW1lX2NvbG9yIjoiI2ZmNDUwMCJ9">
-<title>VULCANEX — Fil-Trek Production Intelligence</title>
+<title>VULCANEX — Production Intelligence</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -247,13 +247,12 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 /* PDF PRINT */
 @media print{
   *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+  html{background:#fff !important}
   body{background:#fff !important;color:#111 !important;margin:0;padding:0}
-  body::after,body::before{display:none !important}
-  #hdr,#nav,.nst{display:none !important}
-  .pg{display:none !important;padding:0 !important}
-  #pdf-page{display:block !important}
-  #pdf-page{position:relative;z-index:10000;background:#fff;padding:0;font-family:Arial,Helvetica,sans-serif}
-  .pdf-wrap{width:100%;background:#fff;padding:40px 48px;box-sizing:border-box}
+  body::after,body::before{display:none !important;content:none !important;background:none !important}
+  #hdr,#nav,.nst,.pg{display:none !important}
+  #pdf-page{display:block !important;position:relative;z-index:10000;background:#fff !important;padding:0;font-family:Arial,Helvetica,sans-serif}
+  .pdf-wrap{width:100%;background:#fff !important;padding:40px 48px;box-sizing:border-box}
   .pdf-table{width:100%;border-collapse:collapse;font-size:11px;page-break-inside:auto}
   .pdf-table tr{page-break-inside:avoid;page-break-after:auto}
   .pdf-table thead{display:table-header-group}
@@ -298,7 +297,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   <div style="display:flex;align-items:baseline">
     <span class="logo-name">VULCANEX</span>
     <span class="logo-tag">Production Intelligence</span>
-    <span class="logo-ver">V5</span>
   </div>
   <div class="hdr-r">
     <div class="shift-timer" id="SHFT">SHIFT: --:--:--</div>
@@ -2303,8 +2301,8 @@ function renderInv(){
 /* ═══ HANDOFF ═══ */
 function buildHoff(){
   var lines=[];
-  lines.push('VULCANEX V5 — SHIFT HANDOFF REPORT');
-  lines.push('Fil-Trek Manufacturing · Cambridge, ON');
+  lines.push('VULCANEX — SHIFT HANDOFF REPORT');
+  lines.push('Production Intelligence');
   lines.push('Date: '+new Date().toISOString().slice(0,10));
   lines.push('Shift: Day (07:30–16:30)');
   lines.push('Generated: '+tsNow());lines.push('');
@@ -2404,7 +2402,7 @@ window.exportPDF=function(){
   if(AppState.pressLog.length){for(var i=0;i<AppState.pressLog.length;i++){var e=AppState.pressLog[i];var rcls=e.res==='cycle'?'pass':e.res==='delayed'?'delay':'fail';pLogHTML+='<tr><td>'+e.time+'</td><td>Press '+e.press+'</td><td>'+esc(e.ref||'--')+'</td><td>'+e.mat+'</td><td>'+e.sz+'</td><td>'+(e.temp||'--')+'</td><td>'+e.dur+'</td><td class="'+rcls+'">'+e.res.toUpperCase()+'</td></tr>';}}
   else pLogHTML='<tr><td colspan="8" style="text-align:center;color:#999;padding:12px">No press cycles recorded.</td></tr>';
   var html='';
-  html+='<div class="pdf-header"><div><div class="pdf-logo">VULCANEX</div><div class="pdf-sub">Fil-Trek Production Intelligence · V'+VERSION+'</div></div>';
+  html+='<div class="pdf-header"><div><div class="pdf-logo">VULCANEX</div><div class="pdf-sub">Production Intelligence</div></div>';
   html+='<div class="pdf-meta"><strong>End-of-Day Report</strong><br>'+today+'<br>Day Shift 07:30–16:30<br>Generated: '+nowStr+'</div></div>';
   html+='<div class="pdf-section-title">Key Performance Indicators</div><div class="pdf-kpi-grid">';
   html+='<div class="pdf-kpi"><div class="pdf-kpi-val pdf-green">'+AppState.stats.out+'</div><div class="pdf-kpi-lbl">O-Rings Out</div></div>';
@@ -2504,7 +2502,7 @@ window.exportPDF=function(){
     html+='</div>';
   }
   html+='<div class="pdf-section-title">Shift Notes</div><div class="pdf-notes">'+esc(notes)+'</div>';
-  html+='<div class="pdf-footer"><div class="pdf-footer-txt">VULCANEX V'+VERSION+' &middot; Fil-Trek Manufacturing &middot; Cambridge, ON</div><div>'+today+' '+nowStr+'</div></div>';
+  html+='<div class="pdf-footer"><div class="pdf-footer-txt">VULCANEX &middot; Production Intelligence</div><div>'+today+' '+nowStr+'</div></div>';
   var pc=g('pdf-content');if(pc)pc.innerHTML=html;setTimeout(function(){window.print();},150);
 };
 
