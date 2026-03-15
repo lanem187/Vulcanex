@@ -246,12 +246,12 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .integrity-badge{font-family:var(--fm);font-size:8px;color:var(--tx3);letter-spacing:1px;opacity:.5;margin-top:4px}
 /* PDF PRINT */
 @media print{
-  *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
-  html{background:#fff !important}
-  body{background:#fff !important;color:#111 !important;margin:0;padding:0}
-  body::after,body::before{display:none !important;content:none !important;background:none !important}
+  html,body{background:#fff !important;color:#111 !important;margin:0;padding:0}
+  *{background:transparent !important}
+  body::after,body::before{display:none !important;content:none !important}
   #hdr,#nav,.nst,.pg{display:none !important}
   #pdf-page{display:block !important;position:relative;z-index:10000;background:#fff !important;padding:0;font-family:Arial,Helvetica,sans-serif}
+  #pdf-page *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
   .pdf-wrap{width:100%;background:#fff !important;padding:40px 48px;box-sizing:border-box}
   .pdf-table{width:100%;border-collapse:collapse;font-size:11px;page-break-inside:auto}
   .pdf-table tr{page-break-inside:avoid;page-break-after:auto}
