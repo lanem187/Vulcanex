@@ -346,8 +346,6 @@ body.printing{background:#fff !important}
         <div><span style="color:var(--tx3)">PERF</span><br><span id="p1-p" style="color:var(--blue);font-size:14px;font-family:var(--fd)">—</span></div>
         <div><span style="color:var(--tx3)">QUALITY</span><br><span id="p1-q" style="color:var(--yellow);font-size:14px;font-family:var(--fd)">—</span></div>
         <div><span style="color:var(--tx3)">CYCLES</span><br><span id="p1-cyc" style="color:var(--tx);font-size:14px;font-family:var(--fd)">0</span></div>
-        <div><span style="color:var(--tx3)">RUNTIME</span><br><span id="p1-rt" style="color:var(--tx2);font-size:14px;font-family:var(--fd)">0m</span></div>
-        <div><span style="color:var(--tx3)">DOWNTIME</span><br><span id="p1-dt" style="color:var(--red);font-size:14px;font-family:var(--fd)">—</span></div>
         <div><span style="color:var(--tx3)">AVG CYCLE</span><br><span id="p1-avg" style="color:var(--tx2);font-size:14px;font-family:var(--fd)">—</span></div>
         <div><span style="color:var(--tx3)">σ STD DEV</span><br><span id="p1-std" style="color:var(--tx3);font-size:14px;font-family:var(--fd)">—</span></div>
       </div>
@@ -363,8 +361,6 @@ body.printing{background:#fff !important}
         <div><span style="color:var(--tx3)">PERF</span><br><span id="p2-p" style="color:var(--blue);font-size:14px;font-family:var(--fd)">—</span></div>
         <div><span style="color:var(--tx3)">QUALITY</span><br><span id="p2-q" style="color:var(--yellow);font-size:14px;font-family:var(--fd)">—</span></div>
         <div><span style="color:var(--tx3)">CYCLES</span><br><span id="p2-cyc" style="color:var(--tx);font-size:14px;font-family:var(--fd)">0</span></div>
-        <div><span style="color:var(--tx3)">RUNTIME</span><br><span id="p2-rt" style="color:var(--tx2);font-size:14px;font-family:var(--fd)">0m</span></div>
-        <div><span style="color:var(--tx3)">DOWNTIME</span><br><span id="p2-dt" style="color:var(--red);font-size:14px;font-family:var(--fd)">—</span></div>
         <div><span style="color:var(--tx3)">AVG CYCLE</span><br><span id="p2-avg" style="color:var(--tx2);font-size:14px;font-family:var(--fd)">—</span></div>
         <div><span style="color:var(--tx3)">σ STD DEV</span><br><span id="p2-std" style="color:var(--tx3);font-size:14px;font-family:var(--fd)">—</span></div>
       </div>
@@ -380,8 +376,6 @@ body.printing{background:#fff !important}
         <div><span style="color:var(--tx3)">PERF</span><br><span id="p3-p" style="color:var(--blue);font-size:14px;font-family:var(--fd)">—</span></div>
         <div><span style="color:var(--tx3)">QUALITY</span><br><span id="p3-q" style="color:var(--yellow);font-size:14px;font-family:var(--fd)">—</span></div>
         <div><span style="color:var(--tx3)">CYCLES</span><br><span id="p3-cyc" style="color:var(--tx);font-size:14px;font-family:var(--fd)">0</span></div>
-        <div><span style="color:var(--tx3)">RUNTIME</span><br><span id="p3-rt" style="color:var(--tx2);font-size:14px;font-family:var(--fd)">0m</span></div>
-        <div><span style="color:var(--tx3)">DOWNTIME</span><br><span id="p3-dt" style="color:var(--red);font-size:14px;font-family:var(--fd)">—</span></div>
         <div><span style="color:var(--tx3)">AVG CYCLE</span><br><span id="p3-avg" style="color:var(--tx2);font-size:14px;font-family:var(--fd)">—</span></div>
         <div><span style="color:var(--tx3)">σ STD DEV</span><br><span id="p3-std" style="color:var(--tx3);font-size:14px;font-family:var(--fd)">—</span></div>
       </div>
@@ -1823,7 +1817,7 @@ function renderOEE(){
     var k=presses[i].key;var d=presses[i].data;
     if(!d.active){
       st(k+'-oee','—');st(k+'-a','—');st(k+'-p','—');st(k+'-q','—');
-      st(k+'-cyc','0');st(k+'-rt','0m');st(k+'-dt','—');
+      st(k+'-cyc','0');
       st(k+'-avg','—');st(k+'-std','—');
       continue;
     }
@@ -1832,8 +1826,6 @@ function renderOEE(){
     st(k+'-p',Math.round(d.performance*100)+'%');
     st(k+'-q',Math.round(d.quality*100)+'%');
     st(k+'-cyc',d.cyc.toString());
-    st(k+'-rt',Math.round(d.runtime/60)+'m');
-    st(k+'-dt',Math.round(d.downtime/60)+'m');
     st(k+'-avg',d.avg>0?d.avg.toFixed(1)+'s':'—');
     st(k+'-std',d.stddev>0?'±'+d.stddev.toFixed(1):'—');
     // Color OEE value
@@ -1920,20 +1912,6 @@ function renderPressUI(num){
       default:badgeCls+='si';badgeTxt=pr.jobId?'LOADED':'IDLE';
     }
     ps.className=badgeCls;ps.textContent=badgeTxt;
-  }
-  // V5: Downtime indicator — shows in COMPLETE and IDLE states (time since last cycle ended)
-  var dtEl=g('DT'+num);
-  if(dtEl){
-    var showDt=pr.lastCycleEndAt&&pr.jobId&&(pr.fsm===PS.IDLE||pr.fsm===PS.COMPLETE);
-    if(showDt){
-      var dtMs=Date.now()-new Date(pr.lastCycleEndAt).getTime();
-      var dtS=Math.floor(dtMs/1000);
-      if(dtS>10){
-        dtEl.style.display='block';
-        var dtLabel=pr.fsm===PS.COMPLETE?'WAITING':'IDLE';
-        dtEl.innerHTML='<div class="dt-indicator"><div class="dt-dot"></div>'+dtLabel+' '+Math.floor(dtS/60)+'m '+pad(dtS%60)+'s since cycle end</div>';
-      } else dtEl.style.display='none';
-    } else dtEl.style.display='none';
   }
   if(pr.jobId&&job){
     g('PNJ'+num).style.display='none';g('PJSEL'+num).style.display='none';
@@ -2332,13 +2310,11 @@ function buildHoff(){
   lines.push('Scrap rate:               '+rate+'%');
   lines.push('');lines.push('-- OEE (COMBINED) --');
   lines.push('OEE: '+Math.round(oee.combined.oee*100)+'%  |  A: '+Math.round(oee.combined.availability*100)+'%  |  P: '+Math.round(oee.combined.performance*100)+'%  |  Q: '+Math.round(oee.combined.quality*100)+'%');
-  lines.push('Combined downtime:        '+Math.round(oee.combined.downtime/60)+'m');
-  if(oee.combined.avgCycle>0)lines.push('Avg cycle: '+oee.combined.avgCycle.toFixed(1)+'s (σ '+oee.combined.stddev.toFixed(1)+')');
   lines.push('');lines.push('-- PER-PRESS OEE --');
   var ppNames=['Press 1','Press 2','Press 3'];var ppData=[oee.press1,oee.press2,oee.press3];
   for(var pi=0;pi<3;pi++){var pp=ppData[pi];
     if(!pp.active){lines.push(ppNames[pi]+': No cycles');continue;}
-    lines.push(ppNames[pi]+': OEE '+Math.round(pp.oee*100)+'% | A '+Math.round(pp.availability*100)+'% | P '+Math.round(pp.performance*100)+'% | Q '+Math.round(pp.quality*100)+'% | '+pp.cyc+' cycles | '+Math.round(pp.runtime/60)+'min runtime | '+Math.round(pp.downtime/60)+'min downtime');
+    lines.push(ppNames[pi]+': OEE '+Math.round(pp.oee*100)+'% | A '+Math.round(pp.availability*100)+'% | P '+Math.round(pp.performance*100)+'% | Q '+Math.round(pp.quality*100)+'% | '+pp.cyc+' cycles | Avg '+pp.avg.toFixed(1)+'s');
   }
   lines.push('');lines.push('-- PENDING / DELAYED JOBS --');
   if(pending.length){for(var i=0;i<pending.length;i++){var j2=pending[i];lines.push('  * '+(j2.refType==='vessel'?'VES':'SO')+': '+j2.ref+' — '+j2.mat+' '+j2.sz+'mm x '+j2.qty+' ['+j2.pri.toUpperCase()+']'+(j2.status==='delayed'?' DELAYED: '+j2.delayReason:''));}}
@@ -2436,18 +2412,16 @@ window.exportPDF=function(){
   }
   // V5: Per-Press OEE Breakdown
   html+='<div class="pdf-section-title">Per-Press Performance</div>';
-  html+='<table class="pdf-table"><thead><tr><th>Press</th><th>OEE</th><th>Avail</th><th>Perf</th><th>Quality</th><th>Cycles</th><th>Runtime</th><th>Downtime</th><th>Avg Cycle</th><th>σ</th></tr></thead><tbody>';
+  html+='<table class="pdf-table"><thead><tr><th>Press</th><th>OEE</th><th>Avail</th><th>Perf</th><th>Quality</th><th>Cycles</th><th>Avg Cycle</th><th>σ</th></tr></thead><tbody>';
   var ppd=[{n:'Press 1',d:oee.press1},{n:'Press 2',d:oee.press2},{n:'Press 3',d:oee.press3}];
   for(var pi=0;pi<3;pi++){var pp=ppd[pi];
-    if(!pp.d.active){html+='<tr><td>'+pp.n+'</td><td colspan="9" style="color:#999">No cycles</td></tr>';continue;}
+    if(!pp.d.active){html+='<tr><td>'+pp.n+'</td><td colspan="7" style="color:#999">No cycles</td></tr>';continue;}
     html+='<tr><td><b>'+pp.n+'</b></td>';
     html+='<td style="color:#ff4500;font-weight:700">'+Math.round(pp.d.oee*100)+'%</td>';
     html+='<td>'+Math.round(pp.d.availability*100)+'%</td>';
     html+='<td>'+Math.round(pp.d.performance*100)+'%</td>';
     html+='<td>'+Math.round(pp.d.quality*100)+'%</td>';
     html+='<td>'+pp.d.cyc+'</td>';
-    html+='<td>'+Math.round(pp.d.runtime/60)+'m</td>';
-    html+='<td>'+Math.round(pp.d.downtime/60)+'m</td>';
     html+='<td>'+pp.d.avg.toFixed(1)+'s</td>';
     html+='<td>±'+pp.d.stddev.toFixed(1)+'</td></tr>';
   }
@@ -2664,13 +2638,6 @@ persist();renderAll();
 setInterval(autoBackupCheck,30*60*1000);autoBackupCheck();
 document.addEventListener('click',function initAudio(){getAudioCtx();document.removeEventListener('click',initAudio);},{once:true});
 
-// V5: Periodic downtime tracker update (updates idle/complete press indicators every 15s)
-setInterval(function(){
-  for(var p=1;p<=3;p++){
-    var pr=AppState.presses[p];
-    if((pr.fsm===PS.IDLE||pr.fsm===PS.COMPLETE)&&pr.jobId&&pr.lastCycleEndAt) renderPressUI(p);
-  }
-},15000);
 
 /* ═══ SERVICE WORKER ═══ */
 if('serviceWorker' in navigator){
