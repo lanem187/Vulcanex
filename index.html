@@ -246,13 +246,18 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .integrity-badge{font-family:var(--fm);font-size:8px;color:var(--tx3);letter-spacing:1px;opacity:.5;margin-top:4px}
 /* PDF PRINT */
 @media print{
-  html,body{background:#fff !important;color:#111 !important;margin:0;padding:0}
-  *{background:transparent !important}
+  html{background-color:#fff !important}
+  body{background-color:#fff !important;background-image:none !important;color:#111 !important;margin:0;padding:0}
   body::after,body::before{display:none !important;content:none !important}
-  #hdr,#nav,.nst,.pg{display:none !important}
-  #pdf-page{display:block !important;position:relative;z-index:10000;background:#fff !important;padding:0;font-family:Arial,Helvetica,sans-serif}
-  #pdf-page *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
-  .pdf-wrap{width:100%;background:#fff !important;padding:40px 48px;box-sizing:border-box}
+  #hdr,#nav,.nst,.pg,.logo-name,.logo-tag,.spill,.clk,.shift-timer,.tab{display:none !important}
+  #pdf-page{display:block !important;position:relative;z-index:10000;padding:0;font-family:Arial,Helvetica,sans-serif}
+  .pdf-wrap{width:100%;padding:40px 48px;box-sizing:border-box}
+  .pdf-wrap,.pdf-wrap *{background-color:#fff;color:#111}
+  .pdf-kpi,.pdf-mat,.pdf-notes{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;background-color:#f7f7f7 !important}
+  .pdf-table th{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;background-color:#111 !important;color:#fff !important}
+  .pdf-table tr:nth-child(even) td{background-color:#fafafa !important}
+  .pdf-kpi-val,.pdf-mat-val,.pdf-table .pass,.pdf-table .fail,.pdf-table .delay,.pdf-section-title,.pdf-logo,.pdf-red,.pdf-green,.pdf-orange{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+  .pdf-header{border-bottom:3px solid #ff4500}
   .pdf-table{width:100%;border-collapse:collapse;font-size:11px;page-break-inside:auto}
   .pdf-table tr{page-break-inside:avoid;page-break-after:auto}
   .pdf-table thead{display:table-header-group}
@@ -288,6 +293,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   .pdf-footer-txt{font-family:Arial,sans-serif;font-size:9px;color:#bbb;letter-spacing:1px;text-transform:uppercase}
 }
 #pdf-page{display:none}
+body.printing::before,body.printing::after{display:none !important;content:none !important}
+body.printing{background:#fff !important}
 </style>
 </head>
 <body>
@@ -2503,7 +2510,33 @@ window.exportPDF=function(){
   }
   html+='<div class="pdf-section-title">Shift Notes</div><div class="pdf-notes">'+esc(notes)+'</div>';
   html+='<div class="pdf-footer"><div class="pdf-footer-txt">VULCANEX &middot; Production Intelligence</div><div>'+today+' '+nowStr+'</div></div>';
-  var pc=g('pdf-content');if(pc)pc.innerHTML=html;setTimeout(function(){window.print();},150);
+  var pc=g('pdf-content');if(pc)pc.innerHTML=html;
+  // Force white background by physically modifying DOM before print
+  // Mobile browsers often ignore @media print CSS
+  var origBodyBg=document.body.style.cssText;
+  var origHtmlBg=document.documentElement.style.cssText;
+  document.documentElement.style.cssText='background:#fff !important';
+  document.body.style.cssText='background:#fff !important;color:#111 !important';
+  // Hide all app UI, show only PDF
+  var appEls=document.querySelectorAll('#hdr,#nav,.nst,.pg');
+  for(var ei=0;ei<appEls.length;ei++) appEls[ei].style.display='none';
+  var pdfEl=g('pdf-page');if(pdfEl){pdfEl.style.display='block';pdfEl.style.background='#fff';}
+  // Kill pseudo-elements by adding a temporary class
+  document.body.classList.add('printing');
+  setTimeout(function(){
+    window.print();
+    // Restore after print dialog closes
+    setTimeout(function(){
+      document.documentElement.style.cssText=origHtmlBg;
+      document.body.style.cssText=origBodyBg;
+      document.body.classList.remove('printing');
+      for(var ei2=0;ei2<appEls.length;ei2++) appEls[ei2].style.display='';
+      if(pdfEl) pdfEl.style.display='none';
+      // Re-show active page
+      var activePg=document.querySelector('.tab.on');
+      if(activePg) activePg.click();
+    },500);
+  },150);
 };
 
 /* ═══ BACKUP + IMPORT SYSTEM ═══ */
